@@ -10,7 +10,7 @@
 
 1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。
 2. **江城 the river town** 因为找到音频书，就决定再看一遍，要说特别好也谈不上，可看。我更推荐 **Mr. China**，相似时间，相似经历，居然还都发生在四川。
-3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。
+3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。可以再读一遍
 4. **Simply Gödel** 几年前看Gödel没看懂，不甘心，这次再挑战下
 5. 突然被**洪堡的经历**深深吸引，找了这几本看：
    1. **The Invention of Nature: Alexander von Humboldt's New World** 唯一缺点对洪堡在南美5年探险讲得不够多
@@ -18,7 +18,15 @@
    3. **丈量世界** 刘列推荐就看了，不推荐，不好看
 6. **China in Ten Words 余华十个字的中国** 生在70年代的人看了才有感觉
 7. **The Immortal Life of Henrietta Lacks 永生的海拉** 作者对海拉故事痴迷10多年终于写成这本书，是励志故事，推荐。
-8. **West with the Night 夜航西飞** 还在看
+8. **中美写作教学对话十五讲**
+9. **West with the Night 夜航西飞** 还在看
+10. **毕加索画传**
+11. **1984** 要认真读完
+12. **The Meaning of Everything: The Story of the Oxford English Dictionary**
+13. **Introducing Logic** & **Godel's Proof**
+14. **Introducing Economics** 
+15. **selfish gene**
+16. **烟雨任平生**
 
 
 
