@@ -18,15 +18,14 @@
    3. **丈量世界** 刘列推荐就看了，不推荐，不好看
 6. **China in Ten Words 余华十个字的中国** 生在70年代的人看了才有感觉
 7. **The Immortal Life of Henrietta Lacks 永生的海拉** 作者对海拉故事痴迷10多年终于写成这本书，是励志故事，推荐。
-8. **中美写作教学对话十五讲**
-9. **West with the Night 夜航西飞** 还在看
-10. **毕加索画传**
-11. **1984** 要认真读完
-12. **The Meaning of Everything: The Story of the Oxford English Dictionary**
+8. **中美写作教学对话十五讲** 这本书其实买了一两年了。这次儿子中考作文不理想，就花时间把它完整读完，挺有收获。
+9. **West with the Night 夜航西飞** 写得很“文艺”，看惯了non-fiction 典型叙述手法，读起来这本书有点费劲。
+10. **毕加索画传** 后浪出过前半部，这是从美亚买的完整版，计划10.1时候看
+11. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读
+12. **The Meaning of Everything: The Story of the Oxford English Dictionary** 计划看完毕加索画传后看
 13. **Introducing Logic** & **Godel's Proof**
 14. **Introducing Economics** 
-15. **selfish gene**
-16. **烟雨任平生**
+15. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读
 
 
 
