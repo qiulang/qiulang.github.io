@@ -8,15 +8,13 @@
 
 ### 2020
 
-1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。随便推荐两个关于达尔文纪录片，都是在2009年达尔文诞辰200周年推出的：
-
+1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。随便推荐两个关于达尔文纪录片，都是在2009年达尔文诞辰200周年推出的，内容可以看做这本书精华摘要：
    1. BBC [What Darwin Didn't Know](https://www.imdb.com/title/tt1978354/)
-
    2. PBS [What Darwin Never Knew](https://www.imdb.com/title/tt1540263/)
 
 2. **江城 the river town** 因为找到音频书，就决定再看一遍，要说特别好也谈不上，可看。我更推荐 **Mr. China**，相似时间，相似经历，居然还都发生在四川。
 
-3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。可以再读一遍
+3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。可以再读一遍。
 
 4. **Simply Gödel** 几年前看Gödel没看懂，不甘心，这次再挑战下
 
@@ -35,15 +33,17 @@
 
 10. **毕加索画传** 后浪出过前半部，这是从美亚买的完整版，10.1看完，但有几段因为印刷体原因没看懂。
 
-11. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读
+11. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。
 
-12. **The Meaning of Everything: The Story of the Oxford English Dictionary** 计划看完毕加索画传后看
+12. **The Ride of Lifetime** 10.1之后在看，有喜马拉雅有音频书，听到现在不难。
 
-13. **Introducing Logic** & **Godel's Proof**
+13. **The Meaning of Everything: The Story of the Oxford English Dictionary**  看完 **The Ride of Lifetime**再看
 
-14. **Introducing Economics** 
+14. **Introducing Logic** & **Godel's Proof**
 
-15. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读
+15. **Introducing Economics** 
+
+16. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读。
 
 
 
