@@ -33,17 +33,21 @@
 
 10. **毕加索画传** 后浪出过前半部，这是从美亚买的完整版，10.1看完，但有几段因为印刷体原因没看懂。
 
-11. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。
+11. **The Ride of Lifetime**
 
-12. **The Ride of Lifetime** 10.1之后在看，有喜马拉雅有音频书，听到现在不难。
+12. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。
 
-13. **The Meaning of Everything: The Story of the Oxford English Dictionary**  看完 **The Ride of Lifetime**再看
+13. **A higer call**
 
-14. **Introducing Logic** & **Godel's Proof**
+14. **Longitude**
 
-15. **Introducing Economics** 
+15. **The Meaning of Everything: The Story of the Oxford English Dictionary**  看完 **The Ride of Lifetime**再看
 
-16. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读。
+16. **Introducing Logic** & **Godel's Proof**
+
+17. **Introducing Economics** 
+
+18. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读。
 
 
 
