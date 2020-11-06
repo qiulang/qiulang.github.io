@@ -6,15 +6,39 @@
 
 
 
+### 2021 计划
+
+1. **A higer call** 原版和翻译版都买了
+
+2. **The Wright Brothers** 终于要第一次读 David McCullough的书
+
+3. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+
+4. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
+
+5. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
+
+   1. **Introducing Logic** & **Godel's Proof**
+   2. **Introducing Economics** 
+   3. **Introducing Game Theory**
+
+6. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+
+
+
 ### 2020
 
-1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。随便推荐两个关于达尔文纪录片，都是在2009年达尔文诞辰200周年推出的，内容可以看做这本书精华摘要：
+1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。随便推荐几个关于达尔文纪录片，都是在2009年达尔文诞辰200周年推出的，内容可以看做这本书精华摘要：
+  
    1. BBC [What Darwin Didn't Know](https://www.imdb.com/title/tt1978354/)
-   2. PBS [What Darwin Never Knew](https://www.imdb.com/title/tt1540263/)
 
+   2. PBS [What Darwin Never Knew](https://www.imdb.com/title/tt1540263/)
+   
+   另：BBC 分别出了两个加拉帕戈斯的记录片，一个大卫艾登伯格，一个是Tilda Swinton 都可以看看。
+   
 2. **江城 the river town** 因为找到音频书，就决定再看一遍，要说特别好也谈不上，可看。我更推荐 **Mr. China**，相似时间，相似经历，居然还都发生在四川。
 
-3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。可以再读一遍。
+3. **The double Helix**, The annotated and illustrated double helix 最近才知道双螺旋这本书，惭愧。而且没想到[它的翻译版本居然有这么多个](http://blog.sciencenet.cn/blog-611951-1052125.html) 强烈推荐，但最好整个注释版的。想在年前再读一遍。
 
 4. **Simply Gödel** 几年前看Gödel没看懂，不甘心，这次再挑战下
 
@@ -31,23 +55,19 @@
 
 9. **West with the Night 夜航西飞** 写得很“文艺”，看惯了non-fiction 典型叙述手法，读起来这本书有点费劲。
 
-10. **毕加索画传** 后浪出过前半部，这是从美亚买的完整版，10.1看完，但有几段因为印刷体原因没看懂。
+10. **毕加索画传** 后浪出过前半部，这是从美亚买的完整版，10.1看完，但有几段因为印刷体原因没看懂，不知道后浪为什么也不下半部。
 
-11. **The Ride of Lifetime**
+11. **The Ride of Lifetime**， **一生的旅程：迪士尼CEO自述批量打造超级IP的经营哲学**   文笔比较轻松简单，电子书听一两遍就基本听懂了，不像夜航西飞那么费劲。
 
-12. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。
+12. **Longitude** 就150页薄薄一本，但因为设计背景较多，电子书第一遍很多没听懂。中文版已经绝版，在孔夫子居然要一两百块，最终在淘宝小店让人打印一本，看完中文版在听英文版就明白很多。还下载3小时纪录片也可以看看。
 
-13. **A higer call**
+13. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。英文版听起来同样不太轻松，还找到50年代片子有时间看看。
 
-14. **Longitude**
+14. **烟雨任平生** 才知道有这本将高耀洁的书，已经到货了，计划是 2020最后一本。
 
-15. **The Meaning of Everything: The Story of the Oxford English Dictionary**  看完 **The Ride of Lifetime**再看
+15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 
-16. **Introducing Logic** & **Godel's Proof**
-
-17. **Introducing Economics** 
-
-18. **烟雨任平生** 才知道有这本将高耀洁的书，已经在美亚下单，到了就开始读。
+注，2020还有两个月，看完列的这些，最好把双螺旋再看一遍。
 
 
 
@@ -110,7 +130,7 @@
 
    1. **Endurance: Shackleton's Incredible Voyage** [我是不是唯一一个发现这本书里的一个小问题的人呢?](https://www.goodreads.com/review/show/2722924581?book_show_action=false&from_review_page=1) :D 
    2. **The Endurance: Shackleton's Legendary Antarctic Expedition** 如果只推荐一本关于 Endurance的书，那我推荐它
-   3. **Shackleton's stowaway** 因为太喜欢Shackleton的故事，就又找些相关作品来读；这本书如果不是死忠粉丝可以不需要看
+   3. **Shackleton's stowaway** 因为太喜欢Shackleton的故事，就又找些相关作品来读；这本书如果不是死忠粉丝不需要看
    4. **Shipwreck at the bottom of the world** 像是 Endurance 这两本改版的青少版
 
 3. **Unbroken 坚不可摧**只有结局让我觉得不太合理，受了那么多苦，怎么听了几场牧师的布道就好了？！
