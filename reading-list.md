@@ -9,20 +9,17 @@
 ### 2021 计划
 
 1. **A higer call** 原版和翻译版都买了
-
 2. **The Wright Brothers** 终于要第一次读 David McCullough的书
-
 3. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-
 4. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
-
 5. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
 
    1. **Introducing Logic** & **Godel's Proof**
    2. **Introducing Economics** 
    3. **Introducing Game Theory**
-
 6. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+7. **David Livingstone: Africa's Trailblazer** 书买了好久，也不厚，找时间看完
+8. **Born to run Bruce Springsteen** 之前没看完 这次争取
 
 
 
@@ -59,7 +56,7 @@
 
 11. **The Ride of Lifetime**， **一生的旅程：迪士尼CEO自述批量打造超级IP的经营哲学**   文笔比较轻松简单，电子书听一两遍就基本听懂了，不像夜航西飞那么费劲。
 
-12. **Longitude** 就150页薄薄一本，但因为设计背景较多，电子书第一遍很多没听懂。中文版已经绝版，在孔夫子居然要一两百块，最终在淘宝小店让人打印一本，看完中文版在听英文版就明白很多。还下载3小时纪录片也可以看看。
+12. **Longitude** 就150页薄薄一本，但因为涉及背景较多，电子书第一遍很多没听懂。中文版已经绝版，在孔夫子居然要一两百块，最终在淘宝小店让人打印一本，看完中文版在听英文版就明白很多。还下载3小时纪录片也可以看看。
 
 13. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。英文版听起来同样不太轻松，还找到50年代片子有时间看看。
 
