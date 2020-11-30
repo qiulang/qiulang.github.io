@@ -8,18 +8,19 @@
 
 ### 2021 计划
 
-1. **A higer call** 原版和翻译版都买了
+1. **A higher call** 原版和翻译版都买了
 2. **The Wright Brothers** 终于要第一次读 David McCullough的书
 3. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-4. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
-5. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
+4. **Krakatoa: The Day the World Exploded** 
+5. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
+6. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
 
    1. **Introducing Logic** & **Godel's Proof**
    2. **Introducing Economics** 
    3. **Introducing Game Theory**
-6. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-7. **David Livingstone: Africa's Trailblazer** 书买了好久，也不厚，找时间看完
-8. **Born to run Bruce Springsteen** 之前没看完 这次争取
+7. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+8. **David Livingstone: Africa's Trailblazer** 书买了好久，也不厚，找时间看完
+9. **Born to run Bruce Springsteen** 之前没看完 这次争取
 
 
 
@@ -60,11 +61,13 @@
 
 13. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。英文版听起来同样不太轻松，还找到50年代片子有时间看看。
 
-14. **烟雨任平生** 才知道有这本将高耀洁的书，已经到货了，计划是 2020最后一本。
+14. **Shackleton's Boat: The Story of The James Caird**  死忠粉
 
-15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+15. **烟雨任平生** 才知道有这本将高耀洁的书，已经到货了，计划是 2020最后一本。
 
-注，2020还有两个月，看完列的这些，最好把双螺旋再看一遍。
+16. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+
+注，2020还有一个月，看完列的这些，最好把双螺旋再看一遍。
 
 
 
