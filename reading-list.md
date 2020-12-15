@@ -8,19 +8,27 @@
 
 ### 2021 计划
 
-1. **A higher call** 原版和翻译版都买了
-2. **The Wright Brothers** 终于要第一次读 David McCullough的书
-3. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-4. **Krakatoa: The Day the World Exploded** 
-5. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
-6. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
+买了几本 David McCullough的书，第一次读他的书
+
+1. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+2. **The American Spirit**
+3. **The Wright Brothers** 
+4. **A higher call** 原版和翻译版都买了
+5. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+6. **Krakatoa: The Day the World Exploded** 
+7. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
+8. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
 
    1. **Introducing Logic** & **Godel's Proof**
    2. **Introducing Economics** 
    3. **Introducing Game Theory**
-7. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-8. **David Livingstone: Africa's Trailblazer** 书买了好久，也不厚，找时间看完
-9. **Born to run Bruce Springsteen** 之前没看完 这次争取
+9. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+10. **Little Soldiers An American Boy, a Chinese School**
+11. **When Einstein Walked with Godel**
+12. **Educated A Memoir** 
+13. **Born to run Bruce Springsteen** 之前没看完 这次争取
+14. **The Selfish Gene** 听一遍？
+15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 
 
 
@@ -32,7 +40,7 @@
 
    2. PBS [What Darwin Never Knew](https://www.imdb.com/title/tt1540263/)
    
-   另：BBC 分别出了两个加拉帕戈斯的记录片，一个大卫艾登伯格，一个是Tilda Swinton 都可以看看。
+   另：BBC 分别出了三个加拉帕戈斯的记录片，2017 Liz Bonnin,  2013 大卫艾登伯格, 2006 Tilda Swinton 都可以看看。
    
 2. **江城 the river town** 因为找到音频书，就决定再看一遍，要说特别好也谈不上，可看。我更推荐 **Mr. China**，相似时间，相似经历，居然还都发生在四川。
 
@@ -61,13 +69,15 @@
 
 13. **1984** 因为最近的时局，把这本十多年前看过的书又翻出来读。英文版听起来同样不太轻松，还找到50年代片子有时间看看。
 
-14. **Shackleton's Boat: The Story of The James Caird**  死忠粉
+14. **Shackleton's Boat: The Story of The James Caird**  死忠粉. 开车把endurance书又听了好几遍。
 
-15. **烟雨任平生** 才知道有这本将高耀洁的书，已经到货了，计划是 2020最后一本。
+15. **烟雨任平生** 才知道有这本将高耀洁的书，读来很沉重。
 
-16. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+16. **David Livingstone: Africa's Trailblazer**
 
-注，2020还有一个月，看完列的这些，最好把双螺旋再看一遍。
+17. **所有的写作都是讲故事/美国中学写作教学译丛**
+
+注，2020快结束了，看完列的这些，最好把双螺旋再看一遍。
 
 
 
