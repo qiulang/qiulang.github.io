@@ -8,7 +8,7 @@
 
 ### 2021 计划
 
-买了几本 David McCullough的书，第一次读他的书
+买了三本 David McCullough的书，第一次读他的书
 
 1. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
 2. **The American Spirit**
@@ -73,11 +73,11 @@
 
 15. **烟雨任平生** 才知道有这本将高耀洁的书，读来很沉重。
 
-16. **David Livingstone: Africa's Trailblazer**
+16. **David Livingstone: Africa's Trailblazer** 作者是虔诚信徒，书是写给小朋友看的。读它部分原因是想看看信徒都怎么写自己大英雄。几年前读一个台湾人写livingstone的《深入非洲三千里》我给了一星差评，实在把我恶心到了。写livingstone的书，目前我只推荐 **Into Africa**
 
 17. **所有的写作都是讲故事/美国中学写作教学译丛**
 
-注，2020快结束了，看完列的这些，最好把双螺旋再看一遍。
+18. 2020最后几天，看能不能把卡尔 波尔普尔 Karl Popper  **二十世纪的教训** 看完
 
 
 
