@@ -2,7 +2,7 @@
 
 我基本不看小说，而是看non-fiction。主要选择有翻译版又有音频的non-fiction。这样一来开车时候可以听；二来听不懂地方还可以对照翻译版看看。
 
-探险故事、量子力学史话、遗传基因故事是我这几年来主要看的书。
+探险故事、量子力学史话、爱因斯坦、哥德尔、遗传基因故事是我这几年来主要看的书。
 
 
 
@@ -33,10 +33,10 @@
 16. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 17. **所有的写作都是讲故事/美国中学写作教学译丛**
 18. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-19. **The lesson of this century**
+19. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
 20. **The Map That Changed the World** 
 21. **Einstein His Life and Universe**
-22. **孤筏重洋** 
+22. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage
 
 
 
@@ -82,11 +82,6 @@
 15. **烟雨任平生** 才知道有这本将高耀洁的书，读来很沉重。
 
 16. **David Livingstone: Africa's Trailblazer** 作者是虔诚信徒，书是写给小朋友看的。读它部分原因是想看看信徒都怎么写自己大英雄。几年前读一个台湾人写livingstone的《深入非洲三千里》我给了一星差评，实在把我恶心到了。写livingstone的书，目前我只推荐 **Into Africa**
-
-    
-
-
-18. 2020最后几天，看能不能把卡尔 波尔普尔 Karl Popper  **二十世纪的教训** 看完
 
 
 
