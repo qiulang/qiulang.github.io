@@ -8,27 +8,35 @@
 
 ### 2021 计划
 
-买了三本 David McCullough的书，第一次读他的书
+买了几本 David McCullough的书，第一次读他的书。去年底一下子买了很多书，读书计划估计可以一直延续到2022
 
-1. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-2. **The American Spirit**
-3. **The Wright Brothers** 
-4. **A higher call** 原版和翻译版都买了
-5. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-6. **Krakatoa: The Day the World Exploded** 
-7. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
-8. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
-
+1. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
+2. **The Manager's Path**   亚马逊软件开发类书籍排名很靠前，就买来看看。
+3. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+4. **The American Spirit**
+5. **The Wright Brothers** 
+6. **A higher call** 原版和翻译版都买了
+7. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+8. **Krakatoa: The Day the World Exploded** 
+9. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
    1. **Introducing Logic** & **Godel's Proof**
    2. **Introducing Economics** 
    3. **Introducing Game Theory**
-9. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-10. **Little Soldiers An American Boy, a Chinese School**
-11. **When Einstein Walked with Godel**
-12. **Educated A Memoir** 
-13. **Born to run Bruce Springsteen** 之前没看完 这次争取
-14. **The Selfish Gene** 听一遍？
-15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+   4. **Cancer** 
+
+10. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+11. **Little Soldiers An American Boy, a Chinese School**
+12. **When Einstein Walked with Godel**
+13. **Educated A Memoir** 
+14. **Born to run Bruce Springsteen** 之前没看完 这次争取
+15. **The Selfish Gene** 听一遍？
+16. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+17. **所有的写作都是讲故事/美国中学写作教学译丛**
+18. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+19. **The lesson of this century**
+20. **The Map That Changed the World** 
+21. **Einstein His Life and Universe**
+22. **孤筏重洋** 
 
 
 
@@ -75,7 +83,8 @@
 
 16. **David Livingstone: Africa's Trailblazer** 作者是虔诚信徒，书是写给小朋友看的。读它部分原因是想看看信徒都怎么写自己大英雄。几年前读一个台湾人写livingstone的《深入非洲三千里》我给了一星差评，实在把我恶心到了。写livingstone的书，目前我只推荐 **Into Africa**
 
-17. **所有的写作都是讲故事/美国中学写作教学译丛**
+    
+
 
 18. 2020最后几天，看能不能把卡尔 波尔普尔 Karl Popper  **二十世纪的教训** 看完
 
