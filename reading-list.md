@@ -12,33 +12,34 @@
 
 1. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错，已经看了。
 2. **Einstein His Life and Universe**
-3. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage
-4. **The Manager's Path**   亚马逊软件开发类书籍排名很靠前，就买来看看。倒也没觉得有什么特别。
-5. **The Making of a Manager: What to Do When Everyone Looks to You** 这本是美亚推荐的就买了也看看
-6. **Tuesdays with Morrie** 当年桐桐老师建议读的书，因为有个公众号推荐，快快看了
-7. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-8. **The American Spirit**
-9. **The Wright Brothers** 
-10. **A higher call** 原版和翻译版都买了
-11. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-12. **Krakatoa: The Day the World Exploded** 
-13. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
+3. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage 英文版还是有点难度。
+4. 两本关于管理的书，都是女性作者写的，有点好奇，就买来看看。但是挺失望的，分别写的书评
+   1. **The Manager's Path**   亚马逊软件开发类书籍排名很靠前，就买来看看。倒也没觉得有什么特别。
+   2. **The Making of a Manager: What to Do When Everyone Looks to You** 这本是美亚推荐的就买了也看看。
+5. **Tuesdays with Morrie** 当年桐桐老师建议读的书，因为有个公众号推荐，快快看了
+6. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+7. **The American Spirit**
+8. **The Wright Brothers** 
+9. **A higher call** 原版和翻译版都买了
+10. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+11. **Krakatoa: The Day the World Exploded** 
+12. 几个 introducing系列，当做轻松读物 （中文翻译成通识丛书）
     1. **Introducing Logic** & **Godel's Proof**
     2. **Introducing Economics** 
     3. **Introducing Game Theory**
     4. **Cancer** 
-14. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-15. **Little Soldiers An American Boy, a Chinese School**
-16. **When Einstein Walked with Godel**
-17. **Educated A Memoir** 
-18. **Born to run Bruce Springsteen** 之前没看完 这次争取
-19. **The Selfish Gene** 听一遍？
-20. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-21. **所有的写作都是讲故事/美国中学写作教学译丛**
-22. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-23. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-24. **The Map That Changed the World** 
-25. **The Long Walk: The True Story Of A Trek To Freedom**
+13. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+14. **Little Soldiers An American Boy, a Chinese School**
+15. **When Einstein Walked with Godel**
+16. **Educated A Memoir** 
+17. **Born to run Bruce Springsteen** 之前没看完 这次争取
+18. **The Selfish Gene** 听一遍？
+19. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+20. **所有的写作都是讲故事/美国中学写作教学译丛**
+21. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+22. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+23. **The Map That Changed the World** 
+24. **The Long Walk: The True Story Of A Trek To Freedom**
 
 
 
