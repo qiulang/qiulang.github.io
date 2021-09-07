@@ -12,3 +12,7 @@ SO 几个值得看看的问题，前两个也被关了，SO 基于opinion based�
 
 意犹未尽 又找来美亚评价高的 The Making of a Manager: What to Do When Everyone Looks to You 看看有点意外这两本书都是女性作者写的。
 
+
+
+关于管理的问题，尤其涉及每日工作，被删了两次（有一次还直接被删，都找不到记录），但不死心，又问了一次，经过反复修改终于没被删  [How to manage the team effectively on a self-managing team?](https://softwareengineering.stackexchange.com/questions/431284/how-to-manage-the-team-effectively-on-a-self-managing-team)
+
