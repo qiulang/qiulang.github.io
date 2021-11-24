@@ -30,6 +30,8 @@
    2. **Introducing Economics** 
    3. **Introducing Game Theory**
    4. **Introducing Wittgenstein**
+   4. **Introducing Budda**
+   4. **Introducing Statistics**
    5. **Cancer** 
 
 10. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
@@ -37,8 +39,6 @@
 11. **Little Soldiers An American Boy, a Chinese School**
 
 12. **Educated A Memoir** 
-
-13. **Born to run Bruce Springsteen** 之前没看完 这次争取
 
 14. **The Selfish Gene** 听一遍？
 
@@ -48,9 +48,13 @@
 
 17. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
 
+17. **The Kon-Tiki man** 考虑读读
+
+17. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+
+17. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+
     
-
-
 
 ### 2021
 
@@ -59,23 +63,40 @@
 更新 David McCullough书都没看了，要安排倒2022看了，2021计划重新修正下
 
 1. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错。
+
 2. **Einstein His Life and Universe** 读了两三遍
-3. **Einstein: The Man, the Genius, and the Theory of Relativity (Great Thinkers) ** Einstein His Life and Universe的缩减版
+
+3. **Einstein: The Man, the Genius, and the Theory of Relativity (Great Thinkers)** Einstein His Life and Universe的缩减版
+
 4. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage 英文版还是有点难度。
+
 5. 两本关于管理的书，都是女性作者写的，有点好奇，就买来看看。但是挺失望的，分别写的书评
    1. **The Manager's Path**   亚马逊软件开发类书籍排名很靠前，就买来看看。倒也没觉得有什么特别。
    2. **The Making of a Manager: What to Do When Everyone Looks to You** 这本是美亚推荐的就买了也看看。
+   
 6. **Tuesdays with Morrie** 当年桐桐老师建议读的书，因为有个公众号推荐，快快看了
-7. **A World Without Time: The Forgotten Legacy of Godel and Einstein**
-8. **When Einstein Walked with Godel**
-9. **Einstein's Greatest Mistake: A Biography** 
+
+7. **A World Without Time: The Forgotten Legacy of Godel and Einstein** 觉得写得一般，没有出彩的地方，争取看完有点难，比较乏味
+
+8. **When Einstein Walked with Godel** 暂时没安排
+
+9. **Einstein's Greatest Mistake: A Biography**  9，10月份看书重点，同时看看 big bang相关章节。这本书倒是觉得一般，比e=mc2差多了，[视频](https://www.youtube.com/watch?v=zpTUjb-iKf4&t=486s)可以看看
+
 10. **The Long Walk: The True Story Of A Trek To Freedom** 我证明是伪书
+
 11. **The Quantum Story A History in 40 Moments** 考虑选几个章节听听
-12. **The Kon-Tiki man** 考虑读读
-13. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读 或者是 **The Illustrated Longitude**
-14. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 
+12. **Born to run Bruce Springsteen** 11月份开始阅读重点，之前没看完 这次出了中文版
 
+13. **红楼梦画册**，两个不同版本解读，也算把红楼梦整个故事梗概看下，不然被儿子鄙视
+
+14. **South** 听就行，这个故事实在烂熟于心了
+
+15. **The double Helix** 注释版找时间看
+
+16. **我是漫画家**
+
+    
 
 ### 2020
 
@@ -130,7 +151,7 @@
 4. **This is Going to Hurt: Secret Diaries of a Junior Doctor 绝对笑喷之弃业医生日志**  很有意思，小屁孩日记成人版，推荐！
 5. **Entanglement** Amir D. Aczel 另一本口碑三星的书，我已经看过那么多本关于量子力学史话的书，看这本完全就当学习英语
 6. **The Professor and the Madman** 又一本 Simon Winchester的书，不到200页，推荐。
-7. **Shackleton's Boat Journey** 这是还债，买了那么多本shackleton的书就这本一直没看，这次终于看。如果只能选一本shackleton的书，我选的是 Shackleton's Legendary Antarctic Expedition
+7. **Shackleton's Boat Journey**  船长Frank Worsley写的， 这是还债，买了那么多本shackleton的书就这本一直没看，这次终于看。如果只能选一本shackleton的书，我选的是 Shackleton's Legendary Antarctic Expedition
 8. **Born to run Bruce Springsteen** ，超喜欢 Bruce Springsteen 但这本书太厚了，听了几次没听完，要找个时间再看
 
 
@@ -174,7 +195,7 @@
 
 
 
-### 2015 
+### 2015
 
 1. **Tin Tin the complete companion 永远的丁丁** 个人觉得这是丁丁迷必须看的书，详细讲解22本丁丁历险记背后故事，终于让我明白这个22个故事的来龙去脉。
 2. **Shackleton** 是我的偶像，这几本我都是反复读了又读：
@@ -187,7 +208,6 @@
 3. **Unbroken 坚不可摧**只有结局让我觉得不太合理，受了那么多苦，怎么听了几场牧师的布道就好了？！
 
    
-
 
 ### 更早以前推荐书目
 
@@ -211,3 +231,27 @@
 
 10. 周有光的**朝闻道集**、**拾贝集**、**逝年如水**：百岁老人回忆人生、笔耕不辍。可惜作为异议人士，就算百岁老人也会被封杀，  [At 105, Chinese Linguist Now A Government Critic](https://www.npr.org/2011/10/19/141503738/at-105-celebrated-chinese-linguist-now-a-dissident)
 
+
+
+### 如果让我推荐10本，20本
+
+1. The Endurance: Shackleton's Legendary Antarctic Expedition
+2. Tin Tin the complete companion 永远的丁丁  70后的丁丁迷必看
+3. Guns  Germs and Steel
+4. The man who loved China
+5. Longitude
+6. The Invention of Nature: Alexander von Humboldt's New World
+7. E=mc2: A Biography of the World's Most Famous Equation
+8. Einstein His Life and Universe
+9. Kon Tiki Voyage 孤筏重洋
+10. Fermat's Last Theorem 费马大定理
+11. The Immortal Life of Henrietta Lacks 永生的海拉
+12. 大江大河1949
+13. 1984
+14. The boy who harnesses the wind 驭风少年
+15. The Professor and the Madman 教授和疯子
+16. The double Helix 双螺旋
+17. 烟雨任平生
+18. 我的漫画人生 手冢治虫
+19. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory) 不知道会不会有回答。
+20. 周有光的书可以推荐一般，哪一本没想好，
