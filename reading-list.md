@@ -8,6 +8,12 @@
 
 ### 2022
 
+1. **Reality Is Not What It Seems - Carlo Rovelli**
+
+1. **Land: How the Hunger for Ownership Shaped the Modern World**
+
+1. **The God Equation: The Quest for a Theory of Everything**
+
 1. **Leonardo da Vinci**
 
 2. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
@@ -94,7 +100,7 @@
 
 15. **The double Helix** 注释版找时间看
 
-16. **我是漫画家**
+16. **我是漫画家** 这本和**我的漫画人生**到底有什么不同？
 
     
 
@@ -251,7 +257,8 @@
 14. The boy who harnesses the wind 驭风少年
 15. The Professor and the Madman 教授和疯子
 16. The double Helix 双螺旋
-17. 烟雨任平生
+16. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
 18. 我的漫画人生 手冢治虫
 19. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory) 不知道会不会有回答。
-20. 周有光的书可以推荐一般，哪一本没想好，
+20. 周有光的书可以推荐一般，哪一本没想好
+20. 烟雨任平生
