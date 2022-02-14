@@ -8,11 +8,17 @@
 
 ### 2022
 
-1. **Reality Is Not What It Seems - Carlo Rovelli**
+1. 春节看完 **平如美棠** 和 **平生记**
+
+1. **Reality Is Not What It Seems - Carlo Rovelli** 在看
+
+1. **The Selfish Gene** 听一遍？
+
+1. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
 
 1. **Land: How the Hunger for Ownership Shaped the Modern World**
 
-1. **The God Equation: The Quest for a Theory of Everything**
+1. **The God Equation: The Quest for a Theory of Everything** 加來道雄的新书，大致听了一遍
 
 1. **Leonardo da Vinci**
 
@@ -46,11 +52,7 @@
 
 12. **Educated A Memoir** 
 
-14. **The Selfish Gene** 听一遍？
-
 15. **所有的写作都是讲故事/美国中学写作教学译丛**
-
-16. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
 
 17. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
 
@@ -90,17 +92,19 @@
 
 10. **The Long Walk: The True Story Of A Trek To Freedom** 我证明是伪书
 
-11. **The Quantum Story A History in 40 Moments** 考虑选几个章节听听
+11. **The Quantum Story A History in 40 Moments** 考虑选几个章节听听 （没有做到！）
 
-12. **Born to run Bruce Springsteen** 11月份开始阅读重点，之前没看完 这次出了中文版
+12. **Born to run Bruce Springsteen** 11月份开始阅读重点，之前没看完 这次出了中文版 （还是有几个章节没完全听懂，但是暂时不看了）
 
 13. **红楼梦画册**，两个不同版本解读，也算把红楼梦整个故事梗概看下，不然被儿子鄙视
 
+13. **Hackers & Painters** 找到音频书，就听了两遍。其实很多年前关注 Paul Graham的主页，文章当时也看过一些。现在再听觉得很一般，只能说大多文章没经受时间的考验。但是技术文章应该大多是这样吧
+
 14. **South** 听就行，这个故事实在烂熟于心了
 
-15. **The double Helix** 注释版找时间看
+15. **The double Helix** 注释版找时间看 （2022春节倒是逼着儿子看了）
 
-16. **我是漫画家** 这本和**我的漫画人生**到底有什么不同？
+16. **我是漫画家** 这本和**我的漫画人生**到底有什么不同？把我的漫画人生又看了一遍才注意后记里写了 我的漫画人生是基于手冢治虫 1986到1988年的演讲磁带编辑成的书。我是漫画集确实手冢治虫自述的自传。
 
     
 
