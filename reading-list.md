@@ -12,11 +12,13 @@
 
 1. **Reality Is Not What It Seems - Carlo Rovelli** 在看
 
-1. **The Selfish Gene** 听一遍？
+1. **The Selfish Gene** 开始听
 
 1. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
 
 1. **Land: How the Hunger for Ownership Shaped the Modern World**
+
+1. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
 1. **The God Equation: The Quest for a Theory of Everything** 加來道雄的新书，大致听了一遍
 
