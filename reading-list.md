@@ -10,59 +10,65 @@
 
 1. 春节看完 **平如美棠** 和 **平生记**
 
-1. **Reality Is Not What It Seems - Carlo Rovelli** 在看
+2. **Reality Is Not What It Seems - Carlo Rovelli** 一般
 
-1. **The Selfish Gene** 开始听
+3. **The Selfish Gene** 有点听不下去
 
-1. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+4. **语文专题学习与整本书阅读十讲** 在读
 
-1. **Land: How the Hunger for Ownership Shaped the Modern World**
+5. Farwell, Byron **Burton: A Biography of Sir Richard Francis Burton ** 已经听了两遍
 
-1. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+6. 听 **走出非洲缩减版** 3小时
 
-1. **The God Equation: The Quest for a Theory of Everything** 加來道雄的新书，大致听了一遍
+7. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
 
-1. **Leonardo da Vinci**
+8. **Land: How the Hunger for Ownership Shaped the Modern World**
 
-2. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+9. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
-3. **The American Spirit**
+10. **The God Equation: The Quest for a Theory of Everything** 加來道雄的新书，大致听了一遍
 
-4. **The Wright Brothers** 
+11. **Leonardo da Vinci**
 
-5. **A higher call** 原版和翻译版都买了
+12. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
 
-6. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+13. **The American Spirit**
 
-7. **Krakatoa: The Day the World Exploded** 
+14. **The Wright Brothers** 
 
-8. **The Map That Changed the World** 
+15. **A higher call** 原版和翻译版都买了
 
-9. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+16. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
 
-   1. **Introducing Logic** & **Godel's Proof**
-   2. **Introducing Economics** 
-   3. **Introducing Game Theory**
-   4. **Introducing Wittgenstein**
-   4. **Introducing Budda**
-   4. **Introducing Statistics**
-   5. **Cancer** 
+17. **Krakatoa: The Day the World Exploded** 
 
-10. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+18. **The Map That Changed the World** 
 
-11. **Little Soldiers An American Boy, a Chinese School**
+19. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
 
-12. **Educated A Memoir** 
+    1. **Introducing Logic** & **Godel's Proof**
+    2. **Introducing Economics** 
+    3. **Introducing Game Theory**
+    4. **Introducing Wittgenstein**
+    4. **Introducing Budda**
+    4. **Introducing Statistics**
+    5. **Cancer** 
 
-15. **所有的写作都是讲故事/美国中学写作教学译丛**
+20. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
 
-17. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+21. **Little Soldiers An American Boy, a Chinese School**
 
-17. **The Kon-Tiki man** 考虑读读
+22. **Educated A Memoir** 
 
-17. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+23. **所有的写作都是讲故事/美国中学写作教学译丛**
 
-17. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+24. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+
+25. **The Kon-Tiki man** 考虑读读
+
+26. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+
+27. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 
     
 
@@ -263,8 +269,9 @@
 14. The boy who harnesses the wind 驭风少年
 15. The Professor and the Madman 教授和疯子
 16. The double Helix 双螺旋
-16. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
+17. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
 18. 我的漫画人生 手冢治虫
 19. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory) 不知道会不会有回答。
 20. 周有光的书可以推荐一般，哪一本没想好
-20. 烟雨任平生
+21. Burton 我就看过一本，但他的人生真的很传奇，值得推荐
+22. 烟雨任平生
