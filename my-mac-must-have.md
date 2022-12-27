@@ -54,7 +54,9 @@ Failed during: /usr/local/bin/brew update --force
 
 9. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 
 
-   
+10. 这次放弃homebrew 改用macport
+
+    
 
 #### 2022.3.13
 
