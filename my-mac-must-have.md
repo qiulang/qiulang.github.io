@@ -1,35 +1,62 @@
 ## Mac 装机必备
 
-每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2020-7-20的版本
+每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2023-3-24的版本
 
 ### 基础软件
 
-1. 输入法： 搜狗，没有模糊音对南方人是一种折磨
-2. vpn：不能用Google对地球人是一种折磨，目前用BetaVPN
-3. Chrome
-4. VLC 播放器：以前还有MPlayerX 但它很久不更新,所以只有VLC可选了
-5. 金山 office， 如果不想用盗版office，金山office是唯一选择了。能完美打开office，苹果的pages和numbers都不行
-7. 网易云音乐， https://demo.unlock-music.dev/ 解锁
-9. 微信
-10. 网盘，但到底哪个好用实在也说不清，百度还是OneDrive；dropbox被墙没法用
-10. Skype 因为有几个skype朋友，一直有联系
-11. Skitch 圈点
-12. XnViewMP， 可选的photo viewer不多
-13. 迅雷
-14. [The Unarchiver](https://theunarchiver.com/)
-15. Page 勉强装一个吧，虽然我基本只用markdown
-15. iMove 偶尔做下视频编辑
-16. 印象笔记，免费版就只能两台设备，但因为有过去几年写的笔记，2021年底买了一年使用权
-16. youtube 视频下载器 open video downloader
+1. 输入法： [搜狗](https://pinyin.sogou.com/mac/)，没有模糊音对南方人是一种折磨
+
+2. vpn：不能用Google对地球人是一种折磨，目前用[BetaVPN](https://rocketv.org/index.php/download/) (Mac Store已下架，但还需要它来获取账号信息) + 公司的 Cisco Anyconnect
+
+3. [Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/)
+
+4. [VLC 播放器](https://www.videolan.org/vlc/download-macosx.html)：以前还有MPlayerX 但它很久不更新,所以只有VLC可选了
+
+5. [金山 office](https://mac.wps.cn/)， 如果不想用盗版office，金山office是唯一选择了。能完美打开office，苹果的pages和numbers都不行
+
+6. [网易云音乐](https://music.163.com/#/download)， https://demo.unlock-music.dev/ 解锁
+
+7. [微信](https://mac.weixin.qq.com/) 或者Mac Store
+
+8. [Hazel](https://www.noodlesoft.com/) 神器，不过40美金太贵了，我唯一用的破解版
+
+9. 网盘，说不清到底哪个好用：[百度](https://pan.baidu.com/download#pan) 或 [OneDrive](https://www.microsoft.com/en-us/microsoft-365/onedrive/download) 还是 [阿里aDrive](https://www.aliyundrive.com/) 。但都那他们下过，百度应该还是用得最多的；dropbox被墙没法用
+
+10. [Skype](https://www.skype.com/en/get-skype/) 因为有几个skype朋友，一直有联系
+
+11. [Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点
+
+12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多
+
+13. [迅雷](https://mac.xunlei.com/)，因为经常下电影
+
+14. ~~[The Unarchiver](https://theunarchiver.com/) 用来解压rar （因为rar最早是window专有的）~~，但现在发现 **Unzip One** 更好用（Mac Store），还能先看文件内容
+
+15. Page ，但基本只用markdown
+
+16. iMove 偶尔做下视频编辑
+
+17. [印象笔记](https://staging.yinxiang.com/download/)，免费版就只能两台设备，但因为有过去几年写的笔记，2021年底买了一年使用权，发现不值，目前我考虑改用 Notion (Mac Store)
+
+18. youtube 视频下载器 [open video downloader](https://github.com/StefanLobbenmeier/youtube-dl-gui) 要用这个版本，官方版已经失效了
+
+19. [HandBrake](https://handbrake.fr/downloads.php) 压缩各种格式视频成mp4 方便在手机观看
+
+20. Kindle (Mac Store) 有点鸡肋，但还是每次都装了
+
+21. Finder 替代品，比如方便显示隐藏文件，方便文件拷贝、移动。目前用 [commander one](https://mac.eltima.com/file-manager.html)
+
+    
 
 ### 开发相关
 
-1. vscode：它的插件找机会再总结
-2. Typora：个人觉得最好用md编辑器  
-3. BBEdit 文本编辑器,也是开发人员必备, 更不用说我买了正版!
-4. SourceTree 版本管理, [设置github账号](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection)
-5. iTerm2
-6. Homebrew, 安装被墙，最简单方法设置vpn `export https_proxy=http://127.0.0.1:2020 http_proxy=http://127.0.0.1:2020 all_proxy=socks5://127.0.0.1:2020`
+1. [vscode](https://code.visualstudio.com/download)：它的插件找机会再总结
+2. [Typora](https://typora.io/)：个人觉得最好用md编辑器 , 86元买的正版
+3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我买了正版 bbedit 13.5.7
+4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection)
+5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/)
+6. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
+7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦， 所以我现在 **弃用 homebrew 改用[macport](https://www.macports.org/)** （见下面描述）
 
 ```shell
 ==> Tapping homebrew/core
@@ -48,13 +75,27 @@ Failed during: /usr/local/bin/brew update --force
 
 反复执行几次成功了，可能还是跟翻墙后的网速有问题
 
-7. Go2Shell, macOS12 不起作用了，改用 https://github.com/Breathleas/Go2Shell, https://github.com/Ji4n1ng/OpenInTerminal 也不行
+7. Go2Shell, macOS12 不起作用了，改用 https://github.com/Breathleas/Go2Shell, **再有新机器改用** https://github.com/Ji4n1ng/OpenInTerminal 也还不错。
 
-8. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
+9. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 目前基本就用bbedit 提供diff
 
-9. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 
+10. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html)
 
-10. 这次放弃homebrew 改用macport
+11. nodejs （工作相关）
+
+12. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
+
+13. [Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere)单位买了正版
+
+14. 腾讯会议，qq 上班要用，工作上的沟通
+
+15. mysql 客户端 TablePlus 免费版功能受限， sequel-pro 比较丑陋，但能用
+
+16. 因为用 m1 芯片，用docker意义不是很大，可装可不装
+
+17. JetBrains 难免会装一些
+
+18. [Stats](https://github.com/exelban/stats)
 
     
 
@@ -113,6 +154,4 @@ https://github.com/homebrew/install
 ```
 
 
-
-Docker 
 

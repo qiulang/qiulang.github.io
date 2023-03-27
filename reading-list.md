@@ -9,19 +9,26 @@
 以下书籍暂时列为 2023 目标
 
 
-1. **林语堂苏东坡传**
-2. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-3. **Land: How the Hunger for Ownership Shaped the Modern World**
-4. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
-5. **Leonardo da Vinci**
-6. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-7. **The American Spirit**
-8. **The Wright Brothers** 
-9. **A higher call** 原版和翻译版都买了
-10. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-11. **Krakatoa: The Day the World Exploded** 
-12. **The Map That Changed the World** 
-13. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+1. **Uncle Petros and Goldbach's Conjecture: A Novel of Mathematical Obsession** 很多年前买的书，一直没看。这是1994年写的书，当时费马定理还没被证明，所以书总也提到这点。书很一般，amazon有个评论说出我的意见 ”I read this after reading the author's Logicomix. This is an extraordinarily beautiful and well-crafted piece of story-telling that puts Uncle Petros and his Goldbach Conjecture into the shade somewhat. In fact, the latter seems like a rather impoverished subset of the former. It doesn't have anything to add.“
+2. 春节期间复习 **Logicomix**，虽然是一本漫画书，但读起来还有吃力
+3. **时评写作十讲** 曹林居然比我还小 78年的 看看停停个月没看完
+4. 两本 讲 胡适和韦莲司的小册子
+5. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看
+6. **Krakatoa: The Day the World Exploded** 听了两遍没听出主旨
+7. **Tambora The Eruption That Changed the World** 由Krakatoa引出
+8. **The Day We Found the Universe**   上半年先把 以上5本看完
+9. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，**2022没看成，2023第一本要看的书**
+10. **林语堂苏东坡传**
+11. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+12. **Leonardo da Vinci**
+13. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+14. **The American Spirit**
+15. **The Wright Brothers** 
+16. **A higher call** 原版和翻译版都买了
+17. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+18. **The Map That Changed the World** 
+19. **Fridtjof Nansen**: A Book for the Young
+20. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
     1. **Introducing Logic** & **Godel's Proof**
     2. **Introducing Economics** 
     3. **Introducing Game Theory**
@@ -29,16 +36,16 @@
     4. **Introducing Budda**
     4. **Introducing Statistics**
     5. **Cancer** 
-
-14. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-15. **Little Soldiers An American Boy, a Chinese School**
-16. **Educated A Memoir** 
-17. **所有的写作都是讲故事/美国中学写作教学译丛**
-18. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-19. **The Kon-Tiki man** 考虑读读
-20. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-21. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-22. **Fridtjof Nansen**: A Book for the Young
+21. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+22. **Little Soldiers An American Boy, a Chinese School**
+23. **Educated A Memoir** 
+24. **所有的写作都是讲故事/美国中学写作教学译丛**
+25. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+26. **The Kon-Tiki man** 考虑读读
+27. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+28. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+29. **Land: How the Hunger for Ownership Shaped the Modern World**
+30. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
 
 
@@ -46,22 +53,22 @@
 
 1. 春节看完 **平如美棠** 和 **平生记**
 2. **Reality Is Not What It Seems - Carlo Rovelli** 一般
-3. **The Selfish Gene** 开车时候听，听不下去
+3. **The Selfish Gene** 开车时候听，听不下去；看文字版也看不下去，不知道为啥
 4. **语文专题学习与整本书阅读十讲**
 5. **温儒敏论语文教育四集**
 6. Farwell, Byron **Burton: A Biography of Sir Richard Francis Burton**
 7. **Devil Drives** A Life of Sir Richard Burton
 8. **Unix a history and a memoir** 
-10. **走出非洲** 3小时和完整版
-11. **River of the Gods: Genius, Courage, and Betrayal in the Search for the Source of the Nile**
-12. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，**没看成，2023第一本要看的书**
-13. **Explorers of the Nile: The Triumph and Tragedy of a Great Victorian Adventure**
-14. Fermat's Last Theorem 费马大定理 当年只听过3小时约略版，这次找到8小时完整版。所以仔细听几次。感觉没有当年第一次看“震撼”，这次只能给中上的评分
-15. **说理与思辨 高考议论文写作指津** 
-16. The God Equation: The Quest for a Theory of Everything 加來道雄的新书，大致听了一遍。没能在听一遍
-17. The Adventures of Sir Samuel White Baker: Victorian Hero 没看
-18. **优雅的等式 欧拉公式与数学之美**，看完一般，但是e和复数的简单介绍多少有点用
-19. **病毒星球**
+9. **走出非洲** 3小时和完整版，完整版其实看得断断续续，到了20232月才算彻底看完
+10. **River of the Gods: Genius, Courage, and Betrayal in the Search for the Source of the Nile**
+11. **Explorers of the Nile: The Triumph and Tragedy of a Great Victorian Adventure**
+12. Fermat's Last Theorem 费马大定理 当年只听过3小时约略版，这次找到8小时完整版。所以仔细听几次。感觉没有当年第一次看“震撼”，这次只能给中上的评分
+13. **说理与思辨 高考议论文写作指津** 
+14. The God Equation: The Quest for a Theory of Everything 加來道雄的新书，大致听了一遍。没能在听一遍
+15. The Adventures of Sir Samuel White Baker: Victorian Hero 没看
+16. **优雅的等式 欧拉公式与数学之美**，看完一般，但是e和复数的简单介绍多少有点用
+17. **病毒星球**
+18. **Shackleton: The Antarctic Challenge** 国家地理画册，2022最后一本书，但是书一般，居然有拼写错误和内容错误。 
 
 今年重点阅读的书是关于 Richard Burton
 
@@ -252,7 +259,6 @@
 4. Kon Tiki Voyage 
 5. Burton: A Biography of Sir Richard Francis Burton
 6. The man who loved China 可以算
-7. Explorers of the Nile: The Triumph and Tragedy of a Great Victorian Adventure
 
 
 
