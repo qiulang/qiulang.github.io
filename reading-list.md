@@ -12,24 +12,30 @@
 1. **Uncle Petros and Goldbach's Conjecture: A Novel of Mathematical Obsession** 很多年前买的书，一直没看。这是1994年写的书，当时费马定理还没被证明，所以书总也提到这点。书很一般，amazon有个评论说出我的意见 ”I read this after reading the author's Logicomix. This is an extraordinarily beautiful and well-crafted piece of story-telling that puts Uncle Petros and his Goldbach Conjecture into the shade somewhat. In fact, the latter seems like a rather impoverished subset of the former. It doesn't have anything to add.“
 2. 春节期间复习 **Logicomix**，虽然是一本漫画书，但读起来还有吃力
 3. 两本 讲 胡适和韦莲司的小册子 
-4. **时评写作十讲** 曹林居然比我还小 78年的 看看停停个月没看完
+4. **时评写作十讲** 曹林居然比我还小 78年的 看看停停终于在4月10号看完
 5. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看
 6. **Krakatoa: The Day the World Exploded** 听了两遍没听出主旨
 7. **Tambora The Eruption That Changed the World** 由Krakatoa引出
 8. **The Day We Found the Universe**   
-9. **心脏简史**, **heart a history** 上半年先把 以上六本看完
-10. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，**2022没看成，2023第一本要看的书**
-11. **林语堂苏东坡传**
-12. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-13. **Leonardo da Vinci**
-14. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-15. **The American Spirit**
-16. **The Wright Brothers** 
-17. **A higher call** 原版和翻译版都买了
-18. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-19. **The Map That Changed the World** 
-20. **Fridtjof Nansen**: A Book for the Young
-21. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+9. **心脏简史**, **heart a history** 
+10. 3.14 Pi 节找到三本关于 Pi的书 上半年先把 以上六本看完
+
+    1. **The Joy of Pi** 先从这本小书看起，这本比较简单
+    2. **A History of Pi**
+    3. **Pi A Biography of the World's Most Mysterious Number**
+
+11. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，**2022没看成，2023第一本要看的书**
+12. **林语堂苏东坡传**
+13. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+14. **Leonardo da Vinci**
+15. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+16. **The American Spirit**
+17. **The Wright Brothers** 
+18. **A higher call** 原版和翻译版都买了
+19. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+20. **The Map That Changed the World** 
+21. **Fridtjof Nansen**: A Book for the Young
+22. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
     1. **Introducing Logic** & **Godel's Proof**
     2. **Introducing Economics** 
     3. **Introducing Game Theory**
@@ -37,16 +43,16 @@
     4. **Introducing Budda**
     4. **Introducing Statistics**
     5. **Cancer** 
-22. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-23. **Little Soldiers An American Boy, a Chinese School**
-24. **Educated A Memoir** 
-25. **所有的写作都是讲故事/美国中学写作教学译丛**
-26. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-27. **The Kon-Tiki man** 考虑读读
-28. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-29. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-30. **Land: How the Hunger for Ownership Shaped the Modern World**
-31. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+23. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+24. **Little Soldiers An American Boy, a Chinese School**
+25. **Educated A Memoir** 
+26. **所有的写作都是讲故事/美国中学写作教学译丛**
+27. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+28. **The Kon-Tiki man** 考虑读读
+29. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+30. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+31. **Land: How the Hunger for Ownership Shaped the Modern World**
+32. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
 
 

@@ -1,12 +1,12 @@
 ## Mac 装机必备
 
-每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2023-3-24的版本。我分成两大类，日常使用和开发使用
+每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2023-4-30的版本。我分成两大类，日常使用和开发使用
 
 ### 基础软件
 
-1. 输入法： [搜狗](https://pinyin.sogou.com/mac/)，没有模糊音对南方人是一种折磨。其实[百度输入法](https://srf.baidu.com/input/mac.html) 也可以，但是已经用惯搜狗
+1. 输入法： [搜狗](https://pinyin.sogou.com/mac/)，~~没有模糊音对南方人是一种折磨~~  MacOS 13.3 自带输入法也有模糊音了 。其实[百度输入法](https://srf.baidu.com/input/mac.html) 也可以，但是已经用惯搜狗
 
-2. vpn：不能用Google对地球人是一种折磨，更别说现在还要ChatGPT. 目前用[红星加速器](https://rocketv.org/index.php/download/) (含安卓客户端) + 公司的 Cisco Anyconnect
+2. vpn：不能用Google对地球人是一种折磨，更别说现在还要ChatGPT. 目前用[红星加速器](https://rocketv.org/index.php/download/) ，含安卓客户端
 
 3. [Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/) 装这么多浏览器有一个很现实目的，medium.com 上的付费文章，一个浏览器，一个月只能读三篇。
 
@@ -14,7 +14,7 @@
 
 5. [金山 office](https://mac.wps.cn/)， 如果不想用盗版office，金山office是唯一选择了。能完美打开office，苹果的pages和numbers都不行
 
-6. [网易云音乐](https://music.163.com/#/download)， https://demo.unlock-music.dev/ 解锁
+6. [网易云音乐](https://music.163.com/#/download)， https://demo.unlock-music.dev/ 解锁 （需要VPN）
 
 7. [微信](https://mac.weixin.qq.com/) 或者Mac Store
 
@@ -26,7 +26,7 @@
 
 11. [Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点
 
-12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多，但因为XnViewMP UI实在不好，太像一个Windows 应用，我现在改用Picsee (Mac商店下载)，国人软件支持一下！
+12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多。因为XnViewMP UI实在不好，太像一个Windows 应用，我现在用Picsee (Mac商店下载)多些，国人软件支持一下！但是Picsee不方便浏览目录，[这个问题我给作者开了问题单，作者确认](https://github.com/kzhiquan/Picsee/issues/36)，希望以后能改进。所以目前这两个工具都用。
 
 13. [迅雷](https://mac.xunlei.com/)，因为经常下电影
 
@@ -44,7 +44,9 @@
 
 20. Kindle (Mac Store) 有点鸡肋，但还是每次都装了
 
-21. Finder 替代品，比如方便显示隐藏文件，方便文件拷贝、移动。目前用 [commander one](https://mac.eltima.com/file-manager.html) , 它最明显的功能就是两个pane方便拷贝移动文件。不过就我个人经验，10年前 Finder功能确实弱了一点，需要找一些它的替代品。但现在也勉强能用了，所以用它替代品的机会就少了不少，比如说我想不出花40美金买[Finder Path](https://www.cocoatech.io/)
+21. Finder 替代品，比如方便显示隐藏文件，方便文件拷贝、移动。目前用 [commander one](https://mac.eltima.com/file-manager.html) , 它最明显的功能就是两个pane方便拷贝移动文件。不过就我个人经验，10年前 Finder功能确实弱了一点，需要找一些它的替代品。但现在也勉强能用了，所以用它替代品的机会就少了不少，比如说我想不出花40美金买[Finder Path](https://www.cocoatech.io/) 的理由！
+
+22. https://www.devontechnologies.com/apps/freeware 比如 easyfind 查找文件，毕竟 find命令有点复杂
 
     
 
@@ -77,29 +79,31 @@ Failed during: /usr/local/bin/brew update --force
 
 7. ~~Go2Shell, macOS12 不起作用了~~，改用 https://github.com/Breathleas/Go2Shell, **再有新机器就用** https://github.com/Ji4n1ng/OpenInTerminal 也还不错。
 
-9. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 目前基本就用bbedit 提供diff
+8. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 目前基本就用bbedit 提供diff
 
-10. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html)
+9. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html)
 
-11. nodejs （工作相关）
+10. nodejs （工作相关）
 
-12. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
+11. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
 
-13. [Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere)单位买了正版
+12. [Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere)单位买了正版
 
-14. 腾讯会议，qq 上班要用，工作上的沟通
+13. 腾讯会议，qq 上班要用，工作上的沟通
 
-15. mysql 客户端 TablePlus 免费版功能受限， sequel-pro 比较丑陋，但能用
+14. mysql 客户端 TablePlus 免费版功能受限， sequel-pro 比较丑陋，但能用
 
-16. 因为用 m1 芯片，用docker意义不是很大，可装可不装
+15. 因为用 m1 芯片，用docker意义不是很大，可装可不装
 
-17. JetBrains 难免会装一些
+16. JetBrains 难免会装一些
 
-18. [Stats](https://github.com/exelban/stats)
+17. [Stats](https://github.com/exelban/stats)
+
+18. [cursor.so](https://www.cursor.so/)
 
     
 
-#### 2022.3.13
+#### 2022.3.13 brew安装失败经历
 
 nodejs 16, `npm i -g n`, `n 14`因为用16 带的npm 8.x 安装`node_modules`失败
 
