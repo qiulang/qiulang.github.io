@@ -8,7 +8,7 @@
 
 2. vpn：不能用Google对地球人是一种折磨，更别说现在还要ChatGPT. 目前用[红星加速器](https://rocketv.org/index.php/download/) ，含安卓客户端
 
-3. [Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/) 装这么多浏览器有一个很现实目的，medium.com 上的付费文章，一个浏览器，一个月只能读三篇。
+3. [Chrome](https://www.google.com/chrome/) (下载比较慢), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/) 装这么多浏览器有一个很现实目的，medium.com 上的付费文章，一个浏览器，一个月只能读三篇。
 
 4. [VLC 播放器](https://www.videolan.org/vlc/download-macosx.html)：以前还有MPlayerX 但它很久不更新,所以只有VLC可选了
 
@@ -38,7 +38,7 @@
 
 17. 笔记终于改用  **Notion** (Mac Store)。我从2011年就开始用 [印象笔记](https://staging.yinxiang.com/download/)，但之后它不停作妖，比如免费版就只能两台设备。2021年底为了这个原因还买了一年使用权，发现不值。但因为有过去近10年写的笔记，一直没换；这几年也考察几个别的笔记，比如有道云笔记，微软One Note 但都没换成。这次实在受不了印象笔记了，下定决心换一条一条拷贝到Notion.
 
-18. youtube 视频下载器 [open video downloader](https://github.com/StefanLobbenmeier/youtube-dl-gui) 要用这个版本，官方版已经失效了
+18. youtube 视频下载器 [open video downloader](https://github.com/StefanLobbenmeier/youtube-dl-gui) 要用这个版本，官方版已经失效了，但是这个非官方版有个bug，必要的插件经常下不下来，而且不给提示，结果就造成没法下载了 [stuck at "Downloading metadata..." for 4.9 & 4.10](https://github.com/StefanLobbenmeier/youtube-dl-gui/issues/51) 所以当一个版本能用之后不要轻易升级，因为升级就要再下载一次所有插件，很容易下载失败。
 
 19. [HandBrake](https://handbrake.fr/downloads.php) 压缩各种格式视频成mp4 方便在手机观看
 
@@ -52,13 +52,13 @@
 
 ### 开发相关
 
-1. [vscode](https://code.visualstudio.com/download)：它的插件找机会再总结
-2. [Typora](https://typora.io/)：个人觉得最好用md编辑器 , 我一共买了三个license 
+1. [vscode](https://code.visualstudio.com/download) (官网下载很慢，需要开vpn)：它的插件找机会再总结
+2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license 
 3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我花了30美金买了正版 bbedit 13.5.7
-4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection)
-5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/)
+4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查
+5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全)
 6. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
-7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦，虽然我给他提了[问题单](https://github.com/Homebrew/brew/issues/6640)，他也修改了。 所以我现在 **弃用 homebrew 改用[macport](https://www.macports.org/)** （见下面描述）
+7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦，虽然我给他提了[问题单](https://github.com/Homebrew/brew/issues/6640)，他也修改了。 所以我现在 **弃用 homebrew 改用[macport](https://www.macports.org/)** （见下面描述） + macport list
 
 ```shell
 ==> Tapping homebrew/core
@@ -81,9 +81,9 @@ Failed during: /usr/local/bin/brew update --force
 
 8. 做开发当然需要diff 工具，没有感觉那个特别好只能推荐，就不列了. 目前基本就用bbedit 提供diff
 
-9. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html)
+9. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html) + pip list
 
-10. nodejs （工作相关）
+10. nodejs （工作相关）+ npm list 
 
 11. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
 
