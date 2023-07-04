@@ -1,6 +1,6 @@
 ## Mac 装机必备
 
-每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2023-4-30的版本。我分成两大类，日常使用和开发使用
+每次装机都至少要花一两天时间，而且把之前写的装机必备做些更新，这是2023-5-03的版本。我分成两大类，日常使用和开发使用
 
 ### 基础软件
 
@@ -52,13 +52,13 @@
 
 ### 开发相关
 
-1. [vscode](https://code.visualstudio.com/download) (官网下载很慢，需要开vpn)：它的插件找机会再总结
+1. [vscode](https://code.visualstudio.com/download) (官网下载很慢，需要开vpn)：它的插件找在下面总结
 2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license 
-3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我花了30美金买了正版 bbedit 13.5.7
-4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查
+3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我在2019年花了30美金买了正版 bbedit 13.5.7，在2023.6.13再次话30美金升级到14.6.6
+4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查, 而且 github.com Access Key for qiulang2000 的密码，用 原来github生成的pat也显示错误。
 5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全)
 6. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
-7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦，虽然我给他提了[问题单](https://github.com/Homebrew/brew/issues/6640)，他也修改了。 所以我现在 **弃用 homebrew 改用[macport](https://www.macports.org/)** （见下面描述） + macport list
+7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦，虽然我给他提了[问题单](https://github.com/Homebrew/brew/issues/6640)，他也修改了。 所以我现在 **弃用 homebrew 改用[macports](https://www.macports.org/)** （见下面描述） + macport list
 
 ```shell
 ==> Tapping homebrew/core
@@ -83,7 +83,53 @@ Failed during: /usr/local/bin/brew update --force
 
 9. Python + [miniconda](https://docs.conda.io/en/latest/miniconda.html) + pip list
 
+   ```
+   pip list
+   Package                Version
+   ---------------------- ---------
+   autopep8               1.6.0
+   certifi                2021.10.8
+   charset-normalizer     2.0.12
+   Deprecated             1.2.13
+   idna                   3.3
+   importlib-resources    5.4.0
+   mysql-connector-python 8.0.31
+   packaging              21.3
+   pexpect                4.8.0
+   Pillow                 9.2.0
+   pip                    22.3
+   protobuf               3.20.1
+   ptyprocess             0.7.0
+   pycodestyle            2.8.0
+   pyparsing              3.0.7
+   redis                  4.1.4
+   requests               2.27.1
+   setuptools             58.1.0
+   termcolor              1.1.0
+   toml                   0.10.2
+   urllib3                1.26.8
+   wrapt                  1.14.0
+   yachalk                0.1.5
+   ```
+
+   
+
 10. nodejs （工作相关）+ npm list 
+
+    ```
+    npm ls -g
+    /usr/local/lib
+    ├── artillery@2.0.0-30
+    ├── corepack@0.10.0
+    ├── http-server@14.1.1
+    ├── n@8.0.2
+    ├── npm@8.15.1
+    ├── qnm@2.6.0
+    ├── typescript@4.6.2
+    └── yarn@1.22.17
+    ```
+
+    
 
 11. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
 
@@ -101,7 +147,159 @@ Failed during: /usr/local/bin/brew update --force
 
 18. [cursor.so](https://www.cursor.so/)
 
-    
+
+
+
+有一点教训，通过硬盘拷贝源代码，git 总是会认为所有文件都有修改，可能是因为FAT32文件系统的原因，直接airdrop 其实还挺快。
+
+#### vscode 插件
+
+[How can you export the Visual Studio Code extension list?](https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list)
+
+[Export/Import VS extensions list?](https://stackoverflow.com/questions/46235923/export-import-vs-extensions-list)
+
+列出的插件太多有些其实没真的用，确实在用有这些
+
+1. Git Extension Pack
+2. Git History 这两个git 插件其实都是因为 GitLens — Git supercharged 要收费了
+3. GitHub Theme
+4. GitHub Copilot
+5. GitHub Copilot Labs
+6. Prettier - Code formatter 还必须设置vscode 缺省的formatter https://www.alphr.com/use-prettier-vs-code/
+7. Python
+8. Python Extension Pack 它会再安装其他python插件
+9. Todo Tree
+10. ESlint
+11. Javascript Debugger
+12. Vue Language Features (Volar)
+13. Vetur
+14. Json
+15. Fig 会被自动安装
+
+```
+code --list-extensions
+aaron-bond.better-comments
+albert.TabOut
+alefragnani.project-manager
+batisteo.vscode-django
+codezombiech.gitignore
+dbaeumer.vscode-eslint
+donjayamanne.git-extension-pack
+donjayamanne.githistory
+donjayamanne.python-environment-manager
+donjayamanne.python-extension-pack
+eamodio.gitlens
+Equinusocio.vsc-community-material-theme
+esbenp.prettier-vscode
+GitHub.copilot
+GitHub.copilot-labs
+GitHub.github-vscode-theme
+github.vscode-github-actions
+Gruntfuggly.todo-tree
+KevinRose.vsc-python-indent
+ms-azuretools.vscode-docker
+MS-CEINTL.vscode-language-pack-zh-hans
+ms-python.isort
+ms-python.python
+ms-python.vscode-pylance
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
+ms-vscode-remote.remote-containers
+ms-vscode.cmake-tools
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cpptools-themes
+ms-vscode.js-debug-nightly
+njpwerner.autodocstring
+octref.vetur
+PKief.material-icon-theme
+twxs.cmake
+VisualStudioExptTeam.intellicode-api-usage-examples
+VisualStudioExptTeam.vscodeintellicode
+Vue.volar
+wholroyd.jinja
+withfig.fig
+ZainChen.json
+ziyasal.vscode-open-in-github
+```
+
+
+
+#### MacPorts 安装过的插件
+
+[See what has been installed via MacPorts](https://stackoverflow.com/questions/9191737/see-what-has-been-installed-via-macports)
+
+有印象是 **the_silver_searcher**/tree/tmux/sqlite3/redis (会顺带安装)/zlib/httpie（会顺带安装python 3.8）/wget  
+
+macpors会 生产**joshua root** 后台进程
+
+ag/redis 必装
+
+```
+port installed
+Warning: port definitions are more than two weeks old, consider updating them by running 'port selfupdate'.
+The following ports are currently installed:
+  bzip2 @1.0.8_0 (active)
+  curl-ca-bundle @7.82.0_0 (active)
+  expat @2.4.7_0 (active)
+  gettext @0.21_0 (active)
+  gettext-runtime @0.21_0 (active)
+  gettext-tools-libs @0.21_0 (active)
+  gmp @6.2.1_0 (active)
+  gnutls @3.6.16_3 (active)
+  htop @3.1.2_0 (active)
+  httpie @3.1.0_0+python38 (active)
+  icu @67.1_4 (active)
+  libedit @20210910-3.1_1 (active)
+  libevent @2.1.12_1 (active)
+  libffi @3.4.2_2 (active)
+  libiconv @1.16_1 (active)
+  libidn2 @2.3.2_1 (active)
+  libpsl @0.21.1-20210726_2 (active)
+  libtasn1 @4.18.0_0 (active)
+  libtextstyle @0.21_0 (active)
+  libunistring @1.0_0 (active)
+  libxml2 @2.9.13_0 (active)
+  libxslt @1.1.34_6 (active)
+  lrzsz @0.12.20_4 (active)
+  ncurses @6.3_0 (active)
+  nettle @3.7.3_0 (active)
+  openssl @3_2 (active)
+  openssl3 @3.0.1_0+legacy (active)
+  p11-kit @0.24.1_0 (active)
+  pcre @8.45_0 (active)
+  pcre2 @10.39_0 (active)
+  pkgconfig @0.29.2_0 (active)
+  py38-certifi @2021.10.8_0 (active)
+  py38-charset-normalizer @2.0.12_0 (active)
+  py38-defusedxml @0.7.1_0 (active)
+  py38-idna @3.3_0 (active)
+  py38-multidict @6.0.2_0 (active)
+  py38-pygments @2.12.0_0 (active)
+  py38-requests @2.27.1_0 (active)
+  py38-requests-toolbelt @0.9.1_0 (active)
+  py38-setuptools @62.1.0_0 (active)
+  py38-socks @1.7.0_0 (active)
+  py38-urllib3 @1.26.9_0 (active)
+  pygments_select @0.1_0 (active)
+  python3_select @0.0_2 (active)
+  python38 @3.8.13_0+optimizations (active)
+  python_select @0.3_9 (active)
+  redis @6.2.6_1 (active)
+  sqlite3 @3.38.1_0 (active)
+  sshpass @1.09_0 (active)
+  the_silver_searcher @2.2.0_0 (active)
+  tmux @3.2a_0 (active)
+  tree @1.8.0_0 (active)
+  wget @1.21.3_0+gnutls (active)
+  xz @5.2.5_0 (active)
+  zlib @1.2.11_0 (active)
+```
+
+ 
 
 #### 2022.3.13 brew安装失败经历
 
