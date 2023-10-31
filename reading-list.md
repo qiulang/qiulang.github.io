@@ -1,62 +1,95 @@
 ## My Reading list 这些年读过的书
 
-我基本不看小说，而是看non-fiction。主要选择有翻译版又有音频的non-fiction。这样一来开车时候可以听；二来听不懂地方还可以对照翻译版看看。
-
-探险故事、量子力学史话、爱因斯坦、哥德尔、遗传基因故事是我这几年来主要看的书。
+我基本不看小说，而是看non-fiction。主要选择有翻译版又有音频的non-fiction。这样一来开车时候可以听；二来听不懂地方还可以对照翻译版看看。探险故事、科学史话、爱因斯坦、哥德尔、遗传基因故事是我这几年来主要看的书。
 
 
 
-以下书籍暂时列为 2023 目标
+### 2024
 
+以下书籍暂时列为 2024 目标
 
-1. **Uncle Petros and Goldbach's Conjecture: A Novel of Mathematical Obsession** 很多年前买的书，一直没看。这是1994年写的书，当时费马定理还没被证明，所以书总也提到这点。书很一般，amazon有个评论说出我的意见 ”I read this after reading the author's Logicomix. This is an extraordinarily beautiful and well-crafted piece of story-telling that puts Uncle Petros and his Goldbach Conjecture into the shade somewhat. In fact, the latter seems like a rather impoverished subset of the former. It doesn't have anything to add.“
-2. 春节期间复习 **Logicomix**，虽然是一本漫画书，但读起来还有吃力
-3. 两本 讲 胡适和韦莲司的小册子 
-4. **时评写作十讲** 曹林居然比我还小 78年的 看看停停终于在4月10号看完  
-5. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看  
-6. **Krakatoa: The Day the World Exploded** 听了两遍没听出主旨，先放一放。  
-7. **The Day We Found the Universe** 先放一放。  
-8. **Tambora The Eruption That Changed the World** 由Krakatoa引出  
-9. **心脏简史**, **heart a history**   
-10. **The Pattern on the Stone** 很薄
-11. **Open Heart - A Cardiac Surgeon's Stories of Life and Death on the Operating Table** 由 心脏简史引出
-12. **一百年很多事**
-13. 3.14 Pi 节找到三本关于 Pi的书 上半年先把 以上六本看完
-
-    1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
-    2. **A History of Pi**  
-    3. **Pi A Biography of the World's Most Mysterious Number**  
-14. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，**2022没看成，2023第一本要看的书**
-15. **林语堂苏东坡传**
-16. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-17. **Leonardo da Vinci**
-18. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-19. **The American Spirit**
-20. **The Wright Brothers** 
-21. **A higher call** 原版和翻译版都买了
-22. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-23. **The Map That Changed the World** 
-24. **Fridtjof Nansen**: A Book for the Young
-25. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+1. **林语堂苏东坡传**
+2. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+3. **Leonardo da Vinci**
+4. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+5. **The American Spirit**
+6. **The Wright Brothers** 
+7. **A higher call** 原版和翻译版都买了
+8. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+9. **The Map That Changed the World** 
+10. **Fridtjof Nansen**: A Book for the Young
+11. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
     1. **Introducing Logic** & **Godel's Proof**
     2. **Introducing Economics** 
     3. **Introducing Game Theory**
     4. **Introducing Wittgenstein**
-    4. **Introducing Budda**
-    4. **Introducing Statistics**
-    5. **Cancer** 
-26. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-27. **Little Soldiers An American Boy, a Chinese School**
-28. **Educated A Memoir** 
-29. **所有的写作都是讲故事/美国中学写作教学译丛**
-30. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-31. **The Kon-Tiki man** 考虑读读
-32. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-33. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-34. **Land: How the Hunger for Ownership Shaped the Modern World**
-35. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+    5. **Introducing Budda**
+    6. **Introducing Statistics**
+    7. **Cancer** 
+12. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+13. **Little Soldiers An American Boy, a Chinese School**
+14. **所有的写作都是讲故事/美国中学写作教学译丛**
+15. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+16. **The Kon-Tiki man** 考虑读读
+17. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+18. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+19. **Land: How the Hunger for Ownership Shaped the Modern World**
+20. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
 
+
+### 2023
+
+
+1. **Uncle Petros and Goldbach's Conjecture: A Novel of Mathematical Obsession** 很多年前买的书，一直没看。这是1994年写的书，当时费马定理还没被证明，所以书总也提到这点。书很一般，amazon有个评论说出我的意见 ”I read this after reading the author's Logicomix. This is an extraordinarily beautiful and well-crafted piece of story-telling that puts Uncle Petros and his Goldbach Conjecture into the shade somewhat. In fact, the latter seems like a rather impoverished subset of the former. It doesn't have anything to add.“
+
+2. 春节期间复习 **Logicomix**，虽然是一本漫画书，但读起来还有吃力
+
+3. 两本 讲 胡适和韦莲司的小册子 
+
+4. **时评写作十讲** 曹林居然比我还小 78年的 看看停停终于在4月10号看完  
+
+5. **心脏简史**, **heart a history**   
+
+6. 孙春龙的书：
+      1. 何止八佰 （最好）
+      2. 没有回家的士兵
+      3. 为爱止戈
+      4. 异域1945
+
+7. **Open Heart - A Cardiac Surgeon's Stories of Life and Death on the Operating Table** 由 心脏简史引出
+
+8. **刀锋人生, the knife edge** 
+
+9. **Educated A Memoir**  当前看
+
+10. **一百年很多事**
+
+11. **Krakatoa: The Day the World Exploded** 听了两遍没听出主旨，先放一放。  
+
+12. **Tambora The Eruption That Changed the World** 听了两遍也没听出主旨
+
+13. **The Day We Found the Universe** 看了头，先放一放。  
+
+14. **The Pattern on the Stone** 很薄，没听懂
+
+15. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看  
+
+16. 3.14 Pi 节找到三本关于 Pi的书 
+
+       1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
+       2. **A History of Pi**   放一放
+       3. **Pi A Biography of the World's Most Mysterious Number**  放一放
+
+17. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，还没看
+
+18. 史铁生**病隙碎笔** 
+
+19. 因为大儿子上大一了，挑了一本微积分我自己也再复习一下  **微积分的故事**
+
+20. 因为小儿子的语文课 叶圣陶 **如何学好语文**
+
+       
 
 ### 2022
 

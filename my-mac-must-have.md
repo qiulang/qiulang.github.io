@@ -24,7 +24,7 @@
 
 10. [Skype](https://www.skype.com/en/get-skype/) 因为有几个skype朋友，一直有联系
 
-11. [Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点
+11. ~~[Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点~~ 自从知道 preview怎么截图后就不用它了
 
 12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多。因为XnViewMP UI实在不好，太像一个Windows 应用，我现在用Picsee (Mac商店下载)多些，国人软件支持一下！但是Picsee不方便浏览目录，[这个问题我给作者开了问题单，作者确认](https://github.com/kzhiquan/Picsee/issues/36)，希望以后能改进。所以目前这两个工具都用。
 
