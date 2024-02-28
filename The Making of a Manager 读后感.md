@@ -9,3 +9,27 @@ I also feel that the author doesn't have many experiences in deal with difficult
 
 On the other hand I am sure if I should give 2 stars because I can see the author did put a lot of thought and energy in writing it. She didn't just churned out a book. I think it is probably useful for the first time manager.
 
+
+
+SO上几条问题讨论
+
+1. [What are the main things a programmer expects from the senior programmer?](https://softwareengineering.stackexchange.com/questions/69916/what-are-the-main-things-a-programmer-expects-from-the-senior-programmer)
+
+2. [What is the role of the lead developer in an agile team?](https://softwareengineering.stackexchange.com/questions/236726/what-is-the-role-of-the-lead-developer-in-an-agile-team)
+
+3. [What skills should I cultivate to become a development/technical lead? [closed]](https://softwareengineering.stackexchange.com/questions/191103/what-skills-should-i-cultivate-to-become-a-development-technical-lead)
+
+4. [Does a team of developers need a manager?](https://softwareengineering.stackexchange.com/questions/151285/does-a-team-of-developers-need-a-manager)
+
+
+
+
+west vs east 
+
+1. [How do programmers in the West see programmers in the East?](https://softwareengineering.stackexchange.com/questions/50831/how-do-programmers-in-the-west-see-programmers-in-the-east)
+
+2. [How do Programmers in the East see programmers in the West?](https://softwareengineering.stackexchange.com/questions/50884/how-do-programmers-in-the-east-see-programmers-in-the-west)
+
+3. [Is software innovation still primarily North American and European? Why, and for how much longer? [closed]](https://softwareengineering.stackexchange.com/questions/48635/is-software-innovation-still-primarily-north-american-and-european-why-and-for)
+
+   

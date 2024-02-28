@@ -23,3 +23,7 @@
 1. [Mac 装机必备](my-mac-must-have.md)
 1. [MacOS 各种脑残设计](MacOS的脑残设计.md)
 
+
+
+### 翻译文章
+

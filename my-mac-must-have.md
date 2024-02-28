@@ -6,7 +6,7 @@
 
 1. 输入法： [搜狗](https://pinyin.sogou.com/mac/)，~~没有模糊音对南方人是一种折磨~~  MacOS 13.3 自带输入法也有模糊音了 。其实[百度输入法](https://srf.baidu.com/input/mac.html) 也可以，但是已经用惯搜狗
 
-2. vpn：不能用Google对地球人是一种折磨，更别说现在还要ChatGPT. 目前用[红星加速器](https://rocketv.org/index.php/download/) ，含安卓客户端
+2. vpn：目前用[红星加速器](https://rocketv.org/index.php/download/) ，含安卓和iOS客户端
 
 3. [Chrome](https://www.google.com/chrome/) (下载比较慢), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/) 装这么多浏览器有一个很现实目的，medium.com 上的付费文章，一个浏览器，一个月只能读三篇。
 
@@ -56,7 +56,7 @@
 2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license 
 3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我在2019年花了30美金买了正版 bbedit 13.5.7，在2023.6.13再次话30美金升级到14.6.6
 4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查, 而且 github.com Access Key for qiulang2000 的密码，用 原来github生成的pat也显示错误。
-5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全)
+5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全) 现在用 **warp** 多
 6. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
 7. [Homebrew](https://brew.sh/), 安装被墙，设置国内代理也麻烦，虽然我给他提了[问题单](https://github.com/Homebrew/brew/issues/6640)，他也修改了。 所以我现在 **弃用 homebrew 改用[macports](https://www.macports.org/)** （见下面描述） + macport list
 
@@ -145,7 +145,7 @@ Failed during: /usr/local/bin/brew update --force
 
 17. [Stats](https://github.com/exelban/stats)
 
-18. [cursor.so](https://www.cursor.so/)
+18. ~~[cursor.so](https://www.cursor.so/)~~ github copilot chat
 
 
 

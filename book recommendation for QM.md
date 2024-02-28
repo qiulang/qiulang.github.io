@@ -30,3 +30,10 @@ A few books that you may consider to learn about the evolution of quantum physic
 5. "Quantum Mechanics: An Introduction" by R. Shankar.
 
 These books provide an in-depth overview of the development of quantum physics, covering the key concepts, theories, and experiments that have shaped this field.
+
+
+
+这个问题被 https://physics.stackexchange.com/ 删了后，我今天（2023.11.07）发现还有这样的论坛 https://hsm.stackexchange.com/ 专门谈历史，就再问一次，看看有没有结果 [Book on the evolution of Quantum Theory](https://hsm.stackexchange.com/questions/15884/book-on-the-evolution-of-quantum-theory)
+
+
+

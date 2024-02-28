@@ -6,35 +6,35 @@
 
 ### 2024
 
-以下书籍暂时列为 2024 目标
+1. **名言侦探** 一本小书
 
-1. **林语堂苏东坡传**
-2. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-3. **Leonardo da Vinci**
-4. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-5. **The American Spirit**
-6. **The Wright Brothers** 
-7. **A higher call** 原版和翻译版都买了
-8. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-9. **The Map That Changed the World** 
-10. **Fridtjof Nansen**: A Book for the Young
-11. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
-    1. **Introducing Logic** & **Godel's Proof**
-    2. **Introducing Economics** 
-    3. **Introducing Game Theory**
-    4. **Introducing Wittgenstein**
-    5. **Introducing Budda**
-    6. **Introducing Statistics**
-    7. **Cancer** 
-12. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-13. **Little Soldiers An American Boy, a Chinese School**
-14. **所有的写作都是讲故事/美国中学写作教学译丛**
-15. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-16. **The Kon-Tiki man** 考虑读读
-17. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-18. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-19. **Land: How the Hunger for Ownership Shaped the Modern World**
-20. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+2. **我的二本学生**
+
+3. **理念的力量**
+
+4. **The Pattern on the Stone** 去年没听懂
+
+5. 因为小儿子的语文课 叶圣陶 **如何学好语文** 还没看
+
+6. **自私的基因** 
+
+7. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  不要再摸鱼，不深入学习！
+
+8. Krakatoa 
+
+9. Tambora
+
+10. The Day We Found the Universe
+
+11. **博弈与社会**
+
+    
+
+以上 六本是去年没看懂的书，但是看完selfist gene 先看下面两本 
+
+1. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 
+2. **Understanding Deep Learning**
+3. **微积分溯源**
 
 
 
@@ -61,7 +61,7 @@
 
 8. **刀锋人生, the knife edge** 
 
-9. **Educated A Memoir**  当前看
+9. **Educated A Memoir**  暂放
 
 10. **一百年很多事**
 
@@ -77,19 +77,25 @@
 
 16. 3.14 Pi 节找到三本关于 Pi的书 
 
-       1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
-       2. **A History of Pi**   放一放
-       3. **Pi A Biography of the World's Most Mysterious Number**  放一放
+             1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
+             2. **A History of Pi**   放一放
+             3. **Pi A Biography of the World's Most Mysterious Number**  放一放
 
-17. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，还没看
+17. 史铁生**病隙碎笔** 
 
-18. 史铁生**病隙碎笔** 
+18. 因为大儿子上大一了，挑了一本微积分我自己也再复习一下  **微积分的故事**
 
-19. 因为大儿子上大一了，挑了一本微积分我自己也再复习一下  **微积分的故事**
+20. **Endurance An Epic of Polar Adventure** 
 
-20. 因为小儿子的语文课 叶圣陶 **如何学好语文**
+21. **The Great Gatsby** 再听一遍
 
-       
+22. 刘瑜 **可能的艺术**
+
+2023.12.15 小结 病隙碎笔看完实在没看出好在哪, "Endurance An Epic of Polar Adventure" 年底听完，再把 一百年这本读完。今年的重点是心脏的书和孙春龙的书。
+
+之后我想把之前基本听了几遍没听懂书看下：1. 自私的基因 2. Krakatoa 3. Tambora 然后再决定要不要看 The Day We Found the Universe
+
+​          
 
 ### 2022
 
@@ -254,6 +260,41 @@
 
 
 
+### 备选
+
+以下书籍备选
+
+1. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，还没看
+2. **林语堂苏东坡传**
+3. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+4. **Leonardo da Vinci**
+5. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+6. **The American Spirit**
+7. **The Wright Brothers** 
+8. **A higher call** 原版和翻译版都买了
+9. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+10. **The Map That Changed the World** 
+11. **Fridtjof Nansen**: A Book for the Young
+12. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+    1. **Introducing Logic** & **Godel's Proof**
+    2. **Introducing Economics** 
+    3. **Introducing Game Theory**
+    4. **Introducing Wittgenstein**
+    5. **Introducing Budda**
+    6. **Introducing Statistics**
+    7. **Cancer** 
+13. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+14. **Little Soldiers An American Boy, a Chinese School**
+15. **所有的写作都是讲故事/美国中学写作教学译丛**
+16. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+17. **The Kon-Tiki man** 考虑读读
+18. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+19. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+20. **Land: How the Hunger for Ownership Shaped the Modern World**
+21. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+
+
+
 ### 如果让我推荐10本，20本
 
 1. The Endurance: Shackleton's Legendary Antarctic Expedition
@@ -278,6 +319,7 @@
 20. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory) 不知道会不会有回答。
 21. 周有光的书可以推荐一本，哪一本没想好
 22. 烟雨任平生
+23. 刘瑜 可能的艺术
 
 
 
@@ -311,5 +353,5 @@
 3. Introducing Quantum Theory A Graphic Guide
 4. Uncertainty: Einstein, Heisenberg, Bohr, and the Struggle for the Soul of Science 
 5. Quantum Enigma: Physics Encounters Consciousness
-6. Entanglement
+6. Entanglement: The Greatest Mystery in Physics  by Amir D. Aczel 
 7. The Quantum Story A History in 40 Moments
