@@ -21,9 +21,11 @@
 做开发难免就会写一些总结，对别人没啥价值，对我自己是个记录，按时间顺序排列，而且不涉及公司任何内容。但现在列的基本都是和node开发相关。iOS相关的基本上我都通过SO回答问题了。
 
 1. [Mac 装机必备](my-mac-must-have.md)
-1. [MacOS 各种脑残设计](MacOS的脑残设计.md)
+2. [MacOS 各种脑残设计](MacOS的脑残设计.md)
 
 
 
 ### 翻译文章
+
+1. [FLYING THE HUMP 飞越驼峰](https://medium.com/@qiulang/flying-the-hump-%E9%A3%9E%E8%B6%8A%E9%A9%BC%E5%B3%B0-7df41bff252c)
 

@@ -12,21 +12,27 @@
 
 3. **理念的力量**
 
-4. **The Pattern on the Stone** 去年没听懂
+4. **上学记**
 
-5. 因为小儿子的语文课 叶圣陶 **如何学好语文** 还没看
+5. **一百年很多事** 看完
 
-6. **自私的基因** 
+6. **The Pattern on the Stone** 去年没听懂
 
-7. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  不要再摸鱼，不深入学习！
+7. 因为小儿子的语文课 叶圣陶 **如何学好语文** 还没看
 
-8. Krakatoa 
+8. **自私的基因** 
 
-9. Tambora
+9. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  不要再摸鱼，不深入学习！
 
-10. The Day We Found the Universe
+10. Krakatoa 
 
-11. **博弈与社会**
+11. Tambora
+
+12. The Day We Found the Universe
+
+13. **博弈与社会**
+
+14. **饥饿的盛世**
 
     
 
@@ -77,9 +83,9 @@
 
 16. 3.14 Pi 节找到三本关于 Pi的书 
 
-             1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
-             2. **A History of Pi**   放一放
-             3. **Pi A Biography of the World's Most Mysterious Number**  放一放
+     1. **The Joy of Pi** 先从这本小书看起，这本比较简单  
+     2. **A History of Pi**   放一放
+     3. **Pi A Biography of the World's Most Mysterious Number**  放一放
 
 17. 史铁生**病隙碎笔** 
 
