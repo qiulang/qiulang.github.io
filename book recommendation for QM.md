@@ -1,4 +1,4 @@
-### [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory)
+### [Book recommendation for Evolution of Quantum Theory](https://hsm.stackexchange.com/questions/15884/book-on-the-evolution-of-quantum-theory)
 
 
 

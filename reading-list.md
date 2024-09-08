@@ -14,29 +14,47 @@
 
 4. **上学记**
 
-5. **一百年很多事** 看完
+5. **一百年很多事**
 
-6. **The Pattern on the Stone** 去年没听懂
+6. 因为小儿子的语文课 叶圣陶 **如何学好语文**
 
-7. 因为小儿子的语文课 叶圣陶 **如何学好语文** 还没看
+7. **叶圣陶的语文课** 9分评分肯定是虚高
 
-8. **自私的基因** 
+8. **Vincent's Starry Night and Other Stories** 和中文版 **和孩子一起读的艺术史**  和嘉嘉一起读完，还是很有收获
 
-9. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  不要再摸鱼，不深入学习！
+9. **奇妙数学史** 和 **极简几何史** 两本小书，没有太出彩，但也有些以前不知道的东西
 
-10. Krakatoa 
+10. 司徒雷登，**在华五十年**
 
-11. Tambora
+11. **Other river** 看完也写书评
 
-12. The Day We Found the Universe
+12. **自私的基因**  还是没看
 
-13. **博弈与社会**
+13. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
 
-14. **饥饿的盛世**
+14. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
+
+15. **The Pattern on the Stone** 去年没听懂，现在也还没看
+
+16. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  还再摸鱼，不深入学习！
+
+17. Krakatoa 
+
+18. Tambora
+
+19. The Day We Found the Universe
+
+20. **博弈与社会**
+
+21. The Cartoon Introduction to Philosophy
+
+22. Economix
+
+23. 虚数的故事
 
     
 
-以上 六本是去年没看懂的书，但是看完selfist gene 先看下面两本 
+以上 六本是去年没看懂的书，但是看完selfish gene 先看下面两本 
 
 1. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 
 2. **Understanding Deep Learning**
@@ -79,7 +97,7 @@
 
 14. **The Pattern on the Stone** 很薄，没听懂
 
-15. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看  
+15. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看 好像没有太特别  
 
 16. 3.14 Pi 节找到三本关于 Pi的书 
 
@@ -271,17 +289,18 @@
 以下书籍备选
 
 1. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，还没看
-2. **林语堂苏东坡传**
-3. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-4. **Leonardo da Vinci**
-5. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-6. **The American Spirit**
-7. **The Wright Brothers** 
-8. **A higher call** 原版和翻译版都买了
-9. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-10. **The Map That Changed the World** 
-11. **Fridtjof Nansen**: A Book for the Young
-12. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+2. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门
+3. **林语堂苏东坡传**
+4. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+5. **Leonardo da Vinci**
+6. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
+7. **The American Spirit**
+8. **The Wright Brothers** 
+9. **A higher call** 原版和翻译版都买了
+10. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+11. **The Map That Changed the World** 
+12. **Fridtjof Nansen**: A Book for the Young
+13. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
     1. **Introducing Logic** & **Godel's Proof**
     2. **Introducing Economics** 
     3. **Introducing Game Theory**
@@ -289,15 +308,15 @@
     5. **Introducing Budda**
     6. **Introducing Statistics**
     7. **Cancer** 
-13. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-14. **Little Soldiers An American Boy, a Chinese School**
-15. **所有的写作都是讲故事/美国中学写作教学译丛**
-16. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-17. **The Kon-Tiki man** 考虑读读
-18. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-19. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-20. **Land: How the Hunger for Ownership Shaped the Modern World**
-21. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+14. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+15. **Little Soldiers An American Boy, a Chinese School**
+16. **所有的写作都是讲故事/美国中学写作教学译丛**
+17. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+18. **The Kon-Tiki man** 考虑读读
+19. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+20. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+21. **Land: How the Hunger for Ownership Shaped the Modern World**
+22. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
 
 
 
@@ -313,7 +332,7 @@
 8. Einstein His Life and Universe
 9. Kon Tiki Voyage 孤筏重洋
 10. Burton: A Biography of Sir Richard Francis Burton
-11. Fermat's Last Theorem 费马大定理
+11. Fermat's Last Theorem 费马大定理，虽然多年后再读没有第一次读感受那么深，但是我暂时还没看到哪本讲数学史的书能比它好。
 12. 大江大河1949
 13. 1984
 14. The boy who harnesses the wind 驭风少年
@@ -322,10 +341,11 @@
 17. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
 18. The Immortal Life of Henrietta Lacks 永生的海拉
 19. 我的漫画人生 手冢治虫
-20. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://physics.stackexchange.com/questions/678894/book-recommendation-for-evolution-of-quantum-theory) 不知道会不会有回答。
+20. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://hsm.stackexchange.com/questions/15884/book-on-the-evolution-of-quantum-theory) 没有有质量的回答。
 21. 周有光的书可以推荐一本，哪一本没想好
 22. 烟雨任平生
 23. 刘瑜 可能的艺术
+24. Open Heart - A Cardiac Surgeon's Stories of Life and Death on the Operating Table
 
 
 
