@@ -28,29 +28,33 @@
 
 11. **Other river** 看完也写书评
 
-12. **自私的基因**  还是没看
+12. **Brave Companions: Portraits In History** 
 
 13. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
 
 14. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
 
-15. **The Pattern on the Stone** 去年没听懂，现在也还没看
+15. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 
 
-16. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  还再摸鱼，不深入学习！
+16. **自私的基因**  还是没看
 
-17. Krakatoa 
+17. **The Pattern on the Stone** 去年没听懂，现在也还没看
 
-18. Tambora
+18. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  还再摸鱼，不深入学习！
 
-19. The Day We Found the Universe
+19. Krakatoa 
 
-20. **博弈与社会**
+20. Tambora
 
-21. The Cartoon Introduction to Philosophy
+21. The Day We Found the Universe
 
-22. Economix
+22. **博弈与社会**
 
-23. 虚数的故事
+23. The Cartoon Introduction to Philosophy
+
+24. Economix
+
+25. 虚数的故事
 
     
 
