@@ -20,41 +20,47 @@
 
 7. **叶圣陶的语文课** 9分评分肯定是虚高
 
-8. **Vincent's Starry Night and Other Stories** 和中文版 **和孩子一起读的艺术史**  和嘉嘉一起读完，还是很有收获
+8. **作文六要** 一般
 
-9. **奇妙数学史** 和 **极简几何史** 两本小书，没有太出彩，但也有些以前不知道的东西
+9. **Vincent's Starry Night and Other Stories** 和中文版 **和孩子一起读的艺术史**  和嘉嘉一起读完，还是很有收获
 
-10. 司徒雷登，**在华五十年**
+10. **奇妙数学史** 和 **极简几何史** 两本小书，没有太出彩，但也有些以前不知道的东西
 
-11. **Other river** 看完也写书评
+11. 司徒雷登，**在华五十年**
 
-12. **Brave Companions: Portraits In History** 
+12. **Other river** 看完也写书评
 
-13. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
+13. **Brave Companions: Portraits In History** 
 
-14. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
+14. **The Amercian Spirit who we are and what we stand for** 一般
 
-15. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 
+15. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
 
-16. **自私的基因**  还是没看
+16. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
 
-17. **The Pattern on the Stone** 去年没听懂，现在也还没看
+17. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 还没看
 
-18. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  还再摸鱼，不深入学习！
+18. **我用中文做了一场梦** 很不错
 
-19. Krakatoa 
+19. **自私的基因**  还是没看
 
-20. Tambora
+20. **The Pattern on the Stone** 去年没听懂，现在也还没看
 
-21. The Day We Found the Universe
+21. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  别再摸鱼，不深入学习！
 
-22. **博弈与社会**
+22. Krakatoa 
 
-23. The Cartoon Introduction to Philosophy
+23. Tambora
 
-24. Economix
+24. The Day We Found the Universe
 
-25. 虚数的故事
+25. **博弈与社会**
+
+26. The Cartoon Introduction to Philosophy
+
+27. Economix
+
+28. 虚数的故事
 
     
 
@@ -297,8 +303,6 @@
 3. **林语堂苏东坡传**
 4. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
 5. **Leonardo da Vinci**
-6. **Brave Companions: Portraits In History** 1992的书，第一部分讲洪堡，所以想读，看看 Andrea Wulf 的书有什么不同
-7. **The American Spirit**
 8. **The Wright Brothers** 
 9. **A higher call** 原版和翻译版都买了
 10. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
