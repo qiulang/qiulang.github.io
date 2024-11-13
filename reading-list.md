@@ -4,6 +4,30 @@
 
 
 
+### 2025
+
+1. **自私的基因**  还是没看
+
+2. **The Pattern on the Stone** 去年没听懂，现在也还没看
+
+3. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  别再摸鱼，不深入学习！
+
+4. Krakatoa 
+
+5. Tambora
+
+6. The Day We Found the Universe
+
+7. **博弈与社会**
+
+8. The Cartoon Introduction to Philosophy
+
+9. Economix
+
+10. 虚数的故事
+
+
+
 ### 2024
 
 1. **名言侦探** 一本小书
@@ -38,29 +62,15 @@
 
 16. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
 
-17. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 还没看
+17. **我用中文做了一场梦** 很不错
 
-18. **我用中文做了一场梦** 很不错
+18. **美丽新世界**
 
-19. **自私的基因**  还是没看
+19. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 还没看
 
-20. **The Pattern on the Stone** 去年没听懂，现在也还没看
+    
 
-21. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  别再摸鱼，不深入学习！
-
-22. Krakatoa 
-
-23. Tambora
-
-24. The Day We Found the Universe
-
-25. **博弈与社会**
-
-26. The Cartoon Introduction to Philosophy
-
-27. Economix
-
-28. 虚数的故事
+    
 
     
 
