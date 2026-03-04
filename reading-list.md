@@ -4,27 +4,43 @@
 
 
 
+### 2026
+
+1. **50岁打工系列** 
+2. **Tambora** 
+3. **Krakatoa** 
+4. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完
+5. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉
+6. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门
+7. **命悬一线我不放手**
+8. 李飞飞 **我看见的世界**
+9. 丘成桐 **我的几何人生**
+10. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
+11. **The Day We Found the Universe** ？
+12. **博弈与社会**
+13. The Cartoon Introduction to Philosophy
+14. 虚数的故事
+15. **中国威尔逊**
+
+
+
 ### 2025
 
-1. **自私的基因**  还是没看
+1. **source code** 一般
+2. **HMS Beagles** 几个版本，两个英文版本+中译版，今年花时间最多的书。包括 1989 Penguin Books 的前言
+3. **Darwin’s Odyssey: The Voyage of the Beagle** 一百页多一点，但是很不错
+4. **The Illustrated Voyage of the Beagle: A Novel Adaptation of Charles Darwin’s Classic — Revised for Easy Reading** 给作者[提意见并得到答复](https://www.linkedin.com/feed/update/urn:li:activity:7338558390333296641/)
+5. **两本讲南森的小册**，**Fridtjof Nansen**: A Book for the Young ; **Nansen: Explorer and Humanitarian**
+6. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 明年一月份看完！
+7. **When the Whales Walked: And Other Incredible Evolutionary Journeys** 和 **Amazing Evolution: The Journey of Life** 中英双语 和 **Charles Darwin's Around-the-World Adventure** ，打算给弟弟讲的
+8. **Educated A Memoir** 把2023年的没看完的后半段看完，这个故事一点也没打动我，差评！ 难怪2023年我看一半就放下了
+10. **Pattern on the stone** 要不是 Alan Kay [这个过誉的答复](https://qr.ae/pCWKWS) 我根本不会看，但是 2023年听音频书没听懂也有点意外。书我本不客气的说 垃圾，不知道想说什么，列出9章更不能说CS的根本
 
-2. **The Pattern on the Stone** 去年没听懂，现在也还没看
+> By far the best book for the general public — the one I always recommend — is “The Pattern on the Stone” by Danny Hillis.
 
-3. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  别再摸鱼，不深入学习！
+> I have several thousand books about computation, but I can’t think of a great next level book. There must be one by now, so it will be interesting to see what other people who answer this question have to say. Meanwhile, I’ll poke around and see what I can find for you.
 
-4. Krakatoa 
-
-5. Tambora
-
-6. The Day We Found the Universe
-
-7. **博弈与社会**
-
-8. The Cartoon Introduction to Philosophy
-
-9. Economix
-
-10. 虚数的故事
+​    10. **50岁打工系列**
 
 
 
@@ -40,39 +56,44 @@
 
 5. **一百年很多事**
 
-6. 因为小儿子的语文课 叶圣陶 **如何学好语文**
+6. 胡适的 **学问与人生** 其中不少文章之前都看过，这本书是一个汇编，但是还是可以随时翻看
 
-7. **叶圣陶的语文课** 9分评分肯定是虚高
+7. 因为小儿子的语文课 叶圣陶 **如何学好语文**
 
-8. **作文六要** 一般
+8. **叶圣陶的语文课** 9分评分肯定是虚高
 
-9. **Vincent's Starry Night and Other Stories** 和中文版 **和孩子一起读的艺术史**  和嘉嘉一起读完，还是很有收获
+9. **作文六要** 一般
 
-10. **奇妙数学史** 和 **极简几何史** 两本小书，没有太出彩，但也有些以前不知道的东西
+10. **Vincent's Starry Night and Other Stories** 和中文版 **和孩子一起读的艺术史**  和嘉嘉一起读完，还是很有收获
 
-11. 司徒雷登，**在华五十年**
+11. **奇妙数学史** 和 **极简几何史** 两本小书，没有太出彩，但也有些以前不知道的东西
 
-12. **Other river** 看完也写书评
+12. **牛津教授的16堂趣味数学课** 这个名字改得很奇怪 ，原来名名字  **1089 and All That: A Journey into Mathematics** 挺好。因为去年看了 作者 **David Acheson** 写的  **微积分的故事**，不错，所以就又找了这本看下，一般。不过书的前言让我发现了 中国威尔逊！
 
-13. **Brave Companions: Portraits In History** 
+13. 司徒雷登，**在华五十年**
 
-14. **The Amercian Spirit who we are and what we stand for** 一般
+14. **Other river** 看完也写书评
 
-15. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
+15. **Brave Companions: Portraits In History** 
 
-16. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
+16. **The Amercian Spirit who we are and what we stand for** 一般
 
-17. **我用中文做了一场梦** 很不错
+17. **The Age of Entanglement; When Quantum Physics Was Reborn by Louisa Gilder** 听烦了 selfish gene 专听一下这本，没什么印象
 
-18. **美丽新世界**
+18. **饥饿的盛世**  以前都是看节选，这次基本从头到尾翻看了一遍。
 
-19. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 还没看
+19. **我用中文做了一场梦** 很不错
+
+20. **美丽新世界** 这次完整读完
+
+21. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 在看
+
+22. **两地书 **和 **朝花夕拾解读**
+
+23. **追忆逝去的时光** 三本图画书
 
     
 
-    
-
-    
 
 以上 六本是去年没看懂的书，但是看完selfish gene 先看下面两本 
 
@@ -111,11 +132,11 @@
 
 11. **Krakatoa: The Day the World Exploded** 听了两遍没听出主旨，先放一放。  
 
-12. **Tambora The Eruption That Changed the World** 听了两遍也没听出主旨
+12. **Tambora The Eruption That Changed the World** 听了两遍也没听出主旨，也放一放
 
 13. **The Day We Found the Universe** 看了头，先放一放。  
 
-14. **The Pattern on the Stone** 很薄，没听懂
+14. **The Pattern on the Stone** 很薄，没听懂，不知道为啥
 
 15. **Quantum A Guide for the Perplexed** ChatGPT 推荐，断断续续看 好像没有太特别  
 
@@ -161,6 +182,7 @@
 16. **优雅的等式 欧拉公式与数学之美**，看完一般，但是e和复数的简单介绍多少有点用
 17. **病毒星球**
 18. **Shackleton: The Antarctic Challenge** 国家地理画册，2022最后一本书，但是书一般，居然有拼写错误和内容错误。 
+19. **Travel in China** 中国纪行，很久之前就买了，但是这次才认真读了。
 
 今年重点阅读的书是关于 Richard Burton
 
@@ -175,7 +197,7 @@
 1. **E=mc2: A Biography of the World's Most Famous Equation**  NOVA 由该书改编的片子在b站有，翻译得不错。
 2. **Einstein His Life and Universe** 读了两三遍
 3. **Einstein: The Man, the Genius, and the Theory of Relativity (Great Thinkers)** Einstein His Life and Universe的缩减版
-4. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage 英文版还是有点难度。
+4. **孤筏重洋**  Thor Heyerdahl’s Kon-Tiki Voyage 英文版还是有点难度。**两本**，一本书青少年版，也很不错
 5. 两本关于管理的书，都是女性作者写的，有点好奇，就买来看看。但是挺失望的，分别写的书评
    1. **The Manager's Path**   亚马逊软件开发类书籍排名很靠前，就买来看看。倒也没觉得有什么特别。
    2. **The Making of a Manager: What to Do When Everyone Looks to You** 这本是美亚推荐的就买了也看看。
@@ -196,7 +218,7 @@
 ### 2020
 
 1. **Evolution: The Triumph of an Idea** 今年看完第一本书，这一两年反反复复的看（因为有点长），这次终于看完。书中提到不少知识点又找了youtube相关视频看，还是涨了不少知识，推荐。随便推荐几个关于达尔文纪录片，都是在2009年达尔文诞辰200周年推出的，内容可以看做这本书精华摘要：
-  
+
    1. BBC [What Darwin Didn't Know](https://www.imdb.com/title/tt1978354/)
    2. PBS [What Darwin Never Knew](https://www.imdb.com/title/tt1540263/)
    
@@ -279,13 +301,14 @@
 ### 2015
 
 1. **Tin Tin the complete companion 永远的丁丁** 个人觉得这是丁丁迷必须看的书，详细讲解22本丁丁历险记背后故事，终于让我明白这个22个故事的来龙去脉。
-2. **Shackleton** 是我的偶像，这几本我都是反复读了又读：
+2. **Herge and the Treasures of Tintin** 仔细读完上一本，这本内容有些认同，所以只是大致浏览。
+3. **Shackleton** 是我的偶像，这几本我都是反复读了又读：
    1. **Endurance: Shackleton's Incredible Voyage** [我是不是唯一一个发现这本书里的一个小问题的人呢?](https://www.goodreads.com/review/show/2722924581?book_show_action=false&from_review_page=1) :D 
    2. **The Endurance: Shackleton's Legendary Antarctic Expedition** 如果只推荐一本关于 Endurance的书，那我推荐它
    3. **Shackleton's stowaway** 因为太喜欢Shackleton的故事，就又找些相关作品来读；这本书如果不是死忠粉丝不需要看
    4. **Shipwreck at the bottom of the world** 像是 Endurance 这两本改版的青少版
 
-3. **Unbroken 坚不可摧**只有结局让我觉得不太合理，受了那么多苦，怎么听了几场牧师的布道就好了？！
+4. **Unbroken 坚不可摧**只有结局让我觉得不太合理，受了那么多苦，怎么听了几场牧师的布道就好了？！
 
 
 ### 更早以前推荐书目
@@ -308,33 +331,32 @@
 
 以下书籍备选
 
-1. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought** 读本经济学的书，还没看
-2. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门
-3. **林语堂苏东坡传**
-4. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
-5. **Leonardo da Vinci**
-8. **The Wright Brothers** 
-9. **A higher call** 原版和翻译版都买了
-10. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
-11. **The Map That Changed the World** 
-12. **Fridtjof Nansen**: A Book for the Young
-13. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
-    1. **Introducing Logic** & **Godel's Proof**
-    2. **Introducing Economics** 
-    3. **Introducing Game Theory**
-    4. **Introducing Wittgenstein**
-    5. **Introducing Budda**
-    6. **Introducing Statistics**
-    7. **Cancer** 
-14. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
-15. **Little Soldiers An American Boy, a Chinese School**
-16. **所有的写作都是讲故事/美国中学写作教学译丛**
-17. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
-18. **The Kon-Tiki man** 考虑读读
-19. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
-20. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
-21. **Land: How the Hunger for Ownership Shaped the Modern World**
-22. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+1. **林语堂苏东坡传** 因为很多人评价不高，暂时搁置
+2. **Collapse: How Societies Choose to Fail or Succeed: Revised Edition**
+3. **Leonardo da Vinci**
+4. **The Wright Brothers** 
+5. **A higher call** 原版和翻译版都买了
+6. **The Meaning of Everything: The Story of the Oxford English Dictionary**  
+7. **The Map That Changed the World** 
+8. 几个 **introducing** 系列，当做轻松读物 （中文翻译成通识丛书）
+   1. **Introducing Logic** & **Godel's Proof**
+   2. **Introducing Economics** 
+   3. **Introducing Game Theory**
+   4. **Introducing Wittgenstein**
+   5. **Introducing Budda**
+   6. **Introducing Statistics**
+   7. **Cancer** 
+9. **Big Bang: The Origin of the Universe**  买了那么久是不是可以看了
+10. **Little Soldiers An American Boy, a Chinese School**
+11. **所有的写作都是讲故事/美国中学写作教学译丛**
+12. **The lesson of this century**  波尔普尔 Karl Popper  **二十世纪的教训**
+13. **The Kon-Tiki man** 考虑读读
+14. **Ships, Clocks, and Stars: The Quest for Longitude** 考虑读读，估计难度大， 或者是 **The Illustrated Longitude**
+15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
+16. **Land: How the Hunger for Ownership Shaped the Modern World**
+17. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+
+
 
 
 
@@ -344,26 +366,28 @@
 2. Tin Tin the complete companion 永远的丁丁  70后的丁丁迷必看
 3. Guns  Germs and Steel
 4. The man who loved China
-5. Longitude
+5. Longitude 经度，很薄的一本书，但是很有意思
 6. The Invention of Nature: Alexander von Humboldt's New World
 7. E=mc2: A Biography of the World's Most Famous Equation
 8. Einstein His Life and Universe
 9. Kon Tiki Voyage 孤筏重洋
 10. Burton: A Biography of Sir Richard Francis Burton
-11. Fermat's Last Theorem 费马大定理，虽然多年后再读没有第一次读感受那么深，但是我暂时还没看到哪本讲数学史的书能比它好。
-12. 大江大河1949
-13. 1984
-14. The boy who harnesses the wind 驭风少年
-15. The Professor and the Madman 教授和疯子
-16. The double Helix 双螺旋
-17. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
-18. The Immortal Life of Henrietta Lacks 永生的海拉
-19. 我的漫画人生 手冢治虫
-20. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://hsm.stackexchange.com/questions/15884/book-on-the-evolution-of-quantum-theory) 没有有质量的回答。
-21. 周有光的书可以推荐一本，哪一本没想好
-22. 烟雨任平生
-23. 刘瑜 可能的艺术
-24. Open Heart - A Cardiac Surgeon's Stories of Life and Death on the Operating Table
+11. 胡适的 **学问与人生** 
+12. Fermat's Last Theorem 费马大定理，虽然多年后再读没有第一次读感受那么深，但是我暂时还没看到哪本讲数学史的书能比它好。
+13. 大江大河1949
+14. 1984
+15. The boy who harnesses the wind 驭风少年
+16. The Professor and the Madman 教授和疯子
+17. The double Helix 双螺旋
+18. Evolution: The Triumph of an Idea 关于讲述进化论故事的书，我只看过这本觉得不错，但也想知道还有没有更好的
+19. The Immortal Life of Henrietta Lacks 永生的海拉
+20. 我的漫画人生 手冢治虫
+21. 量子力学史话的书我看过很多本，反而找不到单独一本推荐。《上帝掷骰子》虽然还不错，我没有特别推荐，觉得有些章节言语比较随意，像是网络读物，不像严肃科普出版物。专门问了一个问题 [Book recommendation for Evolution of Quantum Theory](https://hsm.stackexchange.com/questions/15884/book-on-the-evolution-of-quantum-theory) 没有有质量的回答。
+22. 周有光的书可以推荐一本，哪一本没想好
+23. 烟雨任平生
+24. 刘瑜 可能的艺术
+25. Open Heart - A Cardiac Surgeon's Stories of Life and Death on the Operating Table
+26. Vincent's Starry Night and Other Stories 和中文版 和孩子一起读的艺术史
 
 
 
@@ -376,6 +400,7 @@
 5. Out of Africa
 6. West with the Night
 7. Explorers of the Nile: The Triumph and Tragedy of a Great Victorian Adventure
+8. The boy who harnesses the wind
 
 
 
@@ -399,3 +424,42 @@
 5. Quantum Enigma: Physics Encounters Consciousness
 6. Entanglement: The Greatest Mystery in Physics  by Amir D. Aczel 
 7. The Quantum Story A History in 40 Moments
+
+
+
+### 图画书
+
+丁丁的两本不算
+
+1. Logicomix 罗素的故事
+2. 毕加索画传
+3. **平如美棠** 
+4. **平生记**
+5. Shackleton's Journey  极地重生 by [William Grill](https://www.amazon.com/William-Grill/e/B00DREV73U/ref=dp_byline_cont_book_1) 
+6. 两本洪堡的图书  The Adventures of Alexander Von Humboldt 和 The Incredible yet True Adventures of Alexander von Humboldt
+7. 追忆逝去的时光 **三册**
+8. 红楼梦画册
+9. 杀死一只知更鸟
+10. 安妮日记
+
+
+
+### 和嘉嘉一起看的书
+
+#### non-fiction
+
+1. 经度 一个孤独的天才解决他所处时代最大难题的真实故事
+
+2. 驭风少年
+
+3. 和孩子一起读的艺术史
+
+4. what-if
+
+   
+
+#### fiction
+
+1. 夏洛的网
+2. 动物园农场
+3. 让他 把老人与海 看了 

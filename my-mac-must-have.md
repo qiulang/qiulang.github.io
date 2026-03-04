@@ -6,7 +6,7 @@
 
 1. 输入法： [搜狗](https://pinyin.sogou.com/mac/)，~~没有模糊音对南方人是一种折磨~~  MacOS 13.3 自带输入法也有模糊音了 。其实[百度输入法](https://srf.baidu.com/input/mac.html) 也可以，但是已经用惯搜狗
 
-2. vpn：目前用[红星加速器](https://rocketv.org/index.php/download/) ，含安卓和iOS客户端
+2. vpn：目前用[红星加速器](https://redstarv.com/downFormacOS.html) ，含安卓和iOS客户端
 
 3. [Chrome](https://www.google.com/chrome/) (下载比较慢), [Edge](https://www.microsoft.com/en-us/edge/download?form=MA13FJ), [Firefox](https://www.mozilla.org/en-US/firefox/mac/) 装这么多浏览器有一个很现实目的，medium.com 上的付费文章，一个浏览器，一个月只能读三篇。
 
@@ -26,7 +26,7 @@
 
 11. ~~[Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点~~ 自从知道 preview怎么截图后就不用它了
 
-12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多。因为XnViewMP UI实在不好，太像一个Windows 应用，我现在用Picsee (Mac商店下载)多些，国人软件支持一下！但是Picsee不方便浏览目录，[这个问题我给作者开了问题单，作者确认](https://github.com/kzhiquan/Picsee/issues/36)，希望以后能改进。所以目前这两个工具都用。
+12. [XnViewMP](https://www.xnview.com/en/xnviewmp/)， 可选的photo viewer不多。因为XnViewMP UI实在不好，太像一个Windows 应用，~~我现在用Picsee (Mac商店下载)多些，国人软件支持一下！但是Picsee不方便浏览目录，[这个问题我给作者开了问题单，作者确认](https://github.com/kzhiquan/Picsee/issues/36)，希望以后能改进。所以目前这两个工具都用。~~  现在我改用 [Picture View](https://wl879.github.io/apps/picview/index.html)
 
 13. [迅雷](https://mac.xunlei.com/)，因为经常下电影
 
@@ -53,7 +53,7 @@
 ### 开发相关
 
 1. [vscode](https://code.visualstudio.com/download) (官网下载很慢，需要开vpn)：它的插件找在下面总结
-2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license 
+2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license  
 3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我在2019年花了30美金买了正版 bbedit 13.5.7，在2023.6.13再次话30美金升级到14.6.6
 4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查, 而且 github.com Access Key for qiulang2000 的密码，用 原来github生成的pat也显示错误。
 5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全) 现在用 **warp** 多
@@ -133,7 +133,7 @@ Failed during: /usr/local/bin/brew update --force
 
 11. redis 客户端 花钱买了正版的 medis 2; redis自家出的 [RedisInsight-v2](https://redis.com/redis-enterprise/redis-insight/)
 
-12. [Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere)单位买了正版
+12. ~~[Fiddler Everywhere](https://www.telerik.com/download/fiddler-everywhere)单位买了正版~~ 发现就没用过
 
 13. 腾讯会议，qq 上班要用，工作上的沟通
 
