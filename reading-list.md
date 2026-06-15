@@ -6,22 +6,30 @@
 
 ### 2026
 
-1. **50岁打工系列** 
-2. **Tambora** 
-3. **Krakatoa** 
-4. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完
-5. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉
-6. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门
-7. **命悬一线我不放手**
-8. 李飞飞 **我看见的世界**
-9. 丘成桐 **我的几何人生**
-10. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
-11. **The Day We Found the Universe** ？
-12. **博弈与社会**
-13. The Cartoon Introduction to Philosophy
-14. 虚数的故事
-15. **中国威尔逊**
-
+1. **50岁打工系列**    
+2. **Tambora**   
+3. **成为一把柳叶刀**  
+4. **命悬一线我不放手**  
+5. **The Greatest Sentence Ever Written** 小书  
+6. **阿图·葛文德 Atul Gawande**  
+   1. 医生的修炼  
+   2. 医生的精进  
+   3. 暂时不想看 **最后的告别**  
+7. **李娟**  
+   1. 记一忘二三  
+   2. 冬牧场  
+8. **Krakatoa**  
+9. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
+10. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉  
+11. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
+12. 李飞飞 **我看见的世界**  
+13. 丘成桐 **我的几何人生**  
+14. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
+15. **The Day We Found the Universe** ？  
+16. **博弈与社会**  
+17. The Cartoon Introduction to Philosophy  
+18. 虚数的故事  
+19. **中国威尔逊**  
 
 
 ### 2025
@@ -40,7 +48,8 @@
 
 > I have several thousand books about computation, but I can’t think of a great next level book. There must be one by now, so it will be interesting to see what other people who answer this question have to say. Meanwhile, I’ll poke around and see what I can find for you.
 
-​    10. **50岁打工系列**
+    10. **50岁打工系列**
+    10. **我在北京送快递**
 
 
 
@@ -455,6 +464,8 @@
 3. 和孩子一起读的艺术史
 
 4. what-if
+
+5. a long walk to water
 
    
 

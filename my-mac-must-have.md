@@ -22,7 +22,7 @@
 
 9. 网盘，说不清到底哪个好用：[百度](https://pan.baidu.com/download#pan) 或 [OneDrive](https://www.microsoft.com/en-us/microsoft-365/onedrive/download) 还是 [阿里aDrive](https://www.aliyundrive.com/) 。但都那他们下过，百度应该还是用得最多的；dropbox被墙没法用
 
-10. [Skype](https://www.skype.com/en/get-skype/) 因为有几个skype朋友，一直有联系
+10. ~~[Skype](https://www.skype.com/en/get-skype/) 因为有几个skype朋友，一直有联系~~
 
 11. ~~[Skitch](https://evernote.com/intl/zh-cn/products/skitch) 圈点~~ 自从知道 preview怎么截图后就不用它了
 
@@ -48,13 +48,15 @@
 
 22. https://www.devontechnologies.com/apps/freeware 比如 easyfind 查找文件，毕竟 find命令有点复杂
 
+23. 好久没更新，有一个问题终于找到解决办法，finder里怎么创建新文件 mac store 找 NewFile
+
     
 
 ### 开发相关
 
 1. [vscode](https://code.visualstudio.com/download) (官网下载很慢，需要开vpn)：它的插件找在下面总结
 2. [Typora](https://typora.io/)：个人觉得最好用的md编辑器 , 我一共买了三个license  
-3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我在2019年花了30美金买了正版 bbedit 13.5.7，在2023.6.13再次话30美金升级到14.6.6
+3. [BBEdit 文本编辑器](https://www.barebones.com/support/bbedit/updates.html),也是开发人员必备, 更不用说我在2019.12.06花了30美金买了正版 bbedit 13.5.7，在2023.6.13再次花30美金升级到14.6.6
 4. [SourceTree](https://www.sourcetreeapp.com/) 版本管理, [设置github账号的ssh 访问](https://docs.github.com/en/github/authenticating-to-github/testing-your-ssh-connection) 或者[personal access token](https://github.com/settings/tokens) 但是 clone项目出错，原因还在查, 而且 github.com Access Key for qiulang2000 的密码，用 原来github生成的pat也显示错误。
 5. [iTerm2](https://iterm2.com/) + [fig](https://fig.io/) (需要在系统设置里允许 自动补全) 现在用 **warp** 多
 6. 因为不做iOS开发了就不需要 xcode，只需要Command Line Tools (CLT) for Xcode: `xcode-select --install`  这个装Homebrew就需要
