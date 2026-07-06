@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的阅读书单 | My Reading List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --gold: #c9a227;
+            --paper: #f5f0e8;
+            --text: #2c2c2c;
+            --text-light: #666;
+            --shadow: rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Playfair Display', Georgia, serif;
+            background: var(--paper);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .hero .stat {
+            text-align: center;
+        }
+
+        .hero .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .hero .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #fff;
+            padding: 30px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px var(--shadow);
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+        }
+
+        /* Books Grid */
+        .books-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .year-section {
+            margin-bottom: 60px;
+        }
+
+        .year-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Book Card */
+        .book-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .book-cover {
+            position: relative;
+            height: 220px;
+            background: linear-gradient(145deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-cover .placeholder {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            padding: 20px;
+        }
+
+        .book-cover .placeholder .icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .book-cover .placeholder .title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-title-en {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .book-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .book-category {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            background: var(--paper);
+            color: var(--primary);
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .book-rating {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+        }
+
+        .modal-cover {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(145deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-cover .placeholder {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .modal-cover .placeholder .icon {
+            font-size: 4rem;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-title-en {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .modal-tag {
+            padding: 6px 16px;
+            background: var(--paper);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text);
+        }
+
+        .modal-notes {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--paper);
+            border-radius: 8px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .modal-notes h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .modal-notes p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+
+            .filter-container {
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .modal-body {
+                padding: 25px;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .book-card {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .year-section {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>我的<span>阅读</span>书单</h1>
+            <p>这些年来读过的非虚构类书籍，涵盖科学、历史、探险、经济学等领域</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalBooks">100+</div>
+                    <div class="stat-label">书籍数量</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">阅读年份</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">主要类别</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">全部书籍</button>
+            <button class="filter-btn" data-filter="探险">探险故事</button>
+            <button class="filter-btn" data-filter="科学">科学史话</button>
+            <button class="filter-btn" data-filter="历史">历史人物</button>
+            <button class="filter-btn" data-filter="经济">经济学</button>
+            <button class="filter-btn" data-filter="艺术">艺术文化</button>
+            <button class="filter-btn" data-filter="中国">中国研究</button>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索书籍...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="books-section" id="booksContainer">
+        <!-- Books will be rendered here -->
+    </section>
+
+    <!-- Book Detail Modal -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-cover" id="modalCover">
+                <!-- Cover image or placeholder -->
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-title-en" id="modalTitleEn"></p>
+                <div class="modal-tags" id="modalTags"></div>
+                <div class="modal-description" id="modalDescription"></div>
+                <div class="modal-notes" id="modalNotes" style="display:none;">
+                    <h4>阅读笔记</h4>
+                    <p id="modalNotesContent"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>读书是一种生活方式，也是一种思考方式。</p>
+        <p style="margin-top: 10px; opacity: 0.6;">Built with ♥ for book lovers</p>
+    </footer>
+
+    <script>
+        // Book Data - Extracted from reading list
+        const booksData = [
+            // 2026
+            { year: 2026, title: "Tambora", titleEn: "Tambora", category: "科学", description: "关于1815年坦博拉火山爆发的历史及其对全球气候的影响。", notes: "听了两遍没听出主旨，先放一放。", cover: null },
+            { year: 2026, title: "Krakatoa", titleEn: "Krakatoa: The Day the World Exploded", category: "科学", description: "讲述1883年喀拉喀托火山爆发的故事及其历史影响。", notes: "听了两遍也没听出主旨，也放一放", cover: null },
+            { year: 2026, title: "自私的基因", titleEn: "The Selfish Gene", category: "科学", description: "理查德·道金斯的经典著作，从基因角度解释进化论。", notes: "这次至少把中文版看完，英文版听了很多遍也没感觉", cover: null },
+            { year: 2026, title: "命悬一线我不放手", titleEn: "", category: "中国", description: "医学类书籍，讲述生命危急时刻的故事。", notes: "", cover: null },
+            { year: 2026, title: "我看见的世界", titleEn: "The World I See", category: "科学", description: "李飞飞的AI相关著作。", notes: "", cover: null },
+            { year: 2026, title: "我的几何人生", titleEn: "My Geometric Life", category: "科学", description: "丘成桐的自传，讲述数学家的人生历程。", notes: "", cover: null },
+            { year: 2026, title: "Understanding Deep Learning", titleEn: "Understanding Deep Learning", category: "科学", description: "深度学习入门书籍。", notes: "", cover: null },
+            { year: 2026, title: "The Day We Found the Universe", titleEn: "The Day We Found the Universe", category: "科学", description: "关于宇宙发现的历史。", notes: "看了头，先放一放。", cover: null },
+            { year: 2026, title: "博弈与社会", titleEn: "Game Theory and Society", category: "经济", description: "博弈论与社会学的交叉研究。", notes: "", cover: null },
+            { year: 2026, title: "虚数的故事", titleEn: "The Story of Imaginary Numbers", category: "科学", description: "讲述虚数的历史和发展。", notes: "", cover: null },
+
+            // 2025
+            { year: 2025, title: "HMS Beagles", titleEn: "HMS Beagles", category: "探险", description: "关于达尔文乘坐的贝格尔号的详细历史。", notes: "几个版本，两个英文版本+中译版，今年花时间最多的书。", cover: null },
+            { year: 2025, title: "Darwin's Odyssey: The Voyage of the Beagle", titleEn: "Darwin's Odyssey", category: "探险", description: "达尔文环球航行记。", notes: "一百页多一点，但是很不错", cover: null },
+            { year: 2025, title: "When the Whales Walked", titleEn: "When the Whales Walked", category: "科学", description: "关于进化历程的科普书籍。", notes: "打算给弟弟讲的", cover: null },
+            { year: 2025, title: "Educated", titleEn: "Educated: A Memoir", category: "人物", description: "塔拉·韦斯特弗的自传，讲述她通过教育改变命运的故事。", notes: "这个故事一点也没打动我，差评！", cover: null },
+            { year: 2025, title: "Pattern on the Stone", titleEn: "The Pattern on the Stone", category: "科学", description: "丹尼·希利斯关于计算机科学的基础读物。", notes: "书我本不客气的说 垃圾，不知道想说什么", cover: null },
+
+            // 2024
+            { year: 2024, title: "名言侦探", titleEn: "", category: "中国", description: "一本关于名言出处的小书。", notes: "一本小书", cover: null },
+            { year: 2024, title: "我的二本学生", titleEn: "", category: "中国", description: "关于中国高等教育的故事。", notes: "", cover: null },
+            { year: 2024, title: "理念的力量", titleEn: "", category: "中国", description: "关于思想理念的书籍。", notes: "", cover: null },
+            { year: 2024, title: "上学记", titleEn: "", category: "中国", description: "关于教育经历的回忆。", notes: "", cover: null },
+            { year: 2024, title: "一百年很多事", titleEn: "", category: "中国", description: "百年中国历史回顾。", notes: "", cover: null },
+            { year: 2024, title: "学问与人生", titleEn: "", category: "中国", description: "胡适的文章汇编。", notes: "可以随时翻看", cover: null },
+            { year: 2024, title: "如何学好语文", titleEn: "", category: "教育", description: "叶圣陶关于语文学习的著作。", notes: "", cover: null },
+            { year: 2024, title: "叶圣陶的语文课", titleEn: "", category: "教育", description: "叶圣陶语文教育文章集。", notes: "9分评分肯定是虚高", cover: null },
+            { year: 2024, title: "Vincent's Starry Night", titleEn: "Vincent's Starry Night and Other Stories", category: "艺术", description: "与孩子一起读的艺术史。", notes: "和嘉嘉一起读完，还是很有收获", cover: null },
+            { year: 2024, title: "奇妙数学史", titleEn: "", category: "科学", description: "数学发展史科普。", notes: "没有太出彩，但也有些以前不知道的东西", cover: null },
+            { year: 2024, title: "1089 and All That", titleEn: "1089 and All That: A Journey into Mathematics", category: "科学", description: "大卫·阿cheson的趣味数学书。", notes: "一般，不过书的前言让我发现了中国威尔逊！", cover: null },
+            { year: 2024, title: "在华五十年", titleEn: "Fifty Years in China", category: "人物", description: "司徒雷登的在华回忆录。", notes: "", cover: null },
+            { year: 2024, title: "Other River", titleEn: "Other River", category: "探险", description: "探险类书籍。", notes: "看完也写书评", cover: null },
+            { year: 2024, title: "Brave Companions", titleEn: "Brave Companions: Portraits In History", category: "历史", description: "历史人物肖像。", notes: "", cover: null },
+            { year: 2024, title: "饥饿的盛世", titleEn: "", category: "中国", description: "关于乾隆盛世的历史分析。", notes: "以前都是看节选，这次基本从头到尾翻看了一遍。", cover: null },
+            { year: 2024, title: "我用中文做了一场梦", titleEn: "", category: "中国", description: "很不错的一本书。", notes: "很不错", cover: null },
+            { year: 2024, title: "美丽新世界", titleEn: "Brave New World", category: "文学", description: "奥威尔的反乌托邦小说。", notes: "这次完整读完", cover: null },
+            { year: 2024, title: "两地书", titleEn: "", category: "中国", description: "鲁迅等人的书信集。", notes: "", cover: null },
+
+            // 2023
+            { year: 2023, title: "Uncle Petros and Goldbach's Conjecture", titleEn: "Uncle Petros and Goldbach's Conjecture", category: "科学", description: "关于哥德巴赫猜想的小说。", notes: "书很一般", cover: null },
+            { year: 2023, title: "Logicomix", titleEn: "Logicomix", category: "科学", description: "用漫画形式讲述罗素和逻辑的故事。", notes: "虽然是一本漫画书，但读起来还有吃力", cover: null },
+            { year: 2023, title: "时评写作十讲", titleEn: "", category: "写作", description: "曹林关于时评写作的著作。", notes: "", cover: null },
+            { year: 2023, title: "心脏简史", titleEn: "Heart: A History", category: "科学", description: "心脏医学发展史。", notes: "", cover: null },
+            { year: 2023, title: "Open Heart", titleEn: "Open Heart", category: "科学", description: "心脏外科医生的故事。", notes: "", cover: null },
+            { year: 2023, title: "刀锋人生", titleEn: "The Knife Edge", category: "人物", description: "外科医生的人生故事。", notes: "", cover: null },
+            { year: 2023, title: "一百年很多事", titleEn: "", category: "中国", description: "百年中国历史。", notes: "", cover: null },
+            { year: 2023, title: "Quantum A Guide for the Perplexed", titleEn: "Quantum: A Guide for the Perplexed", category: "科学", description: "量子力学入门指南。", notes: "好像没有太特别", cover: null },
+            { year: 2023, title: "The Joy of Pi", titleEn: "The Joy of Pi", category: "科学", description: "关于圆周率的有趣书籍。", notes: "这本比较简单", cover: null },
+            { year: 2023, title: "病隙碎笔", titleEn: "", category: "中国", description: "史铁生的散文集。", notes: "实在没看出好在哪", cover: null },
+            { year: 2023, title: "微积分的故事", titleEn: "", category: "科学", description: "微积分发展史。", notes: "", cover: null },
+            { year: 2023, title: "Endurance", titleEn: "Endurance: An Epic of Polar Adventure", category: "探险", description: "沙克尔顿的南极探险故事。", notes: "", cover: null },
+            { year: 2023, title: "The Great Gatsby", titleEn: "The Great Gatsby", category: "文学", description: "了不起的盖茨比。", notes: "再听一遍", cover: null },
+            { year: 2023, title: "可能的艺术", titleEn: "", category: "政治", description: "刘瑜的政治随笔。", notes: "", cover: null },
+
+            // 2022
+            { year: 2022, title: "平如美棠", titleEn: "", category: "中国", description: "饶平如的爱情故事。", notes: "", cover: null },
+            { year: 2022, title: "Reality Is Not What It Seems", titleEn: "Reality Is Not What It Seems", category: "科学", description: "卡洛·罗韦利的物理学科普。", notes: "一般", cover: null },
+            { year: 2022, title: "语文专题学习与整本书阅读十讲", titleEn: "", category: "教育", description: "语文教学研究。", notes: "", cover: null },
+            { year: 2022, title: "Burton", titleEn: "Burton: A Biography of Sir Richard Francis Burton", category: "探险", description: "理查德·弗朗西斯·伯顿的传记。", notes: "今年重点阅读的书是关于Richard Burton", cover: null },
+            { year: 2022, title: "Devil Drives", titleEn: "Devil Drives: A Life of Sir Richard Burton", category: "探险", description: "伯顿的另一种传记。", notes: "", cover: null },
+            { year: 2022, title: "Unix a History and a Memoir", titleEn: "Unix: A History and a Memoir", category: "技术", description: "Unix操作系统历史。", notes: "", cover: null },
+            { year: 2022, title: "走出非洲", titleEn: "Out of Africa", category: "文学", description: "凯伦·布里克森的非洲回忆录。", notes: "完整版其实看得断断续续", cover: null },
+            { year: 2022, title: "River of the Gods", titleEn: "River of the Gods", category: "探险", description: "关于尼罗河源头的探险故事。", notes: "", cover: null },
+            { year: 2022, title: "Explorers of the Nile", titleEn: "Explorers of the Nile", category: "探险", description: "尼罗河探险史。", notes: "", cover: null },
+            { year: 2022, title: "费马大定理", titleEn: "Fermat's Last Theorem", category: "科学", description: "西蒙·辛格关于费马大定理的故事。", notes: "这次只能给中上的评分", cover: null },
+            { year: 2022, title: "The God Equation", titleEn: "The God Equation", category: "科学", description: "加来道雄关于统一理论的新书。", notes: "", cover: null },
+            { year: 2022, title: "优雅的等式", titleEn: "Euler's Formula", category: "科学", description: "欧拉公式与数学之美。", notes: "看完一般，但是e和复数的简单介绍多少有点用", cover: null },
+            { year: 2022, title: "病毒星球", titleEn: "", category: "科学", description: "关于病毒科普。", notes: "", cover: null },
+            { year: 2022, title: "Travel in China", titleEn: "Travel in China", category: "中国", description: "中国纪行。", notes: "这次才认真读了", cover: null },
+
+            // 2021
+            { year: 2021, title: "E=mc2", titleEn: "E=mc2: A Biography of the World's Most Famous Equation", category: "科学", description: "爱因斯坦质能方程的历史。", notes: "", cover: null },
+            { year: 2021, title: "Einstein His Life and Universe", titleEn: "Einstein: His Life and Universe", category: "人物", description: "沃尔特·艾萨克森写的爱因斯坦传记。", notes: "读了两三遍", cover: null },
+            { year: 2021, title: "孤筏重洋", titleEn: "Kon-Tiki Voyage", category: "探险", description: "托尔·海尔达尔的海漂流记。", notes: "英文版还是有点难度", cover: null },
+            { year: 2021, title: "The Manager's Path", titleEn: "The Manager's Path", category: "管理", description: "软件开发管理指南。", notes: "倒也没觉得有什么特别", cover: null },
+            { year: 2021, title: "The Making of a Manager", titleEn: "The Making of a Manager", category: "管理", description: "新任管理者指南。", notes: "", cover: null },
+            { year: 2021, title: "Tuesdays with Morrie", titleEn: "Tuesdays with Morrie", category: "人生", description: "米奇·阿尔博姆的人生哲理书。", notes: "", cover: null },
+            { year: 2021, title: "A World Without Time", titleEn: "A World Without Time", category: "科学", description: "关于哥德尔和爱因斯坦的故事。", notes: "觉得写得一般，没有出彩的地方", cover: null },
+            { year: 2021, title: "Einstein's Greatest Mistake", titleEn: "Einstein's Greatest Mistake", category: "人物", description: "爱因斯坦的错误传记。", notes: "这本书倒是觉得一般", cover: null },
+            { year: 2021, title: "Born to Run", titleEn: "Born to Run", category: "人物", description: "布鲁斯·斯pringsteen's自传。", notes: "还是有几个章节没完全听懂", cover: null },
+            { year: 2021, title: "Hackers & Painters", titleEn: "Hackers & Painters", category: "技术", description: "保罗·格雷厄姆的文章集。", notes: "觉得一般，只能说大多文章没经受时间的考验", cover: null },
+            { year: 2021, title: "The Double Helix", titleEn: "The Double Helix", category: "科学", description: "詹姆斯·沃森讲述DNA发现的故事。", notes: "", cover: null },
+            { year: 2021, title: "我的漫画人生", titleEn: "", category: "艺术", description: "手冢治虫的自传。", notes: "", cover: null },
+
+            // 2020
+            { year: 2020, title: "Evolution: The Triumph of an Idea", titleEn: "Evolution: The Triumph of an Idea", category: "科学", description: "进化论的科普书籍。", notes: "推荐，书中提到不少知识点", cover: null },
+            { year: 2020, title: "江城", titleEn: "The River Town", category: "中国", description: "彼得·海斯勒的中国纪实。", notes: "我更推荐Mr. China", cover: null },
+            { year: 2020, title: "Simply Gödel", titleEn: "Simply Gödel", category: "科学", description: "哥德尔不完备定理入门。", notes: "几年看Gödel没看懂，不甘心，这次再挑战下", cover: null },
+            { year: 2020, title: "The Invention of Nature", titleEn: "The Invention of Nature", category: "人物", description: "亚历山大·冯·洪堡的传记。", notes: "唯一缺点对洪堡在南美5年探险讲得不够多", cover: null },
+            { year: 2020, title: "The Adventures of Alexander Von Humboldt", titleEn: "The Adventures of Alexander Von Humboldt", category: "探险", description: "洪堡南美探险的补充读物。", notes: "", cover: null },
+            { year: 2020, title: "丈量世界", titleEn: "", category: "文学", description: "关于洪堡和数学家的德国小说。", notes: "不推荐，不好看", cover: null },
+            { year: 2020, title: "中国十个词", titleEn: "China in Ten Words", category: "中国", description: "余华笔下的中国。", notes: "生在70年代的人看了才有感觉", cover: null },
+            { year: 2020, title: "永生的海拉", titleEn: "The Immortal Life of Henrietta Lacks", category: "科学", description: "海拉细胞的故事。", notes: "是励志故事，推荐", cover: null },
+            { year: 2020, title: "中美写作教学对话十五讲", titleEn: "", category: "教育", description: "写作教学研究。", notes: "挺有收获", cover: null },
+            { year: 2020, title: "夜航西飞", titleEn: "West with the Night", category: "探险", description: "柏瑞尔·马卡姆的非洲飞行故事。", notes: "看习惯了典型叙述手法，读起来这本书有点费劲", cover: null },
+            { year: 2020, title: "毕加索画传", titleEn: "", category: "艺术", description: "毕加索的传记漫画。", notes: "有几段因为印刷体原因没看懂", cover: null },
+            { year: 2020, title: "一生的旅程", titleEn: "The Ride of Lifetime", category: "管理", description: "迪士尼CEO自传。", notes: "文笔比较轻松简单", cover: null },
+            { year: 2020, title: "Longitude", titleEn: "Longitude", category: "科学", description: "经度测定发明的故事。", notes: "150页薄薄一本，但因为涉及背景较多，第一遍很多没听懂", cover: null },
+            { year: 2020, title: "1984", titleEn: "1984", category: "文学", description: "乔治·奥威尔的反乌托邦小说。", notes: "因为最近的时局，把这本十多年前看过的书又翻出来读", cover: null },
+            { year: 2020, title: "Shackleton's Boat", titleEn: "Shackleton's Boat", category: "探险", description: "关于詹姆斯·凯尔德号的故事。", notes: "死忠粉", cover: null },
+            { year: 2020, title: "烟雨任平生", titleEn: "", category: "中国", description: "关于高耀洁的书。", notes: "读来很沉重", cover: null },
+            { year: 2020, title: "David Livingstone", titleEn: "David Livingstone: Africa's Trailblazer", category: "探险", description: "大卫· Livingstone的传记。", notes: "写给小朋友看的", cover: null },
+
+            // 2019
+            { year: 2019, title: "Into Africa", titleEn: "Into Africa", category: "探险", description: "斯坦利和利文斯通的故事。", notes: "第一次了解了Livingstone经历，推荐四星", cover: null },
+            { year: 2019, title: "驭风少年", titleEn: "The Boy Who Harnesses the Wind", category: "探险", description: "马拉维少年发明风车的故事。", notes: "推荐，励志故事！", cover: null },
+            { year: 2019, title: "乞力马扎罗的雪", titleEn: "The Snows of Kilimanjaro", category: "文学", description: "海明威的短篇小说。", notes: "还是欣赏不来", cover: null },
+            { year: 2019, title: "绝对笑喷之弃业医生日志", titleEn: "This is Going to Hurt", category: "人物", description: "英国医生的日记。", notes: "很有意思，小屁孩日记成人版，推荐！", cover: null },
+            { year: 2019, title: "Entanglement", titleEn: "Entanglement", category: "科学", description: "阿米尔·阿克泽尔的量子力学书。", notes: "完全就当学习英语", cover: null },
+            { year: 2019, title: "The Professor and the Madman", titleEn: "The Professor and the Madman", category: "人物", description: "西蒙·温彻斯特关于牛津词典的书。", notes: "推荐，不到200页", cover: null },
+            { year: 2019, title: "Shackleton's Boat Journey", titleEn: "Shackleton's Boat Journey", category: "探险", description: "弗兰克·沃斯利写的南极探险。", notes: "这是还债，这是我看过的最扣人心弦的书之一", cover: null },
+
+            // 2018
+            { year: 2018, title: "Quantum Enigma", titleEn: "Quantum Enigma", category: "科学", description: "物理与意识的讨论。", notes: "但我读完什么深刻印象", cover: null },
+            { year: 2018, title: "2001太空漫游", titleEn: "2001: A Space Odyssey", category: "文学", description: "阿瑟·克拉克的科幻经典。", notes: "还不错，可以推荐", cover: null },
+            { year: 2018, title: "An Illustrated Book of Bad Arguments", titleEn: "An Illustrated Book of Bad Arguments", category: "逻辑", description: "逻辑和辩论的入门书。", notes: "还不错", cover: null },
+            { year: 2018, title: "A Long Walk to Water", titleEn: "A Long Walk to Water", category: "文学", description: "苏丹男孩的真实故事。", notes: "推荐给初一小朋友看", cover: null },
+            { year: 2018, title: "蓝色的海豚岛", titleEn: "Island of the Blue Dolphins", category: "文学", description: "美国儿童文学经典。", notes: "可看但也不算太出彩", cover: null },
+            { year: 2018, title: "In the Heart of the Sea", titleEn: "In the Heart of the Sea", category: "探险", description: "埃塞克斯号沉船事件。", notes: "感觉有几个地方没完全听懂", cover: null },
+
+            // 2017
+            { year: 2017, title: "The Man Who Loved China", titleEn: "The Man Who Loved China", category: "人物", description: "李约瑟博士的传记。", notes: "非常推荐", cover: null },
+            { year: 2017, title: "Guns Germs and Steel", titleEn: "Guns, Germs, and Steel", category: "历史", description: "贾雷德·戴蒙德的人类文明分析。", notes: "这次总算从头到尾读完了", cover: null },
+            { year: 2017, title: "Quantum", titleEn: "Quantum: Einstein, Bohr, and the Great Debate", category: "科学", description: "量子力学史话。", notes: "前几章很不错，后几章差评", cover: null },
+            { year: 2017, title: "Uncertainty", titleEn: "Uncertainty", category: "科学", description: "爱因斯坦、玻尔等人的故事。", notes: "但我觉得一般", cover: null },
+            { year: 2017, title: "丁丁与我", titleEn: "", category: "艺术", description: "埃尔热访谈录。", notes: "在豆瓣给了五星", cover: null },
+            { year: 2017, title: "The Finest Hours", titleEn: "The Finest Hours", category: "探险", description: "美国海岸警卫队救援故事。", notes: "一般", cover: null },
+            { year: 2017, title: "Frozen in Time", titleEn: "Frozen in Time", category: "探险", description: "南极探险的科普书。", notes: "不推荐，当学英语了", cover: null },
+            { year: 2017, title: "Boys in the Boat", titleEn: "The Boys in the Boat", category: "历史", description: "美国划船队的故事。", notes: "amazon的评价特别好，但我并没觉得特别精彩", cover: null },
+            { year: 2017, title: "安妮日记", titleEn: "The Diary of a Young Girl", category: "文学", description: "安妮·弗兰克的日记。", notes: "", cover: null },
+
+            // 2016
+            { year: 2016, title: "God's Equation", titleEn: "God's Equation", category: "科学", description: "爱因斯坦和相对论的故事。", notes: "让我涨知识，所以推荐", cover: null },
+            { year: 2016, title: "The Barefoot Lawyer", titleEn: "The Barefoot Lawyer", category: "中国", description: "阿炳的故事。", notes: "没有看完，需要找时间再看", cover: null },
+            { year: 2016, title: "知无涯者", titleEn: "The Man Who Knew Infinity", category: "人物", description: "拉马努金的传记。", notes: "书其实感觉写得不够引人入胜", cover: null },
+            { year: 2016, title: "Letting Go of God", titleEn: "Letting Go of God", category: "思想", description: "朱莉娅·斯weeney关于信仰的演讲。", notes: "几个关于god演讲都很有意思", cover: null },
+            { year: 2016, title: "Herge and the Treasures of Tintin", titleEn: "Herge and the Treasures of Tintin", category: "艺术", description: "丁丁历险记研究。", notes: "不是丁丁粉有一本就可以", cover: null },
+            { year: 2016, title: "Introducing Quantum Theory", titleEn: "Introducing Quantum Theory", category: "科学", description: "量子理论入门漫画书。", notes: "这本简单的小册子把大部分史料都讲得很清楚", cover: null },
+
+            // 2015
+            { year: 2015, title: "永远的丁丁", titleEn: "Tin Tin the Complete Companion", category: "艺术", description: "丁丁历险记详细解读。", notes: "这是丁丁迷必须看的书", cover: null },
+            { year: 2015, title: "Endurance", titleEn: "Endurance: Shackleton's Incredible Voyage", category: "探险", description: "沙克尔顿南极探险的经典著作。", notes: "我的偶像，这几本我都是反复读了又读", cover: null },
+            { year: 2015, title: "The Endurance", titleEn: "The Endurance", category: "探险", description: "沙克尔顿传奇探险的图文本。", notes: "如果只推荐一本关于Endurance的书，那我推荐它", cover: null },
+            { year: 2015, title: "Shackleton's Stowaway", titleEn: "Shackleton's Stowaway", category: "探险", description: "沙克尔顿的偷渡者故事。", notes: "如果不是死忠粉丝不需要看", cover: null },
+            { year: 2015, title: "Shipwreck at the Bottom of the World", titleEn: "Shipwreck at the Bottom of the World", category: "探险", description: "沙克尔顿探险的青少版。", notes: "", cover: null },
+            { year: 2015, title: "坚不可摧", titleEn: "Unbroken", category: "历史", description: "路易·赞佩里尼的二战争战俘故事。", notes: "只有结局让我觉得不太合理", cover: null },
+
+            // Earlier years
+            { year: 2014, title: "费马大定理", titleEn: "Fermat's Last Theorem", category: "科学", description: "西蒙·辛格讲述费马大定理证明的故事。", notes: "记忆中我完整的读过的以一本non-fiction", cover: null },
+            { year: 2014, title: "大江大河1949", titleEn: "", category: "中国", description: "龙应台关于1949年的书。", notes: "龙应台的书我只看这本", cover: null },
+            { year: 2014, title: "巨流河", titleEn: "", category: "中国", description: "齐邦媛的回忆录。", notes: "一定要看台版", cover: null },
+            { year: 2014, title: "我们最幸福", titleEn: "Nothing to Envy", category: "朝鲜", description: "脱北者讲述朝鲜生活。", notes: "印象最深", cover: null },
+            { year: 2014, title: "上帝掷骰子吗", titleEn: "", category: "科学", description: "量子力学史话。", notes: "我读的第一本关于量子力学史话的书，非常适合当做入门书", cover: null },
+            { year: 2014, title: "绝版甲午", titleEn: "", category: "中国", description: "雪珥关于甲午战争的著作。", notes: "痛苦的承认这是一场文明对野蛮的战争", cover: null },
+            { year: 2014, title: "我的漫画人生", titleEn: "", category: "艺术", description: "手冢治虫自传。", notes: "薄薄一本书，至今能印象深刻", cover: null },
+            { year: 2014, title: "蒋介石日记解读", titleEn: "", category: "中国", description: "杨天石关于蒋介石的研究。", notes: "", cover: null },
+            { year: 2014, title: "国家记忆", titleEn: "", category: "中国", description: "章东磐的抗战历史相册。", notes: "一套很特别的书，序写得很感人", cover: null },
+            { year: 2014, title: "朝闻道集", titleEn: "", category: "中国", description: "周有光的文章集。", notes: "", cover: null },
+            { year: 2014, title: "Logicomix", titleEn: "Logicomix", category: "科学", description: "用漫画讲述罗素和逻辑的历史。", notes: "", cover: null },
+        ];
+
+        // Render books by year
+        function renderBooks(books) {
+            const container = document.getElementById('booksContainer');
+            container.innerHTML = '';
+
+            // Group by year
+            const grouped = {};
+            books.forEach(book => {
+                if (!grouped[book.year]) grouped[book.year] = [];
+                grouped[book.year].push(book);
+            });
+
+            // Sort years in descending order
+            const years = Object.keys(grouped).sort((a, b) => b - a);
+
+            years.forEach((year, index) => {
+                const yearSection = document.createElement('div');
+                yearSection.className = 'year-section';
+                yearSection.style.animationDelay = `${index * 0.1}s`;
+
+                const yearTitle = document.createElement('h2');
+                yearTitle.className = 'year-title';
+                yearTitle.textContent = year;
+                yearSection.appendChild(yearTitle);
+
+                const grid = document.createElement('div');
+                grid.className = 'books-grid';
+
+                grouped[year].forEach((book, bookIndex) => {
+                    const card = createBookCard(book, index);
+                    grid.appendChild(card);
+                });
+
+                yearSection.appendChild(grid);
+                container.appendChild(yearSection);
+            });
+
+            // Update total count
+            document.getElementById('totalBooks').textContent = books.length;
+        }
+
+        function createBookCard(book, index) {
+            const card = document.createElement('div');
+            card.className = 'book-card';
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.onclick = () => openModal(book);
+
+            const cover = document.createElement('div');
+            cover.className = 'book-cover';
+
+            if (book.cover) {
+                const img = document.createElement('img');
+                img.src = book.cover;
+                img.alt = book.title;
+                cover.appendChild(img);
+            } else {
+                cover.innerHTML = `
+                    <div class="placeholder">
+                        <div class="icon">📚</div>
+                        <div class="title">${book.title}</div>
+                    </div>
+                `;
+            }
+
+            const info = document.createElement('div');
+            info.className = 'book-info';
+
+            const title = document.createElement('h3');
+            title.className = 'book-title';
+            title.textContent = book.title;
+
+            const titleEn = document.createElement('p');
+            titleEn.className = 'book-title-en';
+            titleEn.textContent = book.titleEn;
+
+            const description = document.createElement('p');
+            description.className = 'book-description';
+            description.textContent = book.description;
+
+            const meta = document.createElement('div');
+            meta.className = 'book-meta';
+
+            const category = document.createElement('span');
+            category.className = 'book-category';
+            category.textContent = book.category;
+
+            meta.appendChild(category);
+            info.appendChild(title);
+            info.appendChild(titleEn);
+            info.appendChild(description);
+            info.appendChild(meta);
+
+            card.appendChild(cover);
+            card.appendChild(info);
+
+            return card;
+        }
+
+        function openModal(book) {
+            const modal = document.getElementById('bookModal');
+            const cover = document.getElementById('modalCover');
+            const title = document.getElementById('modalTitle');
+            const titleEn = document.getElementById('modalTitleEn');
+            const tags = document.getElementById('modalTags');
+            const description = document.getElementById('modalDescription');
+            const notes = document.getElementById('modalNotes');
+            const notesContent = document.getElementById('modalNotesContent');
+
+            if (book.cover) {
+                cover.innerHTML = `<img src="${book.cover}" alt="${book.title}">`;
+            } else {
+                cover.innerHTML = `
+                    <div class="placeholder">
+                        <div class="icon">📖</div>
+                    </div>
+                `;
+            }
+
+            title.textContent = book.title;
+            titleEn.textContent = book.titleEn || '';
+            titleEn.style.display = book.titleEn ? 'block' : 'none';
+
+            tags.innerHTML = `
+                <span class="modal-tag">${book.year}年</span>
+                <span class="modal-tag">${book.category}</span>
+            `;
+
+            description.textContent = book.description;
+
+            if (book.notes) {
+                notes.style.display = 'block';
+                notesContent.textContent = book.notes;
+            } else {
+                notes.style.display = 'none';
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on outside click
+        document.getElementById('bookModal').addEventListener('click', (e) => {
+            if (e.target.id === 'bookModal') closeModal();
+        });
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Filter buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                if (filter === 'all') {
+                    renderBooks(booksData);
+                } else {
+                    const filtered = booksData.filter(book =>
+                        book.category.includes(filter) || book.titleEn && book.titleEn.toLowerCase().includes(filter.toLowerCase())
+                    );
+                    renderBooks(filtered);
+                }
+            });
+        });
+
+        // Search
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            if (query.length < 2) {
+                renderBooks(booksData);
+                return;
+            }
+
+            const filtered = booksData.filter(book =>
+                book.title.toLowerCase().includes(query) ||
+                book.titleEn.toLowerCase().includes(query) ||
+                book.description.toLowerCase().includes(query)
+            );
+            renderBooks(filtered);
+        });
+
+        // Initial render
+        renderBooks(booksData);
+    </script>
+</body>
+</html>

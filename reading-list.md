@@ -18,18 +18,20 @@
 7. **李娟**  
    1. 记一忘二三  
    2. 冬牧场  
-8. **Krakatoa**  
-9. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
-10. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉  
-11. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
-12. 李飞飞 **我看见的世界**  
-13. 丘成桐 **我的几何人生**  
-14. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
-15. **The Day We Found the Universe** ？  
-16. **博弈与社会**  
-17. The Cartoon Introduction to Philosophy  
-18. 虚数的故事  
-19. **中国威尔逊**  
+8. **道一风同** Doctors East Doctors West
+9. **通往奴役之路**
+10. **Krakatoa**  
+11. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
+12. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉  
+13. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
+14. 李飞飞 **我看见的世界**  
+15. 丘成桐 **我的几何人生**  
+16. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
+17. **The Day We Found the Universe** ？  
+18. **博弈与社会**  
+19. The Cartoon Introduction to Philosophy  
+20. 虚数的故事  
+21. **中国威尔逊**  
 
 
 ### 2025
@@ -48,8 +50,8 @@
 
 > I have several thousand books about computation, but I can’t think of a great next level book. There must be one by now, so it will be interesting to see what other people who answer this question have to say. Meanwhile, I’ll poke around and see what I can find for you.
 
-    10. **50岁打工系列**
-    10. **我在北京送快递**
+11. **50岁打工系列**
+12. **我在北京送快递**
 
 
 
@@ -433,6 +435,19 @@
 5. Quantum Enigma: Physics Encounters Consciousness
 6. Entanglement: The Greatest Mystery in Physics  by Amir D. Aczel 
 7. The Quantum Story A History in 40 Moments
+
+### 中国游记
+
+#### 20世纪初西方传教士写的书
+
+1. 司徒雷登，**在华五十年**
+1. **中国威尔逊**  
+1. 道一风同
+
+#### 19世纪
+
+1. Travel in China
+2. 中国人的德行
 
 
 
