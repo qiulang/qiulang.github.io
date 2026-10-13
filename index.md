@@ -1,31 +1,24 @@
-关于我，能怎么简单做个自我介绍呢？
+## 简单的自我介绍
 
-### 简单的总结
+### 开发相关
 
-[stackoverflow](https://stackoverflow.com/users/301513/qiulang) 上我的主要得分都和iOS和node.js相关，因为我从2011开始做做iOS开发一直到2017，我记得应该是从iOS4做到iOS10。这几年转到做nodejs服务器开发。至于再早10年经历，实在也没什么亮点，研究生毕业，工作、买房、结婚生子。
+开发相关的内容 我放在 https://github.com/qiulang/learning_python
 
-因为负责一些产品和项目，所以有时候也关心些方法论的问题，比如我提到这个[关于scrum的问题](https://stackoverflow.com/users/301513/qiulang) 还入选 SO blog [Does scrum ruin great engineers or are you doing it wrong?](https://stackoverflow.blog/2020/06/29/does-scrum-ruin-great-engineers-or-are-you-doing-it-wrong/)  工作上难免会有不顺心的事，我都努力做成[开放式的问答](https://workplace.stackexchange.com/users/38071/qiulang) 希望能听听别人的建议。
+https://github.com/qiulang/vllm-sglang-perf 记录我从2025 至今做的一个主要工作。
 
-总的来说是个很平常又不甘于平庸的人。工作之外，我喜欢看书，听歌，看电影。大概从10年开始潜水，争取做到每年一次。
-
-这些年看过的书我[简单总结下](./reading-list.md)
-
-看过的电影大都在[豆瓣上记录了](https://movie.douban.com/people/itcrowd/)
-
-喜欢的歌找个时间再总结下，不过我的boss的粉，也很喜欢 leonard cohen
+[stackoverflow 我主要回答一些nodejs 相关问题](https://stackoverflow.com/users/301513/qiulang)
 
 
 
-### 开发文档
+### 读书笔记
 
-做开发难免就会写一些总结，对别人没啥价值，对我自己是个记录，按时间顺序排列，而且不涉及公司任何内容。但现在列的基本都是和node开发相关。iOS相关的基本上我都通过SO回答问题了。
+这里主要记录我的读书笔记 ，这些年看过的书我[有这些](./reading-list.md)
 
-1. [Mac 装机必备](my-mac-must-have.md)
-2. [MacOS 各种脑残设计](MacOS的脑残设计.md)
+我花了很多心思翻译[这篇 flying hump](./flying-hump-2016/index.html) , 如果对飞虎队的历史感兴趣，一定看看
+
+我还创作一本图画书 [美猴王](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title) 之后我会把这本书的文字版也开源，希望给我多提提意见
+
+我对历史很感兴趣， [SO和别人讨论过不少问题](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97)
 
 
-
-### 翻译文章
-
-1. [FLYING THE HUMP 飞越驼峰](https://medium.com/@qiulang/flying-the-hump-%E9%A3%9E%E8%B6%8A%E9%A9%BC%E5%B3%B0-7df41bff252c)
 

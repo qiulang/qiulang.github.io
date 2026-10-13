@@ -17,21 +17,22 @@
    3. 暂时不想看 **最后的告别**  
 7. **李娟**  
    1. 记一忘二三  
-   2. 冬牧场  
+   2. 冬牧场  **先不看了**
 8. **道一风同** Doctors East Doctors West
-9. **通往奴役之路**
-10. **Krakatoa**  
-11. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
-12. **自私的基因**  这次至少把中文版看完，英文版听了很多遍也没感觉  
-13. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
-14. 李飞飞 **我看见的世界**  
-15. 丘成桐 **我的几何人生**  
-16. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
-17. **The Day We Found the Universe** ？  
-18. **博弈与社会**  
-19. The Cartoon Introduction to Philosophy  
-20. 虚数的故事  
-21. **中国威尔逊**  
+9. **中国国民性演变史** 一般
+10. **通往奴役之路** 
+11. **自私的基因**  在读 
+12. **Krakatoa**  
+13. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
+14. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
+15. 李飞飞 **我看见的世界**  
+16. 丘成桐 **我的几何人生**  
+17. https://udlbook.github.io/udlbook/ "**understanding deep learning**"  
+18. **The Day We Found the Universe** ？  
+19. **博弈与社会**  
+20. The Cartoon Introduction to Philosophy  
+21. 虚数的故事  
+22. **中国威尔逊**  
 
 
 ### 2025
@@ -189,7 +190,7 @@
 12. Fermat's Last Theorem 费马大定理 当年只听过3小时约略版，这次找到8小时完整版。所以仔细听几次。感觉没有当年第一次看“震撼”，这次只能给中上的评分
 13. **说理与思辨 高考议论文写作指津** 
 14. The God Equation: The Quest for a Theory of Everything 加來道雄的新书，大致听了一遍。没能在听一遍
-15. The Adventures of Sir Samuel White Baker: Victorian Hero 没看
+15. The Adventures of Sir Samuel White Baker: Victorian Hero **没看**
 16. **优雅的等式 欧拉公式与数学之美**，看完一般，但是e和复数的简单介绍多少有点用
 17. **病毒星球**
 18. **Shackleton: The Antarctic Challenge** 国家地理画册，2022最后一本书，但是书一般，居然有拼写错误和内容错误。 
@@ -280,7 +281,7 @@
 4. **An Illustrated Book of Bad Arguments** 关于将逻辑和辩论的一本小书，还不错
 5. **A Long walk to Water** & **Number the Stars 数星星** ，因为要给儿子推荐几本文字相对简单但又有故事的书，看了这三本，a long walk to water 推荐给初一小朋友看；**数星星**和 **蓝色的海豚岛** 可看可不看
 6. **Island of the Blue Dolphins 蓝色的海豚岛** 可看但也不算太出彩
-7. **In the heart of the sea 海洋深处** 又一个生存与死亡的苦难经历，感觉有几个地方没完全听懂，有时间找中文版再看看，三星半吧 audiobookstore.com  account qiulang@gmail.com
+7. **In the heart of the sea 海洋深处** 又一个生存与死亡的苦难经历，感觉有几个地方没完全听懂，有时间找中文版再看看，三星半吧 audiobookstore.com  account qiulang@gmail.com  [作者2020年在youtube 视频](https://www.youtube.com/watch?v=447JkgSaOUo)
 
 
 
@@ -366,6 +367,8 @@
 15. **Star Wars ™ Made Easy** 主要 ride of lifetime又勾起我的对星战兴趣
 16. **Land: How the Hunger for Ownership Shaped the Modern World**
 17. **六福客栈**和 **Gladys Aylward: The Adventure of a Lifetime**
+18. 乔达摩悉达多
+19. 观鸟的故事
 
 
 
