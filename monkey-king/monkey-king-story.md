@@ -1,4 +1,4 @@
-# Journey to the West
+## Birth of the Monkey King — The Chinese classic, retold for all
 
 **Author 作者:** Lang Qiu (邱朗)
 
@@ -6,9 +6,7 @@ Copyright © 2026 Lang Qiu (邱朗). This text is licensed under [CC BY-NC 4.0](
 
 版权所有 © 2026 邱朗。本文按 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans) 授权，可署名转载，不得商用。纸质版图画书见 [Amazon](https://www.amazon.com/dp/1763731669)。
 
----
-
-## Part One: Birth of the Monkey King — The Chinese classic, retold for all
+I faithfully follow the narrative of the classic *Journey to the West*, revising it for easy reading.
 
 ### Introduction
 
