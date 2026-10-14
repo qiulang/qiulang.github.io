@@ -24,6 +24,10 @@
 - [美国人为什么至今仍对无神论感到不安？（译文与注解）](God/%E7%BE%8E%E5%9B%BD%E4%BA%BA%E4%B8%BA%E4%BD%95%E4%BB%8D%E5%AF%B9%E6%97%A0%E7%A5%9E%E8%AE%BA%E4%B8%8D%E5%AE%89-%E8%AF%91%E6%96%87%E4%B8%8E%E6%B3%A8%E8%A7%A3.html)
 - [我的偶像：图灵测试](%E5%81%B6%E5%83%8F/%E6%88%91%E7%9A%84%E5%81%B6%E5%83%8F-%E5%9B%BE%E7%81%B5%E6%B5%8B%E8%AF%95.html)
 
+## AI 与大模型 AI & LLMs
+
+- [选什么样的话题能快速识别GPT们是不是在胡说八道（2024）](LLM/llm-hallucination-2024/)
+
 ## 软件与管理 Software & Management
 
 - [The Pattern on the Stone – A Dated Artifact Masquerading as Timeless Fundamentals](The%20Pattern%20on%20the%20Stone%20/The%20Pattern%20on%20the%20Stone%20%E2%80%93%20A%20Dated%20Artifact%20Masquerading%20as%20Timeless%20Fundamentals.html)

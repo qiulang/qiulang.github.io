@@ -1,0 +1,49 @@
+/* LLM 的胡说八道（2024）— 网页版样式 */
+:root {
+  --bg: #fbfaf7;
+  --text: #1f1f1f;
+  --muted: #5d5d5d;
+  --rule: #e2ddd3;
+  --link: #1d5fa8;
+  --measure: 46rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --text: #e4e2dd;
+    --muted: #a6a39c;
+    --rule: #3a3833;
+    --link: #7fb2ec;
+  }
+  img { filter: brightness(.92); }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+               "Microsoft YaHei", "Noto Sans CJK SC", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.85;
+}
+.doc { max-width: var(--measure); margin: 0 auto; padding: 3rem 1rem 5rem; }
+.masthead { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); }
+.masthead h1 { font-size: 2rem; line-height: 1.35; margin: 0 0 .75rem; }
+.subtitle { color: var(--muted); margin: 0; }
+p { margin: 0 0 1.1em; }
+h2 { font-size: 1.3rem; margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+ol { padding-left: 1.6rem; margin: 0 0 1.2em; }
+li { margin: .2em 0; }
+a { color: var(--link); text-underline-offset: 2px; word-break: break-all; }
+img {
+  display: block;
+  max-width: min(100%, 30rem);
+  height: auto;
+  margin: 1.2rem auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.site-footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; }
+.site-footer p { margin: .3em 0; }
