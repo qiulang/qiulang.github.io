@@ -4,7 +4,7 @@
 
 ### 简单的自我介绍
 
-#### 开发相关
+#### 软件与 AI
 
 [stackoverflow](https://stackoverflow.com/users/301513/qiulang) 我主要回答一些 Node.js/iOS 相关问题。  
 
@@ -12,7 +12,7 @@
 
 我从2024开始做大模型开发，当时写了一篇[怎么鉴定大模型胡说八道的文章](./读书笔记/llm-hallucination-2024/index.html)，两年过去了，但我觉得情况并没改善多少。
 
-#### 读书笔记
+#### 读书与写作
 
 这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。  
 
@@ -28,17 +28,17 @@
 
 ### About Me
 
-#### Development
+#### Software & AI
 
 On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.  
 
 [vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now.  
 
-#### Reading Notes
+#### Reading & Writing
 
-This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md).  
+This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese).  
 
-I put a lot of effort into translating [Flying the Hump](./flying-hump-2016/index.html) (into Chinese). If you are interested in the history of the Flying Tigers, please take a look.  
+I put a lot of effort into translating [Flying the Hump](./flying-hump-2016/index.html) into Chinese. The page is bilingual, with the English original and my Chinese translation side by side. If you are interested in the history of the Flying Tigers, please take a look.  
 
 I also wrote a picture book, [Monkey King](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title). It faithfully follows the narrative of the classic *Journey to the West*, retold for easy reading. I have [open-sourced its text](./monkey-king/monkey-king-story.md); if you like it, please buy the printed edition so I can keep improving the story.  
 
