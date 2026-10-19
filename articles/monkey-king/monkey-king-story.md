@@ -308,8 +308,6 @@ And so the great Monkey King, who was born out of a stone and mastered wild magi
 
 Under the mountain, Sun Wukong waited for his destiny...
 
-****
-
 
 ## Epilogue: Fun Facts
 
