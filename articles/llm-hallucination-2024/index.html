@@ -1,177 +1,700 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>选什么样的话题能快速识别GPT们是不是在胡说八道</title>
-<link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<main class="doc">
-<header class="masthead">
-<h1>选什么样的话题能快速识别GPT们是不是在胡说八道</h1>
-<p class="subtitle">这是我在2024年写的文章。两年过去了，但我觉得情况并没改善多少。</p>
-</header>
-<p>经常用GPT就会碰它们胡说八道的情况，专业一点的说法叫 AI 幻觉  <strong>Hallucination.  </strong>诸多AI大佬们用更不带感情色彩的说法<strong>creativity &gt; correctness</strong>，AI现阶段的使用场景创意大于正确性<strong> [1] </strong>。</p>
-<p><img loading="lazy" alt="" src="images/image1.jpeg" /></p>
-<p>我们普通人如果对GPT的使用感兴趣，不只是想让它们写小作文（典型的 creativity &gt; correctness的 使用场景），这么多大模型到底哪个能用，哪个基本就是胡说八道，我们还是应该有点自己的把握。</p>
-<p>我经常比较、使用大模型有8个: ChatGPT, Google Bard, 国内有6个 ：百度文心一言、腾讯混元、清华智谱、阿里通义千问、讯飞星火，百川大模型。它们都经常胡说八道，所以我的目标是快速地找到胡说八道较少的几个。极客邦有篇文章说 “我们用<strong>3000</strong>多道测试题，帮你找到了最聪明的大模型” ，但我觉得现阶段这么做意义不大，我只想通过少数几道题快速甄别他们的真实可用情况（比如是不是对我的胃口），这当然跟我选取的话题有关。</p>
-<p>我主要选取三类话题，一、 关于胡适的话题（原因在下面解释） 二、 一些似是而非的名人名言 三、关于满清，满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧，大模型能够辨别吗？</p>
-<p>所以我设计了以下10个左右的问题，八道客观题，一两道主观题:</p>
-<ol type="1">
-<li><p>历史上有哪些名人写文章纪念胡适？</p></li>
-<li><p>胡适的女人缘 （两个变体）</p></li>
-<li><p>培根说过“知识就是力量”这句话吗？他的英文原文是什么？</p></li>
-<li><p>莎士比亚是否说过“一千个人眼中有一千个哈姆雷特” ？</p></li>
-<li><p>谁说了“我不在咖啡馆 就是在往咖啡馆的路上” （一个小小的变体考察大模型）</p></li>
-<li><p>苏格拉底是否跟柏拉图讲过如何在麦田里捡起最大的麦穗的故事？</p></li>
-<li><p>马戛尔尼使团访问大清，是否说过中国人已经退化成半个野蛮人了？</p></li>
-<li><p>满清入关后进行过多少次大屠杀</p></li>
-<li><p>乾隆为什么会说 “加浊字于国号之上，是何肺腑” ？</p></li>
-</ol>
-<p>选择胡适原因有两个：首先，国内长期污名化胡适，50年代举全国之力攻击谩骂胡适达数年之久，出版三百万字的文集《胡适思想批判》。我偶尔翻看一下《批判》的文章，真的很惊讶那么多著名的文人作家会写这么low的文章，比如翦伯赞说:“他强调个人在历史上的作用 。。。 他说 。。。 五四运动是因为他的一个女朋友掉到水里引起来的” [2]。最后连主席都觉得确实做过了，说“到了21世纪，那时候，替他恢复名誉吧” [3] ，所以中文语料库黑胡适的文章很多。现在虽然我们已经在一定程度上“替他恢复名誉”了，可胡适具有天然的招黑体质，因为他推崇美式民主和自由，网上骂他文章忆旧很多，尤其是很多不读书还爱思考的人，把当年那些捏造、谩骂他的文章转述一遍接着骂，比如他说，“如果这叫做作战，我情愿亡国，决不愿学着这种壮语主张作战” 变成他情愿亡国也不抗日，是个十足的汉奸卖国贼[4]。</p>
-<p>他的不少文章到现在也不容易在网上读到全文，像现在有不少人知道他当年和梁漱溟有过著名的梁胡之争，<strong>“</strong>国家最大的敌人到底是什么？”，可是大家未必都知道梁胡之争的出处是1930 胡适发表《 我們走那條路？》，梁漱溟不同意他的看法写文章反驳，然后胡适又做了应答，但因为这三文章里有那么几个根本称不上“敏感词”的敏感词，这篇文章就很难在网上找到全文，所以这些大模型拿着这么多自相矛盾的语料会训练出什么样的结果我很有兴趣看到。</p>
-<p>其次，作为胡适的粉丝，我自认对胡适有不少了解（至少轻松打败90%的国人吧），所以我可以看出这些大模型是不是在胡说八道。我已经料到他们会胡说八道，只是让我有点意外的是他们胡说八道的地方。所有试验都反复测试过，都在这周末（1.27）又完整测试一遍，（因为每个模型都自称不断在演进、学习中，半年前给的答案和现在给的有时候有很大的不同）。</p>
-<p>第一个问题，历史上有哪些名人写文章纪念胡适？<strong> </strong>我完全没想到几乎所有大模型都在这个问题上胡说八道。其实这个问题有个取巧的办法找到答案，2000年社会科学文献出版社出版了一本书叫 《追忆胡适》，收录我们可以看到的所有追忆、纪念胡适的文章。书的编者欧阳哲生我特意查了一下，是北大历史系教授，是“建国后培养的第一位历史学博士后”，所以这个书的质量应该是有保障。当然，这是一本很小众的书，我也是最近才知道这本书，并从孔夫子旧书店买了一本，所以这个办法不适用大多数人和这些大模型。在不知道这本书之前我切确地读过五个人写过纪念胡适的文章：周作人、季羡林、梁实秋、林语堂、张爱玲。 我感慨过周作人的情义，这次想顺便说说梁实秋。</p>
-<p>梁实秋是胡适的小迷弟，写过好几篇纪念胡适的文章：在胡适逝世当天写了 《但恨不见替人》。“但恨不见替人”出自杜甫的祖父杜审言临终前的一首诗，“今且死，固大慰，但恨不见替人”。杜审言经常口出狂言，要死了也改不了这毛病：“现在我快要死了，以后你们就能出头啦，可以高兴了。唯一遗憾的是，没有一个真正有才华的人能接替我在文坛的地位。” 梁实秋写他听到胡适的死讯，脱口而出“但恨不见替人”。</p>
-<p>二十年后他写了《不要被人牵着鼻子走》，还是重复这句话，“胡先生的逝世是我们国家无可弥补的损失。于是我写了以《但恨不见替人》为题的约一千字的短文。二十五年过去了，我仍然觉得没有人能代替他。”</p>
-<p>在这20年间他还写过数篇文章纪念胡适文章，比如《影响我的几本书》、《胡适之先生论诗》、《胡适先生二三事》。梁实秋虽然对胡适毕恭毕敬，言必称先生，但在《胡适之先生论诗》也指出他认为先生对诗歌韵律的领悟不全面，“胡先生提倡白话诗，是针对当时文学状况而发，有时不免矫枉过正，有时不免忽略细节。。。”，真正地体现 “吾爱吾师，但吾更爱真理”的精神。</p>
-<p>林语堂的纪念文章《我最难忘的人物――胡适博士》提到现在广为人知的这件事：“1920年，我获得官费到哈佛大学研究。那时胡适是北大文学院院长。我答应他回国后在北大英文系教书，不料到了美国，官费没有按时汇来，我陷入困境，打电报告急，结果收到了2000美元，使我得以顺利完成学业。回北平后，我向北大校长蒋梦麟先生面谢汇钱事。蒋先生问道:“什么2000块钱?” 原来解救了我困苦的是胡适，那笔在当时近乎天文数字的钱是他从自己腰包里掏出来的。他从未对我提起这件事，这就是他的典型作风。” </p>
-<p>林语堂后来还数次提到“这件事已深藏在我和我太太的心中四十多年了， 虽然后来我们慢慢地把这笔钱还了， 但是我们永远记得胡先生对朋友的这份无声援助。”</p>
-<p>胡适与张爱玲50年代在纽约相遇，同是天涯沦落人，成就一段忘年交。读她的《忆胡适之》有和周作人的《回忆胡适之》一样感觉，她用很平淡的文笔记录两人在纽约相遇、交往的几件事，但有一句话印象很深 “跟适之先生谈，我确是如对神明”。</p>
-<p>之后有些研究胡适的学者，比如余时英、唐德刚写胡适（《胡适的“磁性人格”》）的文章，算不算纪念胡适的文章？其实不好说，但如果AI大模型回答了他们也能算过。可是我得到下面各种匪夷所思的答案：</p>
-<p>Google Bard （Bard 我一直觉得不输ChatGPT，但这个问题错得太离谱）</p>
-<p><img loading="lazy" alt="" src="images/image2.png" /></p>
-<p><img loading="lazy" alt="" src="images/image3.png" /></p>
-<p>蔡元培、梁启超、鲁迅、傅斯年都早于胡适而逝世，这样的胡说八道应该很容易看出，但冯友兰是少数几个没有做成胡适朋友的人，他和他妹妹冯沅君50年代攻击胡适最起劲，这个可能知道的人不多。有一点可以帮我们鉴别真假，所有留在大陆的学者在那个年代，除了周作人没人敢写纪念胡适的文章。</p>
-<p>ChatGPT的回答，没有Bard那么离谱，或许容易忽悠人。</p>
-<p><img loading="lazy" alt="" src="images/image4.png" /></p>
-<p>第二个问题八卦一点，胡适的女人缘。胡适是民国著名的美男子、文坛领袖，口才俱佳又对父母之命的小脚太太不离不弃，这样的人要是没有欠下一堆相思债那真是天理都不容！以前看过一个八卦新闻说现在年轻人不知道胡适，质疑让吴彦祖扮演胡适是不是过度美化他，我只能说这是吴彦祖高攀了，再说阿祖现在头发掉得和我一样少，不像胡适越老越有韵味。</p>
-<p>和胡适有过亲密接触女性其实很容易查到：胡迪美国女友叫韦莲司 ，现在对 Williams 都翻译成 威廉姆斯 （比如大威、小威）这应该辨识度很高的一个关键字。胡适唯一一次动过和江冬秀离婚念头是因为表妹曹诚英（江冬秀以死相逼，让胡适只能作罢，”离婚可以，我先杀两个儿再自杀“）。曹诚英是我国农学界第一位女教授，她总是亲热地叫胡适的乳名-糜哥<strong> </strong>，这也辨识度很高的一个关键字。胡适在北大女学生徐芳，1931年考上北大，读了中文系，是北大当时仅有的两名女生之一。徐芳疯狂追求胡适据说长达5年之久但胡适始终婉拒她，一直将两人关系限定师生情谊。大模型应该还理解不了这样的感情，所以把徐芳列出或不列出都可以接受。大模型应该也理解不了胡适和陈衡哲的关系。胡适和任鸿隽、陈衡哲夫妻是至交，胡适对陈衡哲很欣赏，自己的女儿取名素雯，连唐得刚都胡编说“素斐者，SOPHIA也，‘莎菲’也（陈衡哲的英文名）”是胡适对陈衡哲的爱慕。 （另，我个人对唐得刚的文章、论点经常不太感冒），我更相信美籍学者夏志清说法，他说：“任氏夫妇一直是胡适的至交，也是他事业上最亲信的左右手，他对任太太是不存一丝罗曼蒂克的幻想的。但任、陈婚姻如此美满，胡适自己家里有个病中不准他看书、写诗的老婆——相形之下，他免不了艳羡他们的幸福。他骗过江冬秀，给自己的女儿取名素斐(SOPHIA)，虽不能说纪念他同陈衡哲那段旧情，至少也希望女儿长得像瓦莎学院优秀生莎菲一样聪明好学，而一点也不像她生母那样的庸俗。“ 所以如果大模型把陈衡哲列为胡适女朋友也勉强可以接受。[5]</p>
-<p>没想到这个问题上 Bard 和 ChatGPT 居然都这么一致给他安了两任太太：</p>
-<p><img loading="lazy" alt="" src="images/image5.png" /></p>
-<p>朱安是鲁迅的原配啊！1906年鲁迅被母亲骗回老家完婚。新婚晚上，他独自睡进了书房。第三天，他从家中出走去了日本。他说：“她不是我的太太，只是母亲送我的一件礼物。”朱安独守空房41年。</p>
-<p>江冬秀是胡适13岁时母亲做主给他定的婚。订婚后15年，胡适与江冬秀从未谋面。胡适因“不忍伤几个人的心”而没有推翻婚事。两人的人品从对父母之命的做法、对追求自己的女学生的做法就高下立判。</p>
-<p>ChatGPT 4 的回答</p>
-<p><img loading="lazy" alt="" src="images/image6.png" /></p>
-<p>是不是机器理解不了“亲密的交往”这个说法，那我换个直白的问法。还是一样。 陈懋循到底是何许人也，我根本查不到，ChatGPT是怎么编出这么一个人名来的？！</p>
-<p><img loading="lazy" alt="" src="images/image7.png" /></p>
-<p>国外的模型错得这么离谱，那国内几家又如何？先看混元，微信小程序，不需要单独安装手机应用。</p>
-<p>对于第一个问题混元在过去两个月里分别给我三个不同答案：2023.12.3第一次答案和之后的答案都有明显问题，很想知道它到底是怎么训练的。</p>
-<p><img loading="lazy" alt="" src="images/image8.png" /></p>
-<p><img loading="lazy" alt="" src="images/image9.png" /></p>
-<p><img loading="lazy" alt="" src="images/image10.png" /></p>
-<p>关于胡适的女朋友，说陆小曼真的是胡说八道，但胡适和徐志摩是铁哥们不假。</p>
-<p><img loading="lazy" alt="" src="images/image11.png" /></p>
-<p>换原来的问法 胡适和哪些女性有过亲密交往，混元反而回答得不错，甚至还能说出洛维茨（确有其人）！</p>
-<p><img loading="lazy" alt="" src="images/image12.png" /></p>
-<p>不过总的来说混元目前胡说八道居多，我的另外两大类问题就很容易把它淘汰，举两个例子：</p>
-<p><img loading="lazy" alt="" src="images/image13.png" /></p>
-<p>对于满清屠杀，ChatGPT 3.5 也曾经很扯淡，真不懂为啥。</p>
-<p><img loading="lazy" alt="" src="images/image14.png" /></p>
-<p>对于似是而非的名人名言混元基本都给了错误答案。比如 培根说过<strong>“</strong>知识就是力量<strong>”</strong>这句话吗？他的英文原文是什么？培根的原话是 “Knowledge and human power are <strong>synonymous</strong>” . 维基百科给出更多考证：</p>
-<p><img loading="lazy" alt="" src="images/image15.png" /></p>
-<p><img loading="lazy" alt="" src="images/image16.png" /></p>
-<p>查阅资料可以知道培根的《沉思录》是用拉丁文写的，而且并没有公开发表，我当然不懂，但是都说他的拉丁原文翻译成英语是 "knowledge <strong>itself</strong> is power" 知识本身就是力量 这句话毕竟和 ”knowledge is power" 知识就是力量<strong> </strong>语义是有细微的差别。</p>
-<p>培根明确说过 "“Knowledge and human power are synonymous”. 这个问题Google Bard 和 ChatGPT 4 都能准确回答，国内的大模型的答案就很不理想。混元只有一次回答接近。</p>
-<p><img loading="lazy" alt="" src="images/image17.jpeg" /></p>
-<p><img loading="lazy" alt="" src="images/image18.jpeg" /></p>
-<p>这个问题国内的模型只有智谱和阿里千问正确回答了，智谱的回答</p>
-<p><img loading="lazy" alt="" src="images/image19.png" /></p>
-<p>千问的回答，</p>
-<p><img loading="lazy" alt="" src="images/image20.jpeg" /></p>
-<p>但是清华智谱不仅喜欢胡说八道，还有一点让我极其鄙视：经常可以看到智谱在生成的答案过程中，突然自己检测到答案里的敏感词然后弹出错误提示“[1301][系统检测到输入或生成内容可能包含不安全或敏感内容，请您避免输入易产生敏感内容的提示语，感谢您的配合。] ”</p>
-<p>智谱的主页自吹要对标ChatGPT ，我只能说或许他们真的是这么给自己鼓劲的，毕竟梦想还是要有的，万一实现了呢。只是在目前阶段，个人觉得它只是在比烂程度上和科大讯飞有一拼。</p>
-<p><img loading="lazy" alt="" src="images/image21.png" /></p>
-<p>对于我考察第二类问题，似是而非的名人名言居然也能让它胡说八道，甚至触发敏感词过滤。比如我问它 “为众人抱薪者，不可使其冻毙于风雪” 出处在哪？这句话我真不觉得是什么好词好句，但被人说得很多。它的出处是明确的，是慕容雪村的一句微博，我当年就看过。结果我看着智谱已经回答对了，然后不知道就怎么触发了它的敏感词过滤，把自己回答去掉，弹出警告意思，再问一遍就开始胡说八道。不过，这个问题百川大模型也说无法回答，我暂时想象不出到底触发了什么敏感词。</p>
-<p><img loading="lazy" alt="" src="images/image22.jpeg" /></p>
-<p><img loading="lazy" alt="" src="images/image23.jpeg" /></p>
-<p>科大讯飞星火胡说八道的答案就不贴，但贴出它的另一个特色：还没学会怎么回答问题但已经学会政治正确：</p>
-<p><img loading="lazy" alt="" src="images/image24.jpeg" /></p>
-<p><img loading="lazy" alt="" src="images/image25.jpeg" /></p>
-<p>满清的屠城，有明确史料记载就有几十起，屠杀数量可以从明末清初人口的变化估算，历史专家葛剑雄估算大概一亿到一亿8千万，到顺治年间第一次人口统计1千9万，所以屠杀人口在8千万以上。</p>
-<p>讯飞，你看看人家百川怎么答的！</p>
-<p><img loading="lazy" alt="" src="images/image26.png" /></p>
-<p>回到我的“胡适两问”，百度文心一言对于第一个问题曾经给过相对最不胡说八道的答复：</p>
-<p><img loading="lazy" alt="" src="images/image27.jpeg" /></p>
-<p>但这次再问同样问题又偏差不少：</p>
-<p><img loading="lazy" alt="" src="images/image28.jpeg" /></p>
-<p>至于胡适的女朋友，不知道文心一言怎么编造出孩子被迫送走这样的情节和“白沙”这个人来。</p>
-<p><img loading="lazy" alt="" src="images/image29.jpeg" /></p>
-<p>我本来也不用百度，所以测试完文心一言只是进一步证实我的看法。</p>
-<p>最后测试的百川大模型和阿里的通义千问对于这两个关于胡适的问题也是胡说八道。不过他们在回答别的问题上倒是有些可取之处。</p>
-<p>百川对于不少似是而非的名人名言居然经常能准确给出出处，很可能它的答案实时从网上搜索。对比这个问题百川、智谱、通义千问的回答：马戛尔尼使团访问大清，是否说过中国人已经退化成半个野蛮人了？</p>
-<p>智谱说没有，腾讯混元、文心一言、讯飞星火都瞎答一气。百川准确的给出出处，千问提到另一个有趣的事实：</p>
-<p><img loading="lazy" alt="" src="images/image30.png" /></p>
-<p><img loading="lazy" alt="" src="images/image31.jpeg" /></p>
-<p>Macartney的原话就是 "Since the conquest of the North or the Manchurian Tatars, at least in the past 150 years, there has been no improvement, no advancement, but only backwardness; when we advance in the arts and sciences every day, <strong>they are actually becoming semi-barbarian</strong>."</p>
-<p>百川给出较为准确的答案，翻译 Macartney的原话。</p>
-<p><img loading="lazy" alt="" src="images/image32.png" /></p>
-<p>千问提到约翰巴罗的书叫"<strong>Travels in China</strong>" 我正好读过，他在书里确实是这么说。</p>
-<p><img loading="lazy" alt="" src="images/image33.jpeg" /></p>
-<p>莎士比亚是否说过<strong>“</strong>一千个人眼中有一千个哈姆雷特<strong>” </strong>？答案是根本没有，这明显就是一句山寨版英语。百川、千问给出比较合格答案，对比腾讯混元、文心一言和智谱：</p>
-<p><img loading="lazy" alt="" src="images/image34.png" /></p>
-<p><img loading="lazy" alt="" src="images/image35.jpeg" /></p>
-<p>“There are a thousand Hamlets in a thousand people's eyes” ，这明显就是一句中式英语，莎士比亚哪里会说这样的话！智谱比文心一言和混元编得更像那么一回事，更容易忽悠人。</p>
-<p><img loading="lazy" alt="" src="images/image36.png" /></p>
-<p>只有千问和百川的回答像人说的话，而且回答正确！</p>
-<p><img loading="lazy" alt="" src="images/image37.jpeg" /></p>
-<p><img loading="lazy" alt="" src="images/image38.png" /></p>
-<p>关于苏格拉底的寓言故事，有一个流传很广的传说（英文也是[6]），柏拉图有一天问老师苏格拉底什么是爱情， 苏格拉底叫他到麦田走一次，要不回头地走，在途中摘一棵最大最好的麦穗，但只可以摘一次。</p>
-<p>但是，拜托，我们都是成年人，这么廉价的鸡汤故事难道还鉴别不出吗？再说，苏格拉底的泼妇悍妻是出了名的，苏格拉底会谈什么是爱情吗？！不过鉴于这个故事流传太广了，GPT们鉴别不错我倒是不意外。</p>
-<p><img loading="lazy" alt="" src="images/image39.png" /></p>
-<p>让我意外的是居然只有 ChatGPT和 智谱正确回答了：</p>
-<p><img loading="lazy" alt="" src="images/image40.png" /></p>
-<p>ChatGPT 简单明了，不愧是LLM的天花板。</p>
-<p><img loading="lazy" alt="" src="images/image41.png" /></p>
-<p>如果客观的讲，千问、智谱、文心一言其实处在一个水平线。但因为智谱和文心一言都有让我很不喜欢的地方，所以三个模型里我只会挑阿里的千问进一步考察。</p>
-<p>前面这些问题，我都希望看到大模型给出正确的答案，也就是说我看重他们答案的正确性correctness，但最后我用两个问题看看再看看他们创意creativity怎么样。</p>
-<p>乾隆为什么会说 <strong>“</strong>加浊字于国号之上，是何肺腑<strong>”</strong> ？这个问题所有大模型都能说这是文字狱，但是说得如何只有我们自己判断了。</p>
-<p>这是千问的回答，中规中矩。但也没有出彩的地方。</p>
-<p><img loading="lazy" alt="" src="images/image42.jpeg" /></p>
-<p>百度的回答又怎么能让我不鄙视它。</p>
-<p><img loading="lazy" alt="" src="images/image43.webp" /></p>
-<p>乾隆凌迟处死胡中藻，将其家十六岁以上男皆斩立决后，还给自己贴金：“朕御极以来从未尝以语言文字罪人，在廷诸臣和进诗册何止数千万篇，其中字句谬戾亦所时有，朕皆不加指摘，何恶于胡中藻一人，实以其所刻《坚磨生诗》内连篇累牍，无非谤讪诋毁之词，不惟谤及朕躬，且敢诋毁国家。” 读过满清那些残忍荒唐的文字狱，我不知道还有人能编出那么多欢乐清宫剧吗？</p>
-<p><img loading="lazy" alt="" src="images/image44.jpeg" /></p>
-<p>最后，我用 谁说了<strong>“</strong>我不在咖啡馆 就是在往咖啡馆的路上” 看看这些大模型都怎么答，而且我故意把引号去掉再问一遍 谁说了我不在咖啡馆 就是在往咖啡馆的路上，看看大模型能知道区别吗？</p>
-<p>没有引号，我们谁都会说这句话，根本不算一句名人名言! 不过只有Google Bard 分辨出他们的区别，而且都给出满意的答案。其他七个模型都没能看出这两个问题的区别。</p>
-<p><img loading="lazy" alt="" src="images/image45.png" /></p>
-<p>《名言侦探》这本书对这句话有过详细的考证[7] ，就像Bard和百川给出答案 ： 我们经常把这句话的出处归为法国文豪巴尔扎克，他确实嗜咖啡如命，但是作者查阅外网关于这句话的归属，通常都认为它来自奥地利作家彼得·阿尔滕贝格。</p>
-<p><img loading="lazy" alt="" src="images/image46.png" /></p>
-<p>ChatGPT 看不出这两个问题区别，也没给出准确的答案：</p>
-<p><img loading="lazy" alt="" src="images/image47.png" /></p>
-<p>国内的模型，再一次，只有百川准确的回答这个问题。</p>
-<p><img loading="lazy" alt="" src="images/image48.png" /></p>
-<p>再看看智谱、混元、讯飞的胡说八道。</p>
-<p><img loading="lazy" alt="" src="images/image49.png" /></p>
-<p><img loading="lazy" alt="" src="images/image50.png" /></p>
-<p><img loading="lazy" alt="" src="images/image51.jpeg" /></p>
-<p>百度和千问在我的测试中基本处于一个文平。百度这次的回答就一句话，完全不像回答“是何肺腑”那么话痨。</p>
-<p><img loading="lazy" alt="" src="images/image52.jpeg" /></p>
-<p>通义千问说的卡夫卡确实经常光顾咖啡馆，所以我觉得他这个回答可以看做和文心一言是一个水平级。</p>
-<p><img loading="lazy" alt="" src="images/image53.jpeg" /></p>
-<p>用我的10个问题考察下来，国内模型我只会选百川，千问勉强排第二。极客邦用它的3000道题排出国内的前三名是文心一言、讯飞星火、通义千问，百川排名最后，只能说我和它的口味很不一样。当然我的考察纯粹是个人的自娱自乐，我给自己定了一个小目标，下回写一篇严谨一点的LLM分析。</p>
-<p><img loading="lazy" alt="" src="images/image54.png" /></p>
-<h2 id="refs">参考</h2>
-<ol type="1">
-<li><p>https://a16z.com/what-builders-talk-about-when-they-talk-about-ai/</p></li>
-<li><p>参见 《北大学人“胡适思想批判”一瞥》<br />
-https://www.aisixiang.com/data/115012.html</p></li>
-<li><p>“到了二十一世纪，那时候，替他恢复名誉吧”，列举官方出处，但这段史实很容易证实<br />
-http://dangshi.people.com.cn/n/2013/1014/c85037-23193411.html </p></li>
-<li><p>1933 胡适文章 《我的意見也不過如此》</p></li>
-<li><p>《胡适与陈衡哲》<br />
-https://www.newconcept.com/jixi/mingren/hushi/hushi_31.html  </p></li>
-<li><p>苏格拉底的这个故事，英文版也很多， 比如搜索“Love, Marriage, Happiness, Affair, and Life” </p></li>
-<li><p>《名言侦探》<br />
-https://book.douban.com/subject/35885250/</p></li>
-</ol>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>选什么样的话题能快速识别GPT们是不是在胡说八道</title>
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="../"
+        ><img src="../logo-wide-song.svg" alt="朗之文" width="84" height="32"
+      /></a>
+      <a href="../"
+        ><img src="../nav-home.svg" alt="文章首页" width="39" height="36"
+      /></a>
+    </header>
+    <main>
+      <header>
+        <h1>选什么样的话题能快速识别GPT们是不是在胡说八道</h1>
+        <p class="subtitle">
+          这是我在2024年1月份写的文章，当时 Claude 和 DeepSeek
+          还养在闺中。两年多过去了，有些大模型已经退场了：比如百度的文心一言，讯飞星火；Google的Bard变成Gemini，百川大模型转型成垂直医疗AI百小医，但我觉得幻觉的情况改善得还不够理想。
+        </p>
+        <p class="subtitle">
+          ChatGPT3.5 编造的阉割政策实在是一个离谱到我想笑的幻觉经典。
+        </p>
+        <p class="post-meta">
+          发布于 <time datetime="2024-01">2024年1月</time>
+        </p>
+      </header>
+      <nav class="toc">
+        <details open>
+          <summary>目录</summary>
+          <ol>
+            <li><a href="#s1">引言：我的十个问题</a></li>
+            <li><a href="#s2">问题一：谁写过纪念胡适的文章</a></li>
+            <li><a href="#s3">问题二：胡适的女人缘</a></li>
+            <li><a href="#s4">腾讯混元的问题</a></li>
+            <li><a href="#s42">ChatGPT 3.5编造的阉割政策</a></li>
+            <li><a href="#s5">培根说过“知识就是力量”吗</a></li>
+            <li><a href="#s6">智谱与讯飞星火的问题</a></li>
+            <li><a href="#s7">文心一言的问题</a></li>
+            <li><a href="#s8">百川与通义千问：马戛尔尼使团</a></li>
+            <li><a href="#s9">莎士比亚与“一千个哈姆雷特”</a></li>
+            <li><a href="#s10">苏格拉底的麦穗</a></li>
+            <li><a href="#s11">考考创意：乾隆的“是何肺腑”</a></li>
+            <li>
+              <a href="#s12">考考创意：“我不在咖啡馆，就是在往咖啡馆的路上”</a>
+            </li>
+            <li><a href="#s13">结论</a></li>
+            <li><a href="#refs">参考</a></li>
+          </ol>
+        </details>
+      </nav>
+      <article>
+        <h2 id="s1">引言：我的十个问题</h2>
+        <p>
+          经常用GPT就会碰它们胡说八道的情况，专业一点的说法叫 AI 幻觉  <strong>Hallucination</strong>.
+          诸多AI大佬们用更不带感情色彩的说法<strong
+            >creativity &gt; correctness</strong
+          >，AI现阶段的使用场景创意大于正确性<sup><a href="#ref-1">[1]</a></sup
+          >。
+        </p>
+        <figure class="shot">
+          <a href="images/image1.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image1.jpeg"
+          /></a>
+        </figure>
+        <p>
+          我们普通人如果对GPT的使用感兴趣，不只是想让它们写小作文（典型的 creativity
+          &gt; correctness的
+          使用场景），这么多大模型到底哪个能用，哪个基本就是胡说八道，我们还是应该有点自己的把握。
+        </p>
+        <p>
+          我经常比较、使用大模型有8个: ChatGPT, Google
+          Bard, 国内有6个 ：百度文心一言、腾讯混元、清华智谱、阿里通义千问、讯飞星火，百川大模型。它们都经常胡说八道，所以我的目标是快速地找到胡说八道较少的几个。极客邦有篇文章说“我们用3000多道测试题，帮你找到了最聪明的大模型”<sup
+            ><a href="#ref-2">[2]</a></sup
+          >，但我觉得现阶段这么做意义不大，我只想通过少数几道题快速甄别他们的真实可用情况（比如是不是对我的胃口），这当然跟我选取的话题有关。
+        </p>
+        <p>
+          我主要选取三类话题，一、 关于胡适的话题（原因在下面解释） 二、
+          一些似是而非的名人名言
+          三、关于满清，满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧，大模型能够辨别吗？
+        </p>
+        <p>所以我设计了以下10个左右的问题，八道客观题，一两道主观题:</p>
+        <ol type="1">
+          <li><p>历史上有哪些名人写文章纪念胡适？</p></li>
+          <li><p>胡适的女人缘 （两个变体）</p></li>
+          <li><p>培根说过“知识就是力量”这句话吗？他的英文原文是什么？</p></li>
+          <li><p>莎士比亚是否说过“一千个人眼中有一千个哈姆雷特” ？</p></li>
+          <li>
+            <p>
+              谁说了“我不在咖啡馆 就是在往咖啡馆的路上”
+              （一个小小的变体考察大模型）
+            </p>
+          </li>
+          <li>
+            <p>苏格拉底是否跟柏拉图讲过如何在麦田里捡起最大的麦穗的故事？</p>
+          </li>
+          <li>
+            <p>马戛尔尼使团访问大清，是否说过中国人已经退化成半个野蛮人了？</p>
+          </li>
+          <li><p>满清入关后进行过多少次大屠杀</p></li>
+          <li><p>乾隆为什么会说 “加浊字于国号之上，是何肺腑” ？</p></li>
+        </ol>
+        <p>
+          选择胡适原因有两个：首先，国内<strong>长期污名化</strong>胡适，50年代举全国之力攻击谩骂胡适达数年之久，出版三百万字的文集《胡适思想批判》。我偶尔翻看一下《批判》的文章，真的很惊讶那么多著名的文人作家会写这么low的文章，比如翦伯赞说:“他强调个人在历史上的作用
+          。。。 他说 。。。 五四运动是因为他的一个女朋友掉到水里引起来的” <sup
+            ><a href="#ref-3">[3]</a></sup
+          >。最后连主席都觉得确实做过了，说“到了21世纪，那时候，替他恢复名誉吧” <sup
+            ><a href="#ref-4">[4]</a></sup
+          > ，所以中文语料库<strong>黑胡适的文章</strong>很多。现在虽然我们已经在一定程度上“替他恢复名誉”了，可胡适具有天然的招黑体质，因为他推崇美式民主和自由，网上骂他文章忆旧很多，尤其是很多不读书还爱思考的人，把当年那些捏造、谩骂他的文章转述一遍接着骂，比如他说，“如果这叫做作战，我情愿亡国，决不愿学着这种壮语主张作战”
+          变成他情愿亡国也不抗日，是个十足的汉奸卖国贼<sup
+            ><a href="#ref-5">[5]</a></sup
+          >。
+        </p>
+        <p>
+          他的不少文章到现在也不容易在网上读到全文，像现在有不少人知道他当年和梁漱溟有过著名的梁胡之争，“国家最大的敌人到底是什么？”，可是大家未必都知道梁胡之争的出处是1930 胡适发表《 我們走那條路？》，梁漱溟不同意他的看法写文章反驳，然后胡适又做了应答，但因为这三文章里有那么几个根本称不上“敏感词”的敏感词，这篇文章就很难在网上找到全文，所以这些大模型拿着这么多自相矛盾的语料会训练出什么样的结果我很有兴趣看到。
+        </p>
+        <p>
+          其次，作为胡适的粉丝，我自认对胡适有不少了解（至少轻松打败90%的国人吧），所以我可以看出这些大模型是不是在胡说八道。我已经料到他们会胡说八道，只是让我有点意外的是他们胡说八道的地方。所有试验都反复测试过，都在这周末（1.27）又完整测试一遍，（因为每个模型都自称不断在演进、学习中，半年前给的答案和现在给的有时候有很大的不同）。
+        </p>
+        <h2 id="s2">问题一：谁写过纪念胡适的文章</h2>
+        <p>
+          第一个问题，历史上有哪些名人写文章纪念胡适？我完全没想到几乎所有大模型都在这个问题上胡说八道。其实这个问题有个取巧的办法找到答案，2000年社会科学文献出版社出版了一本书叫 《追忆胡适》，收录我们可以看到的所有追忆、纪念胡适的文章。书的编者欧阳哲生我特意查了一下，是北大历史系教授，是“建国后培养的第一位历史学博士后”，所以这个书的质量应该是有保障。当然，这是一本很小众的书，我也是最近才知道这本书，并从孔夫子旧书店买了一本，所以这个办法不适用大多数人和这些大模型。在不知道这本书之前我切确地读过五个人写过纪念胡适的文章：周作人、季羡林、梁实秋、林语堂、张爱玲。 我感慨过周作人的情义，这次想顺便说说梁实秋。
+        </p>
+        <p>
+          梁实秋是胡适的小迷弟，写过好几篇纪念胡适的文章：在胡适逝世当天写了 《但恨不见替人》。“但恨不见替人”出自杜甫的祖父杜审言临终前的一首诗，“今且死，固大慰，但恨不见替人”。杜审言经常口出狂言，要死了也改不了这毛病：“现在我快要死了，以后你们就能出头啦，可以高兴了。唯一遗憾的是，没有一个真正有才华的人能接替我在文坛的地位。”
+          梁实秋写他听到胡适的死讯，脱口而出“但恨不见替人”。
+        </p>
+        <p>
+          二十年后他写了《不要被人牵着鼻子走》，还是重复这句话，“胡先生的逝世是我们国家无可弥补的损失。于是我写了以《但恨不见替人》为题的约一千字的短文。二十五年过去了，我仍然觉得没有人能代替他。”
+        </p>
+        <p>
+          在这20年间他还写过数篇文章纪念胡适文章，比如《影响我的几本书》、《胡适之先生论诗》、《胡适先生二三事》。梁实秋虽然对胡适毕恭毕敬，言必称先生，但在《胡适之先生论诗》也指出他认为先生对诗歌韵律的领悟不全面，“胡先生提倡白话诗，是针对当时文学状况而发，有时不免矫枉过正，有时不免忽略细节。。。”，真正地体现
+          “吾爱吾师，但吾更爱真理”的精神。
+        </p>
+        <p>
+          林语堂的纪念文章《我最难忘的人物――胡适博士》提到现在广为人知的这件事：“1920年，我获得官费到哈佛大学研究。那时胡适是北大文学院院长。我答应他回国后在北大英文系教书，不料到了美国，官费没有按时汇来，我陷入困境，打电报告急，结果收到了2000美元，使我得以顺利完成学业。回北平后，我向北大校长蒋梦麟先生面谢汇钱事。蒋先生问道:“什么2000块钱?”
+          原来解救了我困苦的是胡适，那笔在当时近乎天文数字的钱是他从自己腰包里掏出来的。他从未对我提起这件事，这就是他的典型作风。” 
+        </p>
+        <p>
+          林语堂后来还数次提到“这件事已深藏在我和我太太的心中四十多年了，
+          虽然后来我们慢慢地把这笔钱还了，
+          但是我们永远记得胡先生对朋友的这份无声援助。”
+        </p>
+        <p>
+          胡适与张爱玲50年代在纽约相遇，同是天涯沦落人，成就一段忘年交。读她的《忆胡适之》有和周作人的《回忆胡适之》一样感觉，她用很平淡的文笔记录两人在纽约相遇、交往的几件事，但有一句话印象很深 “跟适之先生谈，我确是如对神明”。
+        </p>
+        <p>
+          之后有些研究胡适的学者，比如余时英、唐德刚写胡适（《胡适的“磁性人格”》）的文章，算不算纪念胡适的文章？其实不好说，但如果AI大模型回答了他们也能算过。可是我得到下面各种匪夷所思的答案：
+        </p>
+        <p>Google Bard （Bard 我一直觉得不输ChatGPT，但这个问题错得太离谱）</p>
+        <figure class="shot">
+          <a href="images/image2.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image2.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image3.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image3.png"
+          /></a>
+        </figure>
 
-<footer class="site-footer">
-<p><a href="../../">← 读书笔记</a> · <a href="/">首页</a></p>
-<p>© 2024 Lang Qiu (邱朗). <a href="/LICENSE-CONTENT.html">CC BY-NC 4.0</a></p>
-</footer>
-</main>
-</body>
+        <p>
+          蔡元培、梁启超、鲁迅、傅斯年都早于胡适而逝世，这样的胡说八道应该很容易看出，但冯友兰是少数几个没有做成胡适朋友的人，他和他妹妹冯沅君50年代攻击胡适最起劲，这个可能知道的人不多。有一点可以帮我们鉴别真假，所有留在大陆的学者在那个年代，除了周作人没人敢写纪念胡适的文章。
+        </p>
+        <p>ChatGPT的回答，没有Bard那么离谱，或许容易忽悠人。</p>
+        <figure class="shot">
+          <a href="images/image4.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image4.png"
+          /></a>
+        </figure>
+        <h2 id="s3">问题二：胡适的女人缘</h2>
+        <p>
+          第二个问题八卦一点，胡适的女人缘。胡适是民国著名的美男子、文坛领袖，口才俱佳又对父母之命的小脚太太不离不弃，这样的人要是没有欠下一堆相思债那真是天理都不容！以前看过一个八卦新闻说现在年轻人不知道胡适，质疑让吴彦祖扮演胡适是不是过度美化他，我只能说这是吴彦祖高攀了，再说阿祖现在头发掉得和我一样少，不像胡适越老越有韵味。
+        </p>
+        <p>
+          和胡适有过亲密接触女性其实很容易查到：胡适美国女友叫韦莲司 ，现在对
+          Williams 都翻译成 威廉姆斯
+          （比如大威、小威）这应该辨识度很高的一个关键字。胡适唯一一次动过和江冬秀离婚念头是因为表妹曹诚英（江冬秀以死相逼，让胡适只能作罢，”离婚可以，我先杀两个儿再自杀“）。曹诚英是我国农学界第一位女教授，她总是亲热地叫胡适的乳名-糜哥，这也辨识度很高的一个关键字。胡适在北大女学生徐芳，1931年考上北大，读了中文系，是北大当时仅有的两名女生之一。徐芳疯狂追求胡适据说长达5年之久但胡适始终婉拒她，一直将两人关系限定师生情谊。大模型应该还理解不了这样的感情，所以把徐芳列出或不列出都可以接受。大模型应该也理解不了胡适和陈衡哲的关系。胡适和任鸿隽、陈衡哲夫妻是至交，胡适对陈衡哲很欣赏，自己的女儿取名素雯，连唐得刚都胡编说“素斐者，SOPHIA也，‘莎菲’也（陈衡哲的英文名）”是胡适对陈衡哲的爱慕。 （另，我个人对唐得刚的文章、论点经常不太感冒），我更相信美籍学者夏志清说法，他说：“任氏夫妇一直是胡适的至交，也是他事业上最亲信的左右手，他对任太太是不存一丝罗曼蒂克的幻想的。但任、陈婚姻如此美满，胡适自己家里有个病中不准他看书、写诗的老婆——相形之下，他免不了艳羡他们的幸福。他骗过江冬秀，给自己的女儿取名素斐(SOPHIA)，虽不能说纪念他同陈衡哲那段旧情，至少也希望女儿长得像瓦莎学院优秀生莎菲一样聪明好学，而一点也不像她生母那样的庸俗。“
+          所以如果大模型把陈衡哲列为胡适女朋友也勉强可以接受。<sup
+            ><a href="#ref-6">[6]</a></sup
+          >
+        </p>
+        <p>没想到这个问题上 Bard 和 ChatGPT 居然都这么一致给他安了两任太太：</p>
+        <figure class="shot">
+          <a href="images/image5.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image5.png"
+          /></a>
+        </figure>
+        <p>
+          朱安是鲁迅的原配啊！1906年鲁迅被母亲骗回老家完婚。新婚晚上，他独自睡进了书房。第三天，他从家中出走去了日本。他说：“她不是我的太太，只是母亲送我的一件礼物。”朱安独守空房41年。
+        </p>
+        <p>
+          江冬秀是胡适13岁时母亲做主给他定的婚。订婚后15年，胡适与江冬秀从未谋面。胡适因“不忍伤几个人的心”而没有推翻婚事。两人的人品从对父母之命的做法、对追求自己的女学生的做法就高下立判。
+        </p>
+        <p>ChatGPT 4 的回答</p>
+        <figure class="shot">
+          <a href="images/image6.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image6.png"
+          /></a>
+        </figure>
+        <p>
+          是不是机器理解不了“亲密的交往”这个说法，那我换个直白的问法。还是一样。 陈懋循到底是何许人也，我根本查不到，ChatGPT是怎么编出这么一个人名来的？！
+        </p>
+        <figure class="shot">
+          <a href="images/image7.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image7.png"
+          /></a>
+        </figure>
+        <h2 id="s4">腾讯混元的问题</h2>
+        <p>
+          国外的模型错得这么离谱，那国内几家又如何？先看混元，微信小程序，不需要单独安装手机应用。
+        </p>
+        <p>
+          对于第一个问题混元在过去两个月里分别给我三个不同答案：2023.12.3第一次答案和之后的答案都有明显问题，很想知道它到底是怎么训练的。
+        </p>
+        <figure class="shot">
+          <a href="images/image8.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image8.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image9.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image9.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image10.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image10.png"
+          /></a>
+        </figure>
+
+        <p>
+          关于胡适的女朋友，说陆小曼真的是胡说八道，但胡适和徐志摩是铁哥们不假。
+        </p>
+        <figure class="shot">
+          <a href="images/image11.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image11.png"
+          /></a>
+        </figure>
+        <p>
+          换原来的问法 胡适和哪些女性有过亲密交往，混元反而回答得不错，甚至还能说出洛维茨（确有其人）！
+        </p>
+        <figure class="shot">
+          <a href="images/image12.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image12.png"
+          /></a>
+        </figure>
+        <p>
+          不过总的来说混元目前胡说八道居多，我的另外两大类问题就很容易把它淘汰，举两个例子：
+        </p>
+        <figure class="shot">
+          <a href="images/image13.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image13.png"
+          /></a>
+        </figure>
+        <h2 id="s42">ChatGPT 3.5编造的阉割政策</h2>
+        <p>对于满清屠杀，ChatGPT 3.5 也曾经很扯淡，真不懂为啥。</p>
+        <figure class="shot">
+          <a href="images/image14.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image14.png"
+          /></a>
+        </figure>
+        <h2 id="s5">培根说过“知识就是力量”吗</h2>
+        <p>
+          对于似是而非的名人名言混元基本都给了错误答案。比如 培根说过“知识就是力量”这句话吗？他的英文原文是什么？培根的原话是 “Knowledge
+          and human power are <strong>synonymous</strong>” .
+          维基百科给出更多考证：
+        </p>
+        <figure class="shot">
+          <a href="images/image15.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image15.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image16.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image16.png"
+          /></a>
+        </figure>
+
+        <p>
+          查阅资料可以知道培根的《沉思录》是用拉丁文写的，而且并没有公开发表，我当然不懂，但是都说他的拉丁原文翻译成英语是 "knowledge <strong>itself</strong> is
+          power" 知识本身就是力量 这句话毕竟和 ”knowledge is
+          power" 知识就是力量语义是有细微的差别。
+        </p>
+        <p>
+          培根明确说过 "“Knowledge and human power are synonymous”.
+          这个问题Google Bard 和 ChatGPT 4
+          都能准确回答，国内的大模型的答案就很不理想。混元只有一次回答接近。
+        </p>
+        <figure class="shot">
+          <a href="images/image17.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image17.jpeg"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image18.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image18.jpeg"
+          /></a>
+        </figure>
+
+        <p>这个问题国内的模型只有智谱和阿里千问正确回答了，智谱的回答</p>
+        <figure class="shot">
+          <a href="images/image19.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image19.png"
+          /></a>
+        </figure>
+        <p>千问的回答，</p>
+        <figure class="shot">
+          <a href="images/image20.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image20.jpeg"
+          /></a>
+        </figure>
+        <h2 id="s6">智谱与讯飞星火的问题</h2>
+        <p>
+          但是清华智谱不仅喜欢胡说八道，还有一点让我极其鄙视：经常可以看到智谱在生成的答案过程中，突然自己检测到答案里的敏感词然后弹出错误提示“[1301][系统检测到输入或生成内容可能包含不安全或敏感内容，请您避免输入易产生敏感内容的提示语，感谢您的配合。]
+          ”
+        </p>
+        <p>
+          智谱的主页自吹要对标ChatGPT
+          ，我只能说或许他们真的是这么给自己鼓劲的，毕竟梦想还是要有的，万一实现了呢。只是在目前阶段，个人觉得它只是在比烂程度上和科大讯飞有一拼。
+        </p>
+        <figure class="shot">
+          <a href="images/image21.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image21.png"
+          /></a>
+        </figure>
+        <p>
+          对于我考察第二类问题，似是而非的名人名言居然也能让它胡说八道，甚至触发敏感词过滤。比如我问它 “为众人抱薪者，不可使其冻毙于风雪”
+          出处在哪？这句话我真不觉得是什么好词好句，但被人说得很多。它的出处是明确的，是慕容雪村的一句微博，我当年就看过。结果我看着智谱已经回答对了，然后不知道就怎么触发了它的敏感词过滤，把自己回答去掉，弹出警告意思，再问一遍就开始胡说八道。不过，这个问题百川大模型也说无法回答，我暂时想象不出到底触发了什么敏感词。
+        </p>
+        <figure class="shot">
+          <a href="images/image22.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image22.jpeg"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image23.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image23.jpeg"
+          /></a>
+        </figure>
+
+        <p>
+          科大讯飞星火胡说八道的答案就不贴，但贴出它的另一个特色：还没学会怎么回答问题但已经学会政治正确：
+        </p>
+        <figure class="shot">
+          <a href="images/image24.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image24.jpeg"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image25.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image25.jpeg"
+          /></a>
+        </figure>
+
+        <p>
+          满清的屠城，有明确史料记载就有几十起，屠杀数量可以从明末清初人口的变化估算，历史专家葛剑雄估算大概一亿到一亿8千万，到顺治年间第一次人口统计1千9万，所以屠杀人口在8千万以上。
+        </p>
+        <p>讯飞，你看看人家百川怎么答的！</p>
+        <figure class="shot">
+          <a href="images/image26.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image26.png"
+          /></a>
+        </figure>
+        <h2 id="s7">文心一言的问题</h2>
+        <p>
+          回到我的“胡适两问”，百度文心一言对于第一个问题曾经给过相对最不胡说八道的答复：
+        </p>
+        <figure class="shot">
+          <a href="images/image27.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image27.jpeg"
+          /></a>
+        </figure>
+        <p>但这次再问同样问题又偏差不少：</p>
+        <figure class="shot">
+          <a href="images/image28.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image28.jpeg"
+          /></a>
+        </figure>
+        <p>
+          至于胡适的女朋友，不知道文心一言怎么编造出孩子被迫送走这样的情节和“白沙”这个人来。
+        </p>
+        <figure class="shot">
+          <a href="images/image29.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image29.jpeg"
+          /></a>
+        </figure>
+        <p>我本来也不用百度，所以测试完文心一言只是进一步证实我的看法。</p>
+        <h2 id="s8">百川与通义千问：马戛尔尼使团</h2>
+        <p>
+          最后测试的百川大模型和阿里的通义千问对于这两个关于胡适的问题也是胡说八道。不过他们在回答别的问题上倒是有些可取之处。
+        </p>
+        <p>
+          百川对于不少似是而非的名人名言居然经常能准确给出出处，很可能它的答案实时从网上搜索。对比这个问题百川、智谱、通义千问的回答：马戛尔尼使团访问大清，是否说过中国人已经退化成半个野蛮人了？
+        </p>
+        <p>
+          智谱说没有，腾讯混元、文心一言、讯飞星火都瞎答一气。百川准确的给出出处，千问提到另一个有趣的事实：
+        </p>
+        <figure class="shot">
+          <a href="images/image30.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image30.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image31.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image31.jpeg"
+          /></a>
+        </figure>
+
+        <p>
+          Macartney的原话就是 "Since the conquest of the North or the Manchurian
+          Tatars, at least in the past 150 years, there has been no improvement,
+          no advancement, but only backwardness; when we advance in the arts and
+          sciences every day, <strong
+            >they are actually becoming semi-barbarian</strong
+          >."
+        </p>
+        <p>百川给出较为准确的答案，翻译 Macartney的原话。</p>
+        <figure class="shot">
+          <a href="images/image32.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image32.png"
+          /></a>
+        </figure>
+        <p>
+          千问提到约翰巴罗的书叫<cite>Travels in China</cite>
+          我正好读过，他在书里确实是这么说。
+        </p>
+        <figure class="shot">
+          <a href="images/image33.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image33.jpeg"
+          /></a>
+        </figure>
+        <h2 id="s9">莎士比亚与“一千个哈姆雷特”</h2>
+        <p>
+          莎士比亚是否说过“一千个人眼中有一千个哈姆雷特”？答案是根本没有，这明显就是一句山寨版英语。百川、千问给出比较合格答案，对比腾讯混元、文心一言和智谱：
+        </p>
+        <figure class="shot">
+          <a href="images/image34.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image34.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image35.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image35.jpeg"
+          /></a>
+        </figure>
+
+        <p>
+          “There are a thousand Hamlets in a thousand people's eyes”
+          ，这明显就是一句中式英语，莎士比亚哪里会说这样的话！智谱比文心一言和混元编得更像那么一回事，更容易忽悠人。
+        </p>
+        <figure class="shot">
+          <a href="images/image36.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image36.png"
+          /></a>
+        </figure>
+        <p>只有千问和百川的回答像人说的话，而且回答正确！</p>
+        <figure class="shot">
+          <a href="images/image37.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image37.jpeg"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image38.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image38.png"
+          /></a>
+        </figure>
+
+        <h2 id="s10">苏格拉底的麦穗</h2>
+        <p>
+          关于苏格拉底的寓言故事，有一个流传很广的传说（英文也是<sup
+            ><a href="#ref-7">[7]</a></sup
+          >），柏拉图有一天问老师苏格拉底什么是爱情，
+          苏格拉底叫他到麦田走一次，要不回头地走，在途中摘一棵最大最好的麦穗，但只可以摘一次。
+        </p>
+        <p>
+          但是，拜托，我们都是成年人，这么廉价的鸡汤故事难道还鉴别不出吗？再说，苏格拉底的泼妇悍妻是出了名的，苏格拉底会谈什么是爱情吗？！不过鉴于这个故事流传太广了，GPT们鉴别不错我倒是不意外。
+        </p>
+        <figure class="shot">
+          <a href="images/image39.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image39.png"
+          /></a>
+        </figure>
+        <p>让我意外的是居然只有 ChatGPT和 智谱正确回答了：</p>
+        <figure class="shot">
+          <a href="images/image40.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image40.png"
+          /></a>
+        </figure>
+        <p>ChatGPT 简单明了，不愧是LLM的天花板。</p>
+        <figure class="shot">
+          <a href="images/image41.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image41.png"
+          /></a>
+        </figure>
+        <p>
+          如果客观的讲，千问、智谱、文心一言其实处在一个水平线。但因为智谱和文心一言都有让我很不喜欢的地方，所以三个模型里我只会挑阿里的千问进一步考察。
+        </p>
+        <h2 id="s11">考考创意：乾隆的“是何肺腑”</h2>
+        <p>
+          前面这些问题，我都希望看到大模型给出正确的答案，也就是说我看重他们答案的正确性correctness，但最后我用两个问题看看再看看他们创意creativity怎么样。
+        </p>
+        <p>
+          乾隆为什么会说 “加浊字于国号之上，是何肺腑”
+          ？这个问题所有大模型都能说这是文字狱，但是说得如何只有我们自己判断了。
+        </p>
+        <p>这是千问的回答，中规中矩。但也没有出彩的地方。</p>
+        <figure class="shot">
+          <a href="images/image42.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image42.jpeg"
+          /></a>
+        </figure>
+        <p>百度的回答又怎么能让我不鄙视它。</p>
+        <figure class="shot">
+          <a href="images/image43.webp" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image43.webp"
+          /></a>
+        </figure>
+        <p>
+          乾隆凌迟处死胡中藻，将其家十六岁以上男皆斩立决后，还给自己贴金：“朕御极以来从未尝以语言文字罪人，在廷诸臣和进诗册何止数千万篇，其中字句谬戾亦所时有，朕皆不加指摘，何恶于胡中藻一人，实以其所刻《坚磨生诗》内连篇累牍，无非谤讪诋毁之词，不惟谤及朕躬，且敢诋毁国家。” 读过满清那些残忍荒唐的文字狱，我不知道还有人能编出那么多欢乐清宫剧吗？
+        </p>
+        <figure class="shot">
+          <a href="images/image44.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image44.jpeg"
+          /></a>
+        </figure>
+        <h2 id="s12">考考创意：“我不在咖啡馆，就是在往咖啡馆的路上”</h2>
+        <p>
+          最后，我用 谁说了“我不在咖啡馆
+          就是在往咖啡馆的路上” 看看这些大模型都怎么答，而且我故意把引号去掉再问一遍 谁说了我不在咖啡馆
+          就是在往咖啡馆的路上，看看大模型能知道区别吗？
+        </p>
+        <p>
+          没有引号，我们谁都会说这句话，根本不算一句名人名言! 不过只有Google
+          Bard
+          分辨出他们的区别，而且都给出满意的答案。其他七个模型都没能看出这两个问题的区别。
+        </p>
+        <figure class="shot">
+          <a href="images/image45.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image45.png"
+          /></a>
+        </figure>
+        <p>
+          《名言侦探》这本书对这句话有过详细的考证<sup
+            ><a href="#ref-8">[8]</a></sup
+          > ，就像Bard和百川给出答案
+          ： 我们经常把这句话的出处归为法国文豪巴尔扎克，他确实嗜咖啡如命，但是作者查阅外网关于这句话的归属，通常都认为它来自奥地利作家彼得·阿尔滕贝格。
+        </p>
+        <figure class="shot">
+          <a href="images/image46.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image46.png"
+          /></a>
+        </figure>
+        <p>ChatGPT 看不出这两个问题区别，也没给出准确的答案：</p>
+        <figure class="shot">
+          <a href="images/image47.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image47.png"
+          /></a>
+        </figure>
+        <p>国内的模型，再一次，只有百川准确的回答这个问题。</p>
+        <figure class="shot">
+          <a href="images/image48.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image48.png"
+          /></a>
+        </figure>
+        <p>再看看智谱、混元、讯飞的胡说八道。</p>
+        <figure class="shot">
+          <a href="images/image49.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image49.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image50.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image50.png"
+          /></a>
+        </figure>
+        <figure class="shot">
+          <a href="images/image51.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image51.jpeg"
+          /></a>
+        </figure>
+
+        <p>
+          百度和千问在我的测试中基本处于一个文平。百度这次的回答就一句话，完全不像回答“是何肺腑”那么话痨。
+        </p>
+        <figure class="shot">
+          <a href="images/image52.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image52.jpeg"
+          /></a>
+        </figure>
+        <p>
+          通义千问说的卡夫卡确实经常光顾咖啡馆，所以我觉得他这个回答可以看做和文心一言是一个水平级。
+        </p>
+        <figure class="shot">
+          <a href="images/image53.jpeg" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image53.jpeg"
+          /></a>
+        </figure>
+        <h2 id="s13">结论</h2>
+        <p>
+          用我的10个问题考察下来，国内模型我只会选百川，千问勉强排第二。极客邦用它的3000道题排出国内的前三名是文心一言、讯飞星火、通义千问，百川排名最后，只能说我和它的口味很不一样。当然我的考察纯粹是个人的自娱自乐，我给自己定了一个小目标，下回写一篇严谨一点的LLM分析。
+        </p>
+        <figure class="shot">
+          <a href="images/image54.png" target="_blank" rel="noopener"
+            ><img loading="lazy" alt="" src="images/image54.png"
+          /></a>
+        </figure>
+      </article>
+      <section class="refs">
+        <h2 id="refs">参考</h2>
+        <ol type="1">
+          <li id="ref-1">
+            <p>
+              <a
+                href="https://a16z.com/what-builders-talk-about-when-they-talk-about-ai/"
+                target="_blank"
+                rel="noopener"
+                >https://a16z.com/what-builders-talk-about-when-they-talk-about-ai/</a
+              >
+            </p>
+          </li>
+          <li id="ref-2">
+            <p>
+              极客邦《我们用3000多道测试题，帮你找到了最聪明的大模型》<br />
+              <a
+                href="https://news.qq.com/rain/a/20240122A04A6C00"
+                target="_blank"
+                rel="noopener"
+                >https://news.qq.com/rain/a/20240122A04A6C00</a
+              >
+            </p>
+          </li>
+          <li id="ref-3">
+            <p>
+              参见 《北大学人“胡适思想批判”一瞥》<br />
+              <a
+                href="https://www.aisixiang.com/data/115012.html"
+                target="_blank"
+                rel="noopener"
+                >https://www.aisixiang.com/data/115012.html</a
+              >
+            </p>
+          </li>
+          <li id="ref-4">
+            <p>
+              “到了二十一世纪，那时候，替他恢复名誉吧”，列举官方出处，但这段史实很容易证实<br />
+              <a
+                href="http://dangshi.people.com.cn/n/2013/1014/c85037-23193411.html"
+                target="_blank"
+                rel="noopener"
+                >http://dangshi.people.com.cn/n/2013/1014/c85037-23193411.html</a
+              > 
+            </p>
+          </li>
+          <li id="ref-5"><p>1933 胡适文章 《我的意見也不過如此》</p></li>
+          <li id="ref-6">
+            <p>
+              《胡适与陈衡哲》<br />
+              <a
+                href="https://www.newconcept.com/jixi/mingren/hushi/hushi_31.html"
+                target="_blank"
+                rel="noopener"
+                >https://www.newconcept.com/jixi/mingren/hushi/hushi_31.html</a
+              >  
+            </p>
+          </li>
+          <li id="ref-7">
+            <p>
+              苏格拉底的这个故事，英文版也很多， 比如搜索“Love, Marriage,
+              Happiness, Affair, and Life” 
+            </p>
+          </li>
+          <li id="ref-8">
+            <p>
+              《名言侦探》<br />
+              <a
+                href="https://book.douban.com/subject/35885250/"
+                target="_blank"
+                rel="noopener"
+                >https://book.douban.com/subject/35885250/</a
+              >
+            </p>
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer>
+      <p>
+        © 2024 Lang Qiu (邱朗). <a href="/LICENSE-CONTENT.html">CC BY-NC 4.0</a>
+      </p>
+    </footer>
+    <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+  </body>
 </html>

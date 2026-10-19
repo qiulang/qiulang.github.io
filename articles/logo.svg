@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 199 624 624" width="512" height="512" fill="none">
+  <title>QL</title>
+  <defs>
+    <mask id="ql-gap" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#fff"/>
+      <polygon points="523.7,377 640.7,377 544,800 427,800" fill="#000"/>
+    </mask>
+  </defs>
+  <circle cx="511.5" cy="474" r="196.25" stroke="#021032" stroke-width="54.5" mask="url(#ql-gap)"/>
+  <polygon points="549.7,377 614.7,377 536.5,719 733.2,719 721.3,771 459.6,771" fill="#013A90"/>
+</svg>

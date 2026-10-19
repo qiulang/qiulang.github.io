@@ -1,0 +1,379 @@
+/* =====================================================================
+   LangBlog 全站共用样式（site.css）
+
+   用法：每篇文章的 <head> 里先引这个文件，再引自己目录下的 style.css：
+     <link rel="stylesheet" href="../site.css">
+     <link rel="stylesheet" href="style.css">
+   后引入的可以覆盖先引入的。所以文章独有的规则只写在自己的 style.css 里，
+   两篇以上都用到、而且前提对每一篇都成立的规则，才放进这里。
+
+   页面结构（宽屏）：
+   ┌──────────────────────────────────────────┐
+   │ [logo] LangBlog                文章首页  │ ← body > header  站点页头
+   ├──────────────────────────────────────────┤
+   │  ┌────────────────────────────────────┐  │
+   │  │ 标题 / 副标题 / 发布日期           │  │ ← main > header  文章标题区（色块）
+   │  └────────────────────────────────────┘  │
+   │  ┌────────┐       ┌──────────────────┐   │
+   │  │ 目录    │       │ 正文             │   │ ← main 里的两栏：nav.toc 和 article
+   │  │ .toc   │       │ article          │   │
+   │  └────────┘       └──────────────────┘   │
+   ├──────────────────────────────────────────┤
+   │                 © 版权                    │ ← body > footer  页脚
+   └──────────────────────────────────────────┘
+   窄屏（1240px 以下）只有一栏：标题区、目录、正文从上到下排列。
+
+   区块靠"标签 + 位置"区分，不另起 class 名：
+   body > header 是站点页头，main > header 是文章标题区，body > footer 是页脚。
+   ===================================================================== */
+
+
+/* =====================================================================
+   一、颜色和尺寸变量
+   全站的颜色都在这里定义，后面的规则只写 var(--名字)，不直接写色值。
+   换颜色、换皮肤、调深色模式，都只改这一部分。
+   ===================================================================== */
+:root {
+  /* ----- 主题色相：换肤只改这一个数 -----
+     色环上的角度，0–360：30 赭红，150 墨绿，200 青，251 蓝（缺省），295 紫。
+     页面上带颜色的三处（标题区色块、链接、目录高亮）都由它算出来。 */
+  --hue: 251;
+
+  /* ----- 中性色：换肤时不变 ----- */
+  --bg: #fbfaf7;            /* 页面底色：带一点暖的米白 */
+  --text: #1f1f1f;          /* 正文文字：接近黑，比纯黑柔和 */
+  --muted: #5d5d5d;         /* 次要文字：页脚、目录标题 */
+  --rule: #e2ddd3;          /* 分隔线、目录左侧竖线、页头页脚的边线 */
+
+  /* ----- 正文栏宽 -----
+     单位 em 跟着正文字号走：字号 20px 时 38em = 760px，每行约 38 个汉字。
+     中文舒适范围 30–40em。英文正文同样宽度时每行 90 多个字母，偏长。 */
+  --measure: 38em;
+
+  /* ----- 主题色：都写成 oklch(亮度 饱和度 色相) -----
+     亮度 0%–100%：0 是黑，100 是白。标题区色块 40%–50% 配白字；
+                   85% 以上是浅色块，文字要改成深色（见下面的 jelly）。
+     饱和度：0 是灰，0.1 左右颜色清楚，超过 0.2 部分颜色超出屏幕能显示的范围。
+     色相：取上面的 --hue。亮度和饱和度固定，只换色相，任何颜色的深浅都一样。 */
+  --link: oklch(48% 0.134 var(--hue));            /* 链接文字 */
+  --header-bg: oklch(46% 0.091 var(--hue));       /* 文章标题区色块 */
+  --header-text: #ffffff;                         /* 标题区里的文字：深色块配白字 */
+  --toc-active-bg: oklch(95% 0.015 var(--hue));   /* 目录里悬停或正在读的那一项的底色：很浅 */
+}
+
+/* ----- 皮肤 -----
+   用法：在文章 HTML 的 <html> 标签上写 data-theme="名字"，比如
+     <html lang="zh-CN" data-theme="green">
+   :root 指 <html> 元素，[data-theme="green"] 要求它带这个属性，两个都满足才生效。
+   加一个皮肤：照样写一行，只改 --hue。
+   只想试颜色不加皮肤：直接写 <html style="--hue: 150">。 */
+:root[data-theme="green"]  { --hue: 150; }   /* 墨绿 */
+:root[data-theme="purple"] { --hue: 295; }   /* 紫 */
+
+/* jelly：浅蓝标题区。
+   和上面的皮肤不同，它把标题区从深色块改成了浅色块（亮度 93%），
+   白字在浅色上看不清，所以文字颜色也要同时改成深蓝。 */
+:root[data-theme="jelly"] {
+  --hue: 225;
+  --header-bg: oklch(93% 0.035 var(--hue));    /* 很浅的蓝 */
+  --header-text: oklch(38% 0.09 var(--hue));   /* 深蓝文字 */
+}
+
+/* ----- 深色模式 -----
+   读者的操作系统设成深色外观时，这一段才生效；浅色模式下等于不存在。
+   做法只是给变量换一套值，页面上所有用 var() 的规则自动跟着变。
+   没写进来的变量保持原值：--hue 不变，所以换肤在深色模式下照样生效；
+   --header-text 仍是白字。
+   测试：Chrome 检查面板 → 右上角菜单 → More tools → Rendering →
+         Emulate CSS media feature prefers-color-scheme 选 dark。 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;                                  /* 近黑底 */
+    --text: #e4e2dd;                                /* 浅灰字 */
+    --muted: #a6a39c;
+    --rule: #3a3833;                                /* 深色分隔线 */
+    --link: oklch(75% 0.100 var(--hue));            /* 亮度 48% → 75%：黑底上链接要变亮才看得清 */
+    --header-bg: oklch(41% 0.077 var(--hue));       /* 46% → 41%：稍暗，不在黑底上显得突兀 */
+    --toc-active-bg: oklch(30% 0.033 var(--hue));   /* 95% → 30%：浅色模式是浅底，深色模式换成深底 */
+  }
+
+  /* 为什么 jelly 要在深色模式里再写一次：
+     上面的 :root 只有一个条件，前面定义 jelly 的 :root[data-theme="jelly"] 有两个条件，
+     分量更重，所以深色模式下 jelly 的浅色标题区仍会生效，黑底上出现一块刺眼的浅色。
+     （@media 只是"是否生效"的开关，不增加分量。）
+     这里写一条分量相同的规则，位置在后，后写的赢，把标题区换回深色块、白字。 */
+  :root[data-theme="jelly"] {
+    --header-bg: oklch(38% 0.06 var(--hue));
+    --header-text: #ffffff;
+  }
+}
+
+
+/* =====================================================================
+   二、全局
+   ===================================================================== */
+
+/* width 包含内边距和边框。宽屏看不出作用，
+   但能防止"设了宽度又加内边距，结果比屏幕宽、出现横向滚动条"。 */
+* { box-sizing: border-box; }
+
+/* 防止 iPhone 横屏时自动放大文字 */
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;                 /* 去掉浏览器缺省的 8px 边距，页头页脚才能贴满窗口 */
+  background: var(--bg);
+  color: var(--text);
+  /* 字体栈：从左往右，用第一个系统里有的。苹果系统用苹方，Windows 用微软雅黑，
+     最后的 sans-serif 兜底，避免 Windows 上显示成宋体 */
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+               "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Helvetica Neue",
+               Arial, sans-serif;
+  font-size: 1.25rem;        /* 20px，全站唯一的正文字号。用 rem，读者调大浏览器字号时跟着变 */
+  line-height: 1.85;         /* 汉字是满格方块，缺省约 1.2 会挤；长文阅读 1.7–1.9 合适 */
+
+  /* 页面骨架：三行。auto 按内容定高，1fr 拿走剩下的全部高度。
+     所以中间的 main 撑满，内容少时页脚也贴在窗口底部。 */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;         /* body 至少和窗口一样高，1fr 才有剩余高度可分 */
+}
+
+/* 给三块指定行号，不靠顺序。
+   原因：grid-template-rows 是按位置分行的。浏览器扩展常往 body 里插元素
+   （实测 idb-crud 扩展会在 body 最前面插一个），插进来的元素会占掉第 1 行，
+   页头被挤进 1fr 那一行而被拉得很高。指定了行号，插进来的元素只能排到第 4 行。 */
+body > header { grid-row: 1; }
+main          { grid-row: 2; }
+body > footer { grid-row: 3; }
+
+
+/* =====================================================================
+   三、站点页头：logo 加站名在左，导航在右
+   ===================================================================== */
+body > header {
+  display: flex;                    /* 一排内容用 flex */
+  justify-content: space-between;   /* 两端对齐：第一个元素靠左，最后一个靠右 */
+  align-items: center;              /* 垂直方向居中，logo 和文字对齐 */
+  /* 左右留白把 logo 和首页图标挤到和 main 的正文栏对齐：
+     栏宽 var(--measure) 居中，窗口不够宽时至少留 1.25rem（和 main 的左右内边距一致）。
+     首页图标正好落在文章标题色块右边缘的上方，不再贴着窗口边。
+     页头里现在只有图片没有文字，所以不再单独设 16px 字号——
+     不设字号，--measure 的 38em 才和 main 里一样按正文 20px 算出 760px，两边才对得齐 */
+  padding: .9rem max(1.25rem, calc((100% - var(--measure)) / 2));
+  border-bottom: 1px solid var(--rule);   /* 和下面的内容分开 */
+}
+.brand {                            /* logo 图片 + 站名 LangBlog */
+  display: flex;
+  align-items: center;
+  gap: .5rem;                       /* 图片和文字之间的距离 */
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);               /* 不用链接的蓝色 */
+  text-decoration: none;            /* 不要下划线 */
+}
+
+
+/* =====================================================================
+   四、主体：窄屏一栏，宽屏两栏（宽屏部分在第六节的 @media 里）
+   ===================================================================== */
+main {
+  display: grid;
+  /* 窄屏只有一列。minmax(0, 38em)：最宽 38em，最窄可以缩到 0。
+     写 0 而不写 auto，是为了让很长的网址也能在栏里换行，不把这一列撑宽。 */
+  grid-template-columns: minmax(0, var(--measure));
+  justify-content: center;   /* 列宽之外的空间左右平分，整栏居中 */
+  column-gap: 7rem;          /* 宽屏两栏时，目录和正文之间的距离 */
+  padding: 3rem 1.25rem 4rem;   /* 上 / 左右 / 下。左右的 1.25rem 保证窄屏时文字不贴边 */
+}
+
+/* 文章标题区：main 里的 header，一块横跨所有栏的色块 */
+main > header {
+  grid-column: 1 / -1;       /* 从第 1 条列线到最后一条：横跨所有栏。不写的话宽屏时会只占左边窄栏 */
+  margin-bottom: 2.5rem;
+  padding: 2.5rem 2rem;
+  padding-bottom: 1.25rem;   /* 下边少留一点，发布日期离色块底边近一些 */
+  background: var(--header-bg);
+  color: var(--header-text);
+  border-radius: 8px;
+}
+main > header h1 {
+  font-size: 2.3rem;
+  margin: 0 0 1.25rem;       /* 上边距归零，色块的内边距已经够了 */
+}
+
+/* 标题区的副标题：只调间距。
+   缺省段落上下各 1em（约 20px），标题区里两三行副标题会显得松散 */
+.subtitle { margin: .5rem 0; }
+
+/* 发布日期：小一号字，外面一块浅色底 */
+.post-meta {
+  font-size: .875rem;              /* 比副标题小一号，表示这是次要信息 */
+  display: inline-block;           /* 盒子宽度收缩到文字长度，底色只包住日期这一段，不铺满整行 */
+  background: color-mix(in oklch, currentColor 15%, transparent);
+                                   /* 底色 = 当前文字颜色混 15%，其余透明。
+                                      深色标题区上文字是白的，底色就是淡白；
+                                      jelly 的浅色标题区上文字是深蓝，底色就是淡蓝。
+                                      所以换皮肤不用改，也不用为它单独定义颜色变量 */
+  border-radius: 4px;              /* 底色的四个角做成小圆角 */
+  margin-bottom: 0;                /* 去掉段落缺省的下外边距，日期离色块底边只剩标题区自己的内边距 */
+  padding: .2rem .6rem;            /* 底色和文字之间留点空，上下小、左右大 */
+}
+
+
+/* =====================================================================
+   五、目录（nav.toc）
+   HTML：<nav class="toc"><details open><summary>目录</summary><ol>…</ol></details></nav>
+   details 让目录可以点"目录"两个字收起、展开
+   ===================================================================== */
+.toc { margin: 0 0 2.5rem; font-size: .95rem; }   /* 窄屏时目录在正文上方，下面留点距离 */
+.toc summary { cursor: pointer; color: var(--muted); font-weight: 600; }   /* "目录"两个字：鼠标变手形，提示可以点 */
+.toc ol {
+  list-style: none;          /* 去掉编号：整块高亮时编号会落在色块外面 */
+  margin: .75rem 0 0;
+  padding: 0;
+  line-height: 1.6;          /* 目录项比正文行高小一点，更紧凑 */
+  border-left: 2px solid var(--rule);   /* 目录左侧一条贯穿的竖线 */
+  /* 让目录跟随阅读位置：读到哪一节，对应的链接匹配 :target-current。
+     2025 年的新特性，Chrome 和 Edge 支持，Safari 和 Firefox 暂不支持；
+     不支持时只是不高亮，其他照常 */
+  scroll-target-group: auto;
+}
+.toc a {
+  display: block;            /* 链接占满整行，才能整块变色 */
+  margin-left: -2px;         /* 往左挪 2px，让自己的左边框正好盖在 ol 的竖线上 */
+  padding: .45rem .9rem;
+  border-left: 2px solid transparent;   /* 平时透明；高亮时变蓝，看起来是竖线的一段变了色 */
+  color: var(--text);
+  text-decoration: none;
+}
+/* 悬停的那一项，和正文当前读到的那一节，整块变色。
+   用 :is() 包起来：逗号分隔的选择器里只要有一个浏览器不认识，整条规则都会作废；
+   :is() 是宽容的，不认识 :target-current 的浏览器只忽略那一个，:hover 照常生效 */
+.toc a:is(:hover, :target-current) {
+  background: var(--toc-active-bg);
+  border-left-color: var(--link);
+  color: var(--link);
+}
+
+
+/* =====================================================================
+   六、宽屏：两栏，目录在左并固定在顶部
+   1240px 的由来：目录 18rem(288px) + 间距 7rem(112px) + 正文 38em(760px)
+                 + 左右内边距 40px ≈ 1200px，再留一点余量
+   ===================================================================== */
+@media (min-width: 1240px) {
+  main { grid-template-columns: 18rem minmax(0, var(--measure)); }   /* 左：目录固定 18rem；右：正文 */
+  /* 宽屏时标题色块横跨两栏，总宽 = 目录 18rem + 间距 7rem + 正文 var(--measure)。
+     页头留白改按整个色块的宽度算，首页图标才和色块右边缘对齐 */
+  body > header { padding-inline: max(1.25rem, calc((100% - var(--measure) - 25rem) / 2)); }
+  .toc { margin: 0; }
+  /* sticky 写在里层 details 上，不写在 nav 上：
+     粘性元素只能在父元素的范围内移动。nav 没有设 align-self，被 grid 拉成和正文一样高，
+     details 就只能在这一格里移动，正文结束时目录也停下，不会滑进下面的参考文献和页脚。
+     如果写在 nav 上，nav 的父元素是整个 main，目录会一直跟到 main 的底部 */
+  .toc details {
+    position: sticky;
+    top: 1.5rem;                      /* 滚动时停在离窗口顶部 1.5rem 的地方 */
+    max-height: calc(100vh - 3rem);   /* 最高 = 窗口高度减上下各 1.5rem */
+    overflow-y: auto;                 /* 目录比这还高时，在目录内部滚动 */
+  }
+}
+
+
+/* =====================================================================
+   七、正文
+   正文里的标签加 article 前缀：只作用于正文。
+   页面别处的同名标签（比如参考文献的 h2）不受影响，就不用再写一条规则去撤销
+   ===================================================================== */
+h1, h2, h3 { line-height: 1.35; }   /* 标题比正文的 1.85 收紧，换行时不松散 */
+article h2 {
+  font-size: 1.6rem;          /* 正文放大到 20px 后，标题相应放大，保持层级 */
+  margin: 3.2rem 0 1.2rem;    /* 上面多留、下面少留：标题贴近它下面的内容 */
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);   /* 每一节上方一条细线 */
+}
+article h3 { font-size: 1.15rem; margin: 2rem 0 .8rem; }
+article hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--rule); }   /* 分节线：缺省是凹陷的双色线，改成一条细线 */
+
+a {
+  color: var(--link);
+  text-underline-offset: 2px;   /* 下划线离文字远一点，不压住汉字底部 */
+  overflow-wrap: anywhere;      /* 长网址放不下时可以断开换行；普通文字不受影响。
+                                   不用 word-break: break-all，那会把普通文字从任意位置拆开 */
+}
+
+/* 图片 */
+figure { margin: 1.8rem auto 2rem; }
+figure img {
+  display: block;          /* 去掉图片作为行内元素时下方多出的几像素空隙 */
+  max-width: 100%;         /* 只缩不放：大图缩到栏宽，小图保持原尺寸，不会被放大发虚。
+                              不要改成 width: 100%，那会把小图也拉满。要让图片填满一个定好宽度的框
+                              （比如截图占栏宽 90%），在那一篇自己的 style.css 里写 */
+  height: auto;            /* 按比例算高度，HTML 里写了 height 属性时也不会变形 */
+  margin-inline: auto;     /* 小图不满一行时居中 */
+  border-radius: 4px;
+}
+
+
+/* =====================================================================
+   八、回到顶部按钮
+   HTML（每篇都要加，放在 </body> 前）：
+     <a class="to-top" href="#top" aria-label="回到顶部">↑</a>
+   #top 是特殊地址：页面里没有 id="top" 的元素时，跳到 #top 就是回到页面最顶部。
+   ┌─────────────────────────┐
+   │        浏览器窗口       │
+   │                  ┌────┐ │
+   │                  │ ↑  │ │ ← bottom: 1.5rem
+   │                  └────┘ │
+   │                    ↑    │
+   │              right: 1.5rem
+   └─────────────────────────┘
+   ===================================================================== */
+.to-top {
+  position: fixed;           /* 相对浏览器窗口定位，页面怎么滚都不动；
+                                也不算 grid 的子项，不会打乱 body 的三行 */
+  right: 1.5rem;
+  bottom: 1.5rem;
+  padding: .4rem .6rem;      /* 箭头周围留空，看起来像个按钮 */
+  background: var(--bg);     /* 加底色：按钮浮在正文上，没有底色时滚动中的文字会从它下面透出来 */
+}
+
+
+/* =====================================================================
+   九、站点页脚：版权
+   ===================================================================== */
+body > footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  color: var(--muted);
+  font-size: .9rem;
+}
+body > footer p { margin: .3em 0; }   /* 几行版权声明靠得紧一点 */
+
+
+/* =====================================================================
+   十、手机（600px 以下）
+   ===================================================================== */
+@media (max-width: 600px) {
+  body { font-size: 1.125rem; }               /* 正文 18px：屏幕窄，20px 每行字数太少 */
+  main { padding-top: 2rem; }
+  main > header h1 { font-size: 1.8rem; }     /* 标题缩小，避免一个字一行 */
+  main > header { padding: 1.75rem 1.25rem; }
+  body > header { padding: .75rem 1.25rem; }
+}
+
+
+/* =====================================================================
+   十一、打印
+   ===================================================================== */
+@media print {
+  :root { --bg: #fff; --text: #000; }   /* 白纸黑字，忽略深色模式和米白底 */
+  .toc { display: none; }               /* 目录、站点页头、回到顶部按钮在纸上没用 */
+  body > header { display: none; }
+  .to-top { display: none; }
+  main > header { background: none; color: inherit; padding: 0; }   /* 标题区不印色块，省墨 */
+  article h2 { break-after: avoid; }    /* 不让标题落在一页的最后一行、正文跑到下一页 */
+  figure { break-inside: avoid; }       /* 不把一张图拆在两页 */
+}
