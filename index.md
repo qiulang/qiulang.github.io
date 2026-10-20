@@ -9,7 +9,7 @@ title: false
 
 [stackoverflow](https://stackoverflow.com/users/301513/qiulang) 我主要回答一些 Node.js/iOS 相关问题。
 
-[vllm vs sglang](https://github.com/qiulang/vllm-sglang-perf) 记录我从2025 至今做的一个主要工作。
+[vllm vs sglang](https://github.com/qiulang/vllm-sglang-perf) 记录我从2025 至今做的一个主要工作。2026年5月份，我总结了一次我使用 [vibe coding的经历](https://github.com/qiulang/vllm-sglang-perf/blob/main/qwen-omni-proxy-dev-summary-en.md)。vibe coding 的体验一直在变，所以我特意写明时间。很想听听别人的意见。
 
 我从2024开始做大模型开发，当时写了一篇[怎么鉴定大模型胡说八道的文章](./articles/llm-hallucination-2024/index.html)，两年过去了，但我觉得情况并没改善多少。
 
@@ -17,7 +17,7 @@ title: false
 
 这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。
 
-我花了很多心思翻译[这篇 flying hump](./articles/flying-hump-2016/index.html)，如果对飞虎队，还有驼峰航线的的历史感兴趣，一定看看。
+我花了很多心思翻译[这篇 flying hump](./articles/flying-hump-2016/index.html)，如果对飞虎队、驼峰航线的的历史感兴趣，一定看看。
 
 我还创作一本英文图画书 [美猴王](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title)，[我把这本书的文字版开源了](./articles/monkey-king-story/index.html)，如果喜欢请购买纸质版，以便我能进一步打磨这个故事。
 
@@ -31,7 +31,7 @@ title: false
 
 On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.
 
-[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now.
+[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](https://github.com/qiulang/vllm-sglang-perf/blob/main/qwen-omni-proxy-dev-summary-en.md). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
 
 ### Reading & Writing
 
