@@ -39,6 +39,15 @@
     z-index: 30;              /* 主题页头的 z-index 是 20，按钮要在它上面 */
   }
   @media print { .to-top { display: none; } }
+  /* index.md 里小标题左边的图标（nav-dev.svg、nav-home.svg）。
+     高度和标题文字差不多（1.2em，想再小就改这个数）；
+     vertical-align 往下挪一点，让图标和文字在一条线上居中 */
+  .heading-icon {
+    height: 1.2em;
+    width: auto;
+    vertical-align: -0.2em;
+    margin-right: .3em;
+  }
   /* logo 里已经有"朗之文"三个字，主题在 logo 右边再显示一遍站名，这里藏掉。
      要写成 .masthead .site-title：主题的 .greedy-nav a { display: block } 比单写 .site-title 优先 */
   .masthead .site-title { display: none; }

@@ -5,11 +5,11 @@ plugins:
   - jekyll-include-cache
 
 # ---- Site settings ----
-title: "Lang Qiu (邱朗)"
+title: "Lang Qiu 邱朗"
 locale: "zh-CN"
 url: "https://qiulang.github.io"
 baseurl: ""
-logo: "/articles/logo-wide-song.svg"   # 页头左上角的 logo
+logo: "/articles/logo-wide-song.svg" # 页头左上角的 logo
 
 # 主题默认在页脚左下角显示 Feed 链接（/feed.xml），本站没有 feed，隐藏
 atom_feed:
@@ -18,10 +18,10 @@ atom_feed:
 # ---- Left sidebar (author profile) ----
 author:
   name: "Lang Qiu (邱朗)"
-  avatar: "/avatar.jpg"   # 从 me.JPEG 裁成正方形、缩到 400x400
-  bio: "软件与 AI · 读书与写作"
+  avatar: "/avatar.jpg" # 从 me.JPEG 裁成正方形、缩到 400x400
+  bio: "软件与 AI · 阅读与写作"
   location: "Beijing, China"
-  email: "langqiu@gmail.com"   # 左栏显示"电子邮箱"，点击打开邮件程序
+  email: "langqiu@gmail.com" # 左栏显示"电子邮箱"，点击打开邮件程序
   links:
     - label: "Stack Overflow"
       icon: "fab fa-fw fa-stack-overflow"

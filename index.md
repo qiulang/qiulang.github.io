@@ -3,9 +3,10 @@
 # 和正文里的同一行重复。设成 false 就不显示那个大标题；浏览器标签页上显示站名。
 title: false
 ---
+
 ## 简单的自我介绍
 
-### 软件与 AI
+### ![软件开发](/nav-dev.svg){: .heading-icon} 软件与 AI
 
 [stackoverflow](https://stackoverflow.com/users/301513/qiulang) 我主要回答一些 Node.js/iOS 相关问题。
 
@@ -13,7 +14,7 @@ title: false
 
 我从2024开始做大模型开发，当时写了一篇[怎么鉴定大模型胡说八道的文章](./articles/llm-hallucination-2024/index.html)，两年过去了，但我觉得情况并没改善多少。
 
-### 读书与写作
+### ![阅读与写作](/nav-home.svg){: .heading-icon} 阅读与写作
 
 这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。
 
@@ -27,13 +28,13 @@ title: false
 
 ## About Me
 
-### Software & AI
+### ![Software development](/nav-dev.svg){: .heading-icon} Software & AI
 
 On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.
 
 [vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](https://github.com/qiulang/vllm-sglang-perf/blob/main/qwen-omni-proxy-dev-summary-en.md). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
 
-### Reading & Writing
+### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
 
 This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese).
 
