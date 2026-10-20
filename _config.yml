@@ -17,7 +17,7 @@ atom_feed:
 
 # ---- Left sidebar (author profile) ----
 author:
-  name: "Lang Qiu 邱朗"
+  name: "邱朗"
   avatar: "/avatar.jpg" # 从 me.JPEG 裁成正方形、缩到 400x400
   bio: "软件与 AI · 阅读与写作"
   location: "Beijing, China"

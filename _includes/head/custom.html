@@ -40,16 +40,16 @@
   }
   @media print { .to-top { display: none; } }
   /* 左栏名字右边的 QL 图标（/logo.svg）。
-     名字由主题从 _config.yml 的 author.name 生成，不能往里写 HTML，所以用 ::after 在名字后面加一个空盒子，
+     名字由主题从 _config.yml 的 author.name 生成，不能往里写 HTML，所以用 ::before 在名字前面加一个空盒子，
      把 logo.svg 当背景图画进去。宽高跟着名字的字号走，想调大小改 1.2em */
-  .author__name::after {
-    content: "";
-    display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-    margin-left: .3em;
-    vertical-align: -0.2em;
-    background: url("/logo.svg") center / contain no-repeat;
+  .author__name::before {
+	content: "";
+	display: inline-block;
+	width: 1.2em;
+	height: 1.2em;
+	margin-right: .3em;
+	vertical-align: -0.2em;
+	background: url("/logo.svg") center / contain no-repeat;
   }
   /* index.md 里小标题左边的图标（nav-dev.svg、nav-home.svg）。
      高度和标题文字差不多（1.2em，想再小就改这个数）；
