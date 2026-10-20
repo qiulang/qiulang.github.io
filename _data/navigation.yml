@@ -1,5 +1,5 @@
 main:
   - title: "中文"
-    url: "/#中文"
+    url: "/#简单的自我介绍"
   - title: "English"
-    url: "/#english"
+    url: "/#about-me"

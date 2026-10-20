@@ -1,0 +1,46 @@
+<!-- start custom head snippets -->
+<!-- 覆盖 Minimal Mistakes 主题的几处样式，让首页的 logo、颜色、字体和文章页（articles/site.css）一致。
+     这个文件会替换主题自带的同名空文件，主题在 main.css 之后引入它，所以这里的规则能覆盖主题。
+     颜色值抄自 articles/site.css 第一节；那边改了，这里要跟着改。 -->
+<style>
+  :root {
+    --hue: 251;
+    --bg: #fdf6e3;                           /* 米黄底 */
+    --text: #1f1f1f;                          /* 正文文字 */
+    --rule: #e2ddd3;                          /* 分隔线 */
+    --link: oklch(48% 0.134 var(--hue));      /* 链接 */
+  }
+  html { background-color: var(--bg); }      /* 主题在 html 上设了白底 */
+  body { color: var(--text); }
+  /* 主题给标题单独设了字体，所以标题也要写上 */
+  body, h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                 "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Helvetica Neue",
+                 Arial, sans-serif;
+  }
+  /* 正文链接。页头导航（中文 / English）的选择器比这里具体，保持主题的灰色 */
+  a, a:visited { color: var(--link); }
+  a:hover { color: oklch(38% 0.134 var(--hue)); }
+  .masthead { border-bottom-color: var(--rule); }
+  .greedy-nav { background: var(--bg); }     /* 主题给页头导航条单独设了白底，换成页面底色 */
+  /* 页脚：主题设了浅灰底，换成页面底色；底色一样后加一条细线和正文分开，和页头下边那条线对应 */
+  .page__footer { background-color: var(--bg); border-top: 1px solid var(--rule); }
+  /* 回到顶部按钮（HTML 在 _includes/footer/custom.html），规则抄自 articles/site.css 第八节。
+     fixed 相对浏览器窗口定位，页面怎么滚都停在右下角。
+     写成 .page__footer .to-top：按钮在主题的页脚里，主题的 .page__footer a 比单写 .to-top 优先 */
+  .page__footer .to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    padding: .4rem .6rem;
+    background: var(--bg);    /* 加底色：按钮浮在正文上，滚动中的文字不会从它下面透出来 */
+    color: var(--link);       /* 主题把页脚链接设成灰色，这里和文章页一样用链接色 */
+    text-decoration: none;    /* 主题给页脚链接加了样式，这里只要一个箭头 */
+    z-index: 30;              /* 主题页头的 z-index 是 20，按钮要在它上面 */
+  }
+  @media print { .to-top { display: none; } }
+  /* logo 里已经有"朗之文"三个字，主题在 logo 右边再显示一遍站名，这里藏掉。
+     要写成 .masthead .site-title：主题的 .greedy-nav a { display: block } 比单写 .site-title 优先 */
+  .masthead .site-title { display: none; }
+</style>
+<!-- end custom head snippets -->

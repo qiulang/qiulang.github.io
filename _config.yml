@@ -9,11 +9,12 @@ title: "Lang Qiu (邱朗)"
 locale: "zh-CN"
 url: "https://qiulang.github.io"
 baseurl: ""
+logo: "/articles/logo-wide-song.svg"   # 页头左上角的 logo
 
 # ---- Left sidebar (author profile) ----
 author:
   name: "Lang Qiu (邱朗)"
-  avatar: "/favicon.ico"
+  avatar: "/avatar.jpg"   # 从 me.JPEG 裁成正方形、缩到 400x400
   bio: "软件与 AI · 读书与写作"
   location: "Beijing, China"
   links:
