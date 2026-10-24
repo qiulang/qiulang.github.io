@@ -1,8 +1,8 @@
 /* LLM 的胡说八道（2024）独有的样式：手机截图、参考文献。共用部分在 ../site.css */
 
-/* 手机截图：一张一张居中排列 */
-.shot { width: 90%; margin: 1.5rem auto; }   /* 正文栏宽的 90%；宽度决定截图里的字有多大 */
-.shot img { border: 1px solid var(--rule); }
+/* 手机截图：这一篇的 figure 都是截图，所以直接写 figure，不另起 class。一张一张居中排列 */
+figure { width: 90%; }   /* 正文栏宽的 90%；宽度决定截图里的字有多大。上下间距和居中用 site.css 的 figure */
+figure img { border: 1px solid var(--rule); }
 
 /* 参考文献：独立一节，放在正文和目录下面，字号小一号 */
 .refs {
@@ -13,13 +13,13 @@
   font-size: .85rem;
   color: var(--muted);
 }
-.refs h2 { margin: 0 0 .75rem; padding: 0; border: 0; font-size: 1.1rem; }
-.refs ol { margin: 0; padding-left: 1.5rem; }
+.refs h2 { margin: 0 0 .75rem; font-size: 1.1rem; }   /* 正文 h2 的分隔线写在 article h2 上，这里不用撤销 */
+.refs ol { padding-left: 1.5rem; }   /* 缺省 40px，编号离左边太远 */
 .refs li { padding: .2rem .4rem; border-radius: 4px; scroll-margin-top: 1rem; }
 .refs li p { margin: 0; }
-.refs li:target { background: var(--toc-active-bg); }   /* 从正文点 [n] 跳过来时，那一条变色 */
+.refs li:target { background: var(--tint); }   /* 从正文点 [n] 跳过来时，那一条变色 */
 sup a { text-decoration: none; }                         /* 正文里的 [n] 标号 */
 
 @media (max-width: 600px) {
-  .shot { width: 100%; }        /* 手机上屏幕本来就窄，截图占满正文宽度 */
+  figure { width: 100%; }        /* 手机上屏幕本来就窄，截图占满正文宽度 */
 }

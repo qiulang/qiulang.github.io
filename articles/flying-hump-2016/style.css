@@ -4,13 +4,6 @@
   --note-bar: #b9a77f;
   --en: #3d4652;            /* 英文原文段落的颜色，和中文译文区分 */
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --note-bg: #25231f;
-    --note-bar: #8a7a55;
-    --en: #b9c2cc;
-  }
-}
 
 p[lang="en"] { color: var(--en); }
 
