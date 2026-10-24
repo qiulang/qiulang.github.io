@@ -51,6 +51,7 @@
   --header-bg: oklch(46% 0.091 var(--hue));       /* 文章标题区色块 */
   --header-text: #ffffff;                         /* 标题区里的文字：深色块配白字 */
   --tint: oklch(93% 0.035 var(--hue));            /* 浅色底：目录当前项、参考文献跳转项、sky 皮肤的标题块 */
+  --code: oklch(42% 0.1 var(--hue));              /* 代码文字：比链接（48%）暗一点、淡一点，和链接分得开 */
 }
 
 /* ----- 皮肤 -----
@@ -293,7 +294,7 @@ figure img {
 }
 
 
-/* 代码块、表格、引用：两篇技术文章（vibe-coding、pytorch-primer）都有，放在共用里。
+/* 代码、表格、引用：两篇技术文章（vibe-coding、pytorch-primer）都有，放在共用里。
    只作用于对应的元素，页面里没有这些元素时不起作用 */
 /* 代码块：缺省没有底色，长行会撑出页面。
    底色从文字颜色派生（混 5%），不加颜色变量；行高收紧，正文的 1.85 放在代码里太松 */
@@ -305,12 +306,44 @@ pre {
   line-height: 1.5;
 }
 
-/* 表格：缺省没有边框 */
-table { border-collapse: collapse; }
-th, td { border: 1px solid var(--rule); padding: .4em .8em; }
-
 /* 引用：缺省左边缩进 40px，改成一条竖线 */
 blockquote { margin-left: 0; padding-left: 1em; border-left: 4px solid var(--rule); }
+
+/* ===== 代码 =====
+   缺省的等宽字体（monospace）继承正文的 20px，和正文一样大，显得重。
+   写出等宽字体栈：苹果系统用 SF Mono / Menlo，Windows 用 Consolas。
+   字号只写在 code 上：代码块是 <pre><code>，pre 本身不设字号，两层不会叠着缩小 */
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .85em;            /* 正文 20px 时是 17px */
+  color: var(--code);
+}
+/* 正文里的行内代码加一块浅底，和普通文字分开；代码块里的 code 不加（pre 已经有底色） */
+:not(pre) > code {
+  padding: .1em .3em;
+  border-radius: 4px;
+  background: color-mix(in oklch, currentColor 6%, transparent);
+}
+
+/* ===== 表格 =====
+   缺省的表格没有边框，单元格之间还留着 2px 空隙；字号、行高继承正文的 20px 和 1.85，
+   放在表格里又大又松。下面几条各管一件事： */
+table {
+  border-collapse: collapse;   /* 相邻单元格的边框合成一条线，不再是两条线夹一道空隙 */
+  font-size: .875em;           /* em 相对父元素：正文 20px 时是 17.5px，表格是查阅用的，小一号 */
+  line-height: 1.5;            /* 正文的 1.85 放在窄格子里太松 */
+}
+th, td {
+  border: 1px solid var(--rule);
+  padding: .5em .75em;         /* 上下小、左右大，文字不贴边线 */
+  vertical-align: top;         /* 缺省是 middle：一行里有的格子三四行、有的一个词时，短的会飘在中间 */
+}
+th {
+  text-align: left;            /* 表头缺省居中，和下面左对齐的内容对不齐。
+                                  md 里写了 ---: 的列，pandoc 会在格子上加 style="text-align: right"，
+                                  行内样式优先，数字列照样靠右 */
+  background: color-mix(in oklch, currentColor 5%, transparent);   /* 表头浅底，和代码块同一个写法 */
+}
 
 
 /* =====================================================================

@@ -1,4 +1,4 @@
-/* PyTorch Crash Course (Part 1) 独有的样式。共用部分在 ../site.css */
+/* PyTorch Crash Course (Part 1) 独有的样式：加宽的正文栏。表格、代码、引用在 site.css 里。共用部分在 ../site.css */
 
 /* 长篇英文技术文章：正文栏放宽，每行约 110 个字母（接近 Typora 的显示效果）；目录和正文的间距收窄。
    20px 字号下 56em = 1120px。窗口不够宽时正文栏会自己缩窄，见 site.css 第六节 */

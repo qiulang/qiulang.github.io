@@ -1,4 +1,4 @@
-/* I Documented Claude's Every Decision 独有的样式：h5、加宽的正文栏。代码块、表格、引用在 site.css 里。共用部分在 ../site.css */
+/* I Documented Claude's Every Decision 独有的样式：h5、加宽的正文栏。表格、代码、引用在 site.css 里。共用部分在 ../site.css */
 
 /* 全文只有一个 h5。缺省 .83em，正文 20px 时只有约 17px，比正文还小 */
 article h5 { font-size: 1em; }

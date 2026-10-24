@@ -7,6 +7,7 @@
     <link rel="icon" href="../../favicon.ico" />
     <link rel="stylesheet" href="../site.css" />
     <link rel="stylesheet" href="style.css" />
+    <script src="toc-follow.js" defer></script>
   </head>
   <body>
     <header>
@@ -221,7 +222,6 @@
         </tbody>
         </table>
         <p><strong>First read</strong>: skip Appendix Two and the appendix at the end; read the rest in order. <strong>Coming back to look something up</strong>: go straight to the §9 table — every entry points back to its section.</p>
-        <hr />
         <h2 id="s2">0. One-sentence positioning</h2>
         <p>PyTorch = <strong>NumPy + GPU + automatic differentiation (autograd) + a standard container for models/weights (<code>nn.Module</code>)</strong>.</p>
         <p>When you do inference, the autograd half is basically switched off. What you actually deal with every day is the first three: <strong>tensors, device, dtype, memory</strong>. So that's where this guide spends its weight.</p>
@@ -231,7 +231,6 @@
         <li><code>nn.Module</code> ≈ a "callable object that carries weights"; its <code>state_dict</code> is its entire set of weights (literally what lives inside a <code>.safetensors</code> file).</li>
         <li>vLLM / F5-TTS / FunASR ≈ networks someone built out of <code>nn.Module</code> plus a serving/scheduling layer. PyTorch is their shared substrate.</li>
         </ul>
-        <hr />
         <h2 id="s3">0.5 What it doesn't do: the division of labor with sklearn</h2>
         <p>Let's settle where sklearn and PyTorch each apply first, so the nagging question "then what was the sklearn I used all this time?" doesn't keep coming back.</p>
         <p><strong>The simplest test is what your data looks like:</strong></p>
@@ -359,7 +358,6 @@
         <blockquote>
         <p><strong>A preview: the TinyNet example in the next section runs head-on into this criterion</strong> — three numeric features, binary classification; by the standard above it should be sklearn. That's not a badly chosen example; §5 says so explicitly.</p>
         </blockquote>
-        <hr />
         <h2 id="s4">1. Tensor: the core data structure</h2>
         <p><strong>The most fundamental sentence: a tensor = a flat 1D block of memory (a Storage) + metadata (shape + stride) telling PyTorch how to read that block as N-D.</strong> No matter how many dimensions you design, physical memory is always a straight line — hardware memory is linearly addressed; there's no such thing as "2D memory." Dimensionality is purely an interpretation layer.</p>
         <p>PyTorch makes this explicit as two layers:</p>
@@ -519,7 +517,6 @@ emb / np.linalg.norm(emb, axis=0)                  # wrong: normalizes along the
         <p>(A counterintuitive detail: forgetting <code>keepdims</code> and writing <code>[N,D] / [N]</code> <strong>does honestly error when D ≠ N</strong>, which saves you; only when the batch happens to equal the dimension (<code>[8,8] / [8]</code>) does it fail silently. So this trap is "usually errors, occasionally bites".)</p>
         <p><strong>③ Mask dimensions don't line up.</strong> Attention scores are <code>[B, heads, seq, seq]</code>, the mask is <code>[B, seq]</code>; to broadcast it up you first need <code>mask[:, None, None, :]</code> to make it <code>[B,1,1,seq]</code>. You don't write this yourself, but when you read FunASR / F5-TTS modeling code, recognizing that the string of <code>[:, None, None, :]</code> and <code>unsqueeze(1)</code> is there to manufacture broadcasting dimensions makes it stop looking like gibberish.</p>
         <p><strong>One sentence to close: broadcasting is "the small one automatically spreads over the big one", implemented via stride = 0, zero-copy; its risk isn't an error, it's shapes that happen to align and produce a result you didn't want — so when you print shapes while debugging, check "was this broadcast?" alongside them (§9).</strong></p>
-        <hr />
         <h2 id="s5">2. Device: CPU / GPU and the thing you care about most — VRAM</h2>
         <p>Deep learning requires massive parallelism, so the GPU is home turf.</p>
         <pre class="python"><code>dev = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
@@ -563,7 +560,6 @@ torch.cuda.empty_cache()         # return reserved-but-idle memory to the driver
 </code></pre>
         <p>So even if <code>empty_cache()</code> drives reserved to zero, nvidia-smi won't go to zero — those few hundred MB of context stay as long as the process lives. With multiple cards or multiple processes (e.g. vLLM's tensor parallel, one process per card), every process carries its own context, and that has to be counted separately under "overhead" in §3.</p>
         <p>This is exactly why vLLM <em>bypasses</em> the allocator: at startup vLLM grabs a large slab of VRAM via <code>gpu_memory_utilization</code> and <strong>manages it itself</strong> (PagedAttention's paged KV cache), instead of letting PyTorch's general-purpose allocator handle the KV cache. Your earlier findings — "ECC-off gives ~6.3% more VRAM," "~4.4 MiB per concurrent slot" — are precisely you quantifying the behavior of this self-managed memory.</p>
-        <hr />
         <h2 id="s6">3. dtype and precision: fp32 / fp16 / bf16 / int8</h2>
         <p>This is the dial that directly governs your <strong>VRAM footprint and throughput</strong> — the section you'll resonate with most.</p>
         <table>
@@ -656,7 +652,6 @@ x = x.to(torch.bfloat16)                 # input must match, or you get a dtype-
         <blockquote>
         <p><strong>Quantization is orthogonal to all of this.</strong> AWQ/GPTQ quantize <strong>weight precision</strong> (packing Linear weights to 4-bit to shrink size / save VRAM); they <strong>don't touch the tokenizer / vocab / model structure</strong>. So switching to a quantized build leaves the tokenizer outputs, <code>vocab_size</code>, and the whole tokenization story unchanged — beginners often assume "the quantized build changes everything," but it only moves the "bytes-per-weight" knob.</p>
         </blockquote>
-        <hr />
         <h2 id="s7">4. Autograd: understand it mainly so you can <em>turn it off</em></h2>
         <p>PyTorch's signature feature is automatic differentiation: during the forward pass it <strong>quietly records a computation graph</strong>, then differentiates along it on <code>backward</code>.</p>
         <pre class="python"><code>x = torch.tensor([2.0], requires_grad=True)
@@ -693,7 +688,6 @@ with torch.inference_mode():
 inference:  forward only (weights frozen, no gradients)
 </code></pre>
         <p>Doing prompt engineering (not touching weights) = pure inference → autograd off. If you later do <strong>LoRA</strong> on Qwen (updating weights) = training → autograd is back (you need gradients, backward, an optimizer). So don't bind "pretrained model" to "no autograd"; the switch is <strong>"am I updating weights in this step or not."</strong></p>
-        <hr />
         <h2 id="s8">5. nn.Module: a model is just "a function that carries weights"</h2>
         <p>A model is essentially: a bunch of weight tensors + a <code>forward</code> function. <code>nn.Module</code> is the standard container that holds it. We'll use a minimal <strong>two-layer network</strong> (two <code>nn.Linear</code>s, one hidden layer) called <code>TinyNet</code> to explain everything — <strong>note that "layer" here counts weight layers, not node layers; older textbooks call the same thing a "three-layer network" (input + hidden + output); this naming trap is untangled in "How many hidden layers?" below</strong> — once you get this, the real models like Qwen3 and bge share exactly the same scaffold, just with "two layers" swapped for "dozens."</p>
         <pre class="python"><code>import torch
@@ -989,7 +983,6 @@ H @ W2.T + b2 == [[14, 31],
         <blockquote>
         <p><strong>A route in the opposite direction (skippable).</strong> This section goes <strong>down</strong> from the <code>nn.Module</code> abstraction to the weight file; the mainstream route mentioned at the start (the official <code>nn_tutorial</code>, the Manning book) goes <strong>the other way</strong> — first hand-write a working network with bare tensors, then swap in <code>nn.Module</code> / <code>optim</code> / <code>DataLoader</code> step by step. <strong>The same black box, taken apart two ways</strong>: that route ends at <code>optimizer.step()</code>, this one ends at <code>model.layers.0.self_attn.q_proj.weight</code>. Which one is useful to you depends on whether you're training or deploying.</p>
         </blockquote>
-        <hr />
         <h3 id="s8-9">Appendix One: TinyNet touches only two things — what else is in the <code>torch.nn</code> cabinet</h3>
         <p>TinyNet uses only <code>nn.Linear</code> + <code>torch.relu</code>. There's a lot more in <code>torch.nn</code>; here's a map <strong>sorted by "will your inference stack run into it"</strong> — the point isn't to list APIs but to let you, when you dump a real model, <strong>recognize which module produced each key</strong>.</p>
         <p><strong>1) Layers — sort them by relevance, don't list them flat.</strong> The ones you'll actually touch, all already seen in this document:</p>
@@ -1169,7 +1162,6 @@ class Stack(nn.Module):
         <li><strong>profilers, intermediate-activation capture, debugging probes</strong>.</li>
         </ul>
         <p><strong>On a pure-PyTorch toy like TinyNet, <code>.forward()</code> and <code>model(x)</code> give exactly the same result — so this trap normally stays hidden; once the model is loaded by HF + accelerate, or has been quantized, calling <code>.forward()</code> directly silently loses that machinery</strong> (typical symptoms: wrong device, quantization not taking effect, the profiler capturing nothing). <strong>The rule is simple: always <code>model(x)</code>.</strong></p>
-        <hr />
         <h3 id="s8-10">Appendix Two (skippable): that <code>.T</code>, column vectors, and what the "batch dimension" really is</h3>
         <blockquote>
         <p>Follow programmer intuition the whole way — <strong>a 1-D array is a row vector</strong>. This section answers three linked questions: where does the <code>.T</code> in the code come from? Why do textbooks write <code>W·x</code> and treat x as a column vector? And — <strong>when the input has more than two dimensions (<code>[B, seq, hidden]</code> and the like), how does this correspondence hold up?</strong> Readers who just want to use <code>x @ W.T</code> without digging can skip straight to §6. (Below we keep using the <code>W₂ = [[1,0,2,0],[0,1,0,3]]</code> from the diagram, look only at the matrix-multiply step, and <strong>leave out the bias b</strong> — b is just an element-wise shift at the end and has nothing to do with orientation.)</p>
@@ -1315,7 +1307,6 @@ Transposes of each other: (W @ X_col).T == X_row @ W.T           ✓
         <blockquote>
         <p><strong>An honest caveat:</strong> "vectors are columns by default" is <strong>the mainstream convention, not an iron law</strong>. A few fields (older computer graphics, some statistics literature) do the opposite and use <strong>row vectors + right-multiplication</strong> <code>x·W</code>. So the precise statement is: mainstream linear algebra and ML math convention treat vectors as columns and left-multiply by W; PyTorch code lands on <code>x @ W.T</code> in order to keep features in the last dimension. Both are self-consistent; don't take either one as the only correct one.</p>
         </blockquote>
-        <hr />
         <h2 id="s9">6. One complete forward pass: putting the above together</h2>
         <p>Below is the minimal skeleton of "hand-writing one inference"; what your inference engine does internally is essentially the industrial version of this:</p>
         <pre class="python"><code>model = TinyNet(4).to(&quot;cuda&quot;).eval()      # 1. onto the GPU + inference mode (4 features, matching the input below)
@@ -1333,7 +1324,6 @@ torch.cuda.synchronize()                  # 6. only needed when you actually tim
         <blockquote>
         <p><strong>Merged into one forward, the weights are read once; each running its own forward, they're fighting over the same memory bus.</strong></p>
         </blockquote>
-        <hr />
         <h2 id="s10">7. What a model looks like on disk: the full picture of the files in a repo</h2>
         <p>When you download a model, the pile of files in the directory falls into three groups, corresponding to three different things:</p>
         <p><strong>Group 1: structure + weights (the model itself)</strong></p>
@@ -1592,7 +1582,6 @@ for p, (c, n) in sorted(g.items(), key=lambda x: -x[1][1]):
         <p><strong>Why doesn't upstream just ship HF format?</strong> Because <code>model.pt</code> has to be the complete thing — it must be able to continue training and be loaded by upstream's own inference path. What the inference engine wants is a copy that's "LLM only, HF layout, inference-only". <strong>One file can't satisfy both needs.</strong></p>
         <p><strong>So a "training format → inference format" adapter necessarily exists</strong>: extract the submodules you need, strip the prefix, gather the config and tokenizer, save as safetensors. When you take a model from an upstream framework, you'll most likely run into such a conversion step (sometimes a function, sometimes a script, sometimes upstream has already published the converted version for you).</p>
         <p><strong>It's enough to remember what it is: conversion changes only the packaging, not the tensor values.</strong> The same weights, with different key names and a different file layout, become something another pipeline can consume. What traps this kind of conversion runs into (caches that don't invalidate, outputs with no provenance mark, different packagings of the same model that aren't compatible with each other) is an operations matter, belonging to Part 2.</p>
-        <hr />
         <h2 id="s11">8. transformers: the layer that lifts PyTorch into "models"</h2>
         <p>A transformers model <strong>is itself a <code>torch.nn.Module</code></strong>. What <code>AutoModel.from_pretrained(...)</code> returns is an ordinary PyTorch model; you can <code>.to("cuda")</code>, <code>.eval()</code>, <code>.state_dict()</code> it exactly like §5's TinyNet — it just has dozens of transformer layers inside.</p>
         <p><strong>This isn't a metaphor; it's a literal inheritance relationship — three lines of code let you check it yourself:</strong></p>
@@ -1776,7 +1765,6 @@ print(a.shape, b.shape)   # [N] meeting [N,1] silently becomes [N,N]; 16000 → 
         <li><strong>What the model layer can do</strong>: switch to quantized weights (AWQ/GPTQ/FP8), which changes only "bytes per parameter" and touches neither the structure nor the tokenizer.</li>
         <li><strong>The engine layer and multiple GPUs</strong> (<code>gpu_memory_utilization</code>, KV cache quantization, tensor parallelism and so on) — belong to <strong>Part 2</strong>.</li>
         </ol>
-        <hr />
         <h2 id="s13">10. A 30-minute hands-on checklist (verify you really got it)</h2>
         <p>Open Python on any L20, run these, and you're set:</p>
         <pre class="python"><code>import torch
@@ -1830,7 +1818,6 @@ print(&quot;inference peak :&quot;, torch.cuda.max_memory_allocated()/1e6, &quot
 # m = AutoModel.from_pretrained(&quot;...local path...&quot;)
 # print(list(m.state_dict().keys())[:10])   # look at the weight naming structure
 </code></pre>
-        <hr />
         <h2 id="s14">11. Mental model summary (one page to take away)</h2>
         <pre><code>  +----------------------------------------------------+
   |  model = structure + weights + tokenizer  (§7)     |
