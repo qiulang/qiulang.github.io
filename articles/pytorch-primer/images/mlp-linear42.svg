@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 435" width="680" height="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" role="img" aria-label="Linear(4,2) 的权重就是全连接图里的边">
+<rect x="0" y="0" width="680" height="435" fill="#ffffff"/>
+
+<text x="52" y="60" text-anchor="middle" fill="#6b7280" font-size="13">x</text>
+<text x="130" y="60" text-anchor="middle" fill="#6b7280" font-size="13">inputs</text>
+<text x="290" y="60" text-anchor="middle" fill="#6b7280" font-size="13">outputs (neurons)</text>
+
+<!-- zero-weight edges: dashed faint -->
+<g stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 3" opacity="0.7">
+<line x1="138" y1="170" x2="242" y2="150"/>
+<line x1="138" y1="330" x2="242" y2="150"/>
+<line x1="138" y1="90" x2="242" y2="270"/>
+<line x1="138" y1="250" x2="242" y2="270"/>
+</g>
+<!-- nonzero edges into y0 (blue) -->
+<g stroke="#3b82f6" stroke-width="2.5">
+<line x1="138" y1="90" x2="242" y2="150"/>
+<line x1="138" y1="250" x2="242" y2="150"/>
+</g>
+<!-- nonzero edges into y1 (teal) -->
+<g stroke="#10b981" stroke-width="2.5">
+<line x1="138" y1="170" x2="242" y2="270"/>
+<line x1="138" y1="330" x2="242" y2="270"/>
+</g>
+
+<!-- edge weight labels -->
+<text x="176" y="108" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">1</text>
+<text x="176" y="222" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">2</text>
+<text x="176" y="196" text-anchor="middle" fill="#0f766e" font-size="12" font-weight="600">1</text>
+<text x="176" y="320" text-anchor="middle" fill="#0f766e" font-size="12" font-weight="600">3</text>
+
+<!-- input values -->
+<g fill="#1f2937" font-size="14">
+<text x="52" y="95" text-anchor="middle">2</text>
+<text x="52" y="175" text-anchor="middle">5</text>
+<text x="52" y="255" text-anchor="middle">1</text>
+<text x="52" y="335" text-anchor="middle">2</text>
+</g>
+
+<!-- input nodes -->
+<g>
+<circle cx="110" cy="90" r="28" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+<circle cx="110" cy="170" r="28" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+<circle cx="110" cy="250" r="28" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+<circle cx="110" cy="330" r="28" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+</g>
+<g fill="#1f2937" font-size="15" text-anchor="middle">
+<text x="110" y="95">x&#8320;</text>
+<text x="110" y="175">x&#8321;</text>
+<text x="110" y="255">x&#8322;</text>
+<text x="110" y="335">x&#8323;</text>
+</g>
+
+<!-- output nodes -->
+<circle cx="270" cy="150" r="28" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<circle cx="270" cy="270" r="28" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+<text x="270" y="155" text-anchor="middle" fill="#1e3a8a" font-size="15">y&#8320;</text>
+<text x="270" y="275" text-anchor="middle" fill="#065f46" font-size="15">y&#8321;</text>
+
+<!-- results -->
+<text x="306" y="155" fill="#6b7280" font-size="13">= 14</text>
+<text x="306" y="275" fill="#6b7280" font-size="13">= 31</text>
+
+<!-- matrix -->
+<text x="398" y="104" fill="#1f2937" font-size="14" font-weight="600">W  =  [out, in]  =  [2, 4]</text>
+
+<g fill="#6b7280" font-size="13" text-anchor="middle">
+<text x="432" y="130">x&#8320;</text>
+<text x="476" y="130">x&#8321;</text>
+<text x="520" y="130">x&#8322;</text>
+<text x="564" y="130">x&#8323;</text>
+</g>
+
+<rect x="410" y="140" width="176" height="40" fill="#eff6ff"/>
+<rect x="410" y="180" width="176" height="40" fill="#ecfdf5"/>
+<rect x="410" y="140" width="176" height="80" rx="4" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="410" y1="180" x2="586" y2="180" stroke="#cbd5e1" stroke-width="1"/>
+
+<text x="398" y="165" text-anchor="end" fill="#1e3a8a" font-size="13">y&#8320;</text>
+<text x="398" y="205" text-anchor="end" fill="#065f46" font-size="13">y&#8321;</text>
+
+<g font-size="14" text-anchor="middle">
+<text x="432" y="165" fill="#1d4ed8" font-weight="600">1</text>
+<text x="476" y="165" fill="#cbd5e1">0</text>
+<text x="520" y="165" fill="#1d4ed8" font-weight="600">2</text>
+<text x="564" y="165" fill="#cbd5e1">0</text>
+<text x="432" y="205" fill="#cbd5e1">0</text>
+<text x="476" y="205" fill="#0f766e" font-weight="600">1</text>
+<text x="520" y="205" fill="#cbd5e1">0</text>
+<text x="564" y="205" fill="#0f766e" font-weight="600">3</text>
+</g>
+
+<!-- caption -->
+<text x="340" y="392" text-anchor="middle" fill="#6b7280" font-size="13">每条边 x&#8323;&#8322; &#8594; y&#7522; 的权重 = W[i][j]；虚线 = 权重 0，该神经元不看这一路输入</text>
+<text x="340" y="414" text-anchor="middle" fill="#6b7280" font-size="13">蓝 = y&#8320; 入边 = W 第 0 行 [1,0,2,0]　　青 = y&#8321; 入边 = W 第 1 行 [0,1,0,3]</text>
+</svg>

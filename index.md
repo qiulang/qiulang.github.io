@@ -10,7 +10,9 @@ title: false
 
 [stackoverflow](https://stackoverflow.com/users/301513/qiulang) 我主要回答一些 Node.js/iOS 相关问题。
 
-[vllm vs sglang](https://github.com/qiulang/vllm-sglang-perf) 记录我从2025 至今做的一个主要工作。2026年5月份，我总结了一次我使用 [vibe coding的经历](https://github.com/qiulang/vllm-sglang-perf/blob/main/qwen-omni-proxy-dev-summary-en.md)。vibe coding 的体验一直在变，所以我特意写明时间。很想听听别人的意见。
+[vllm vs sglang](https://github.com/qiulang/vllm-sglang-perf) 记录我从2025 至今做的一个主要工作。2026年5月份，我总结了一次我使用 [vibe coding的经历](./articles/vibe-coding/index.html)（英文）。vibe coding 的体验一直在变，所以我特意写明时间。很想听听别人的意见。
+
+我还写了一篇 [PyTorch 速通（基础篇）](./articles/pytorch-primer/index.html)（英文），写给在部署模型、但没系统学过 PyTorch 的人。
 
 我从2024开始做大模型开发，当时写了一篇[怎么鉴定大模型胡说八道的文章](./articles/llm-hallucination-2024/index.html)，两年过去了，但我觉得情况并没改善多少。
 
@@ -32,7 +34,9 @@ title: false
 
 On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.
 
-[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](https://github.com/qiulang/vllm-sglang-perf/blob/main/qwen-omni-proxy-dev-summary-en.md). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
+[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](./articles/vibe-coding/index.html). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
+
+I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath.
 
 ### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
 

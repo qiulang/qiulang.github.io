@@ -33,8 +33,14 @@
 
   /* ----- 正文栏宽 -----
      单位 em 跟着正文字号走：字号 20px 时 38em = 760px，每行约 38 个汉字。
-     中文舒适范围 30–40em。英文正文同样宽度时每行 90 多个字母，偏长。 */
+     中文舒适范围 30–40em。英文正文同样宽度时每行 90 多个字母，偏长。
+     单篇要更宽的正文栏，在自己的 style.css 里改 :root { --measure: … } */
   --measure: 38em;
+
+  /* ----- 宽屏两栏：目录宽度和目录与正文的间距 -----
+     两栏的列宽、页头的左右留白都按这两个数算，单篇改了也不用动别的规则 */
+  --toc-width: 18rem;
+  --toc-gap: 7rem;
 
   /* ----- 主题色：都写成 oklch(亮度 饱和度 色相) -----
      亮度 0%–100%：0 是黑，100 是白。标题区色块 40%–50% 配白字；
@@ -143,7 +149,7 @@ main {
      写 0 而不写 auto，是为了让很长的网址也能在栏里换行，不把这一列撑宽。 */
   grid-template-columns: minmax(0, var(--measure));
   justify-content: center;   /* 列宽之外的空间左右平分，整栏居中 */
-  column-gap: 7rem;          /* 宽屏两栏时，目录和正文之间的距离 */
+  column-gap: var(--toc-gap);   /* 宽屏两栏时，目录和正文之间的距离 */
   padding: 3rem 1.25rem 4rem;   /* 上 / 左右 / 下。左右的 1.25rem 保证窄屏时文字不贴边 */
 }
 
@@ -215,17 +221,29 @@ main > header h1 {
   color: var(--link);
 }
 
+/* 两级目录（monkey-king-story、pytorch-primer）：li 里再套一层 ol。
+   .toc ol 两层都匹配，里层要撤掉三样：
+   - scroll-target-group：两层各成一个跟踪组、各选一个当前项，会同时高亮两项。
+     里层关掉，所有链接都归外层那一组，整个目录只有一个当前项；
+   - 上外边距和左侧竖线：外层已经有一条竖线，里层再画一条就是两条。
+   里层链接的左边框照样盖在外层竖线上（margin-left: -2px 不变），只是文字多缩进一截 */
+.toc ol ol { margin: 0; border-left: 0; scroll-target-group: none; }
+.toc ol ol a { padding-left: 1.8rem; }
+
 
 /* =====================================================================
    六、宽屏：两栏，目录在左并固定在顶部
    1240px 的由来：目录 18rem(288px) + 间距 7rem(112px) + 正文 38em(760px)
-                 + 左右内边距 40px ≈ 1200px，再留一点余量
+                 + 左右内边距 40px ≈ 1200px，再留一点余量。
+   媒体查询里不能用变量，所以这个数是按缺省值写死的。单篇把 --measure 调大时，
+   窗口不够宽的话正文栏会自己缩窄（minmax(0, …) 允许缩到 0），不会撑出横向滚动条
    ===================================================================== */
 @media (min-width: 1240px) {
-  main { grid-template-columns: 18rem minmax(0, var(--measure)); }   /* 左：目录固定 18rem；右：正文 */
-  /* 宽屏时标题色块横跨两栏，总宽 = 目录 18rem + 间距 7rem + 正文 var(--measure)。
-     页头留白改按整个色块的宽度算，首页图标才和色块右边缘对齐 */
-  body > header { padding-inline: max(1.25rem, calc((100% - var(--measure) - 25rem) / 2)); }
+  main { grid-template-columns: var(--toc-width) minmax(0, var(--measure)); }   /* 左：目录；右：正文 */
+  /* 宽屏时标题色块横跨两栏，总宽 = 目录宽 + 间距 + 正文栏宽。
+     页头留白改按整个色块的宽度算，logo 和首页图标才和色块左右边缘对齐。
+     窗口不够宽时算出来是负数，max() 取 1.25rem，正好和 main 的左右内边距一样，仍然对齐 */
+  body > header { padding-inline: max(1.25rem, calc((100% - var(--measure) - var(--toc-width) - var(--toc-gap)) / 2)); }
   .toc { margin: 0; }
   /* sticky 写在里层 details 上，不写在 nav 上：
      粘性元素只能在父元素的范围内移动。nav 没有设 align-self，被 grid 拉成和正文一样高，
@@ -253,6 +271,7 @@ article h2 {
   border-top: 1px solid var(--rule);   /* 每一节上方一条细线 */
 }
 article h3 { margin: 2rem 0 .8rem; }   /* 字号用缺省的 1.17em（约 23px），比正文 20px 大一号 */
+article hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--rule); }   /* 分节线：缺省是凹陷的双色线，改成一条细线 */
 
 a {
   color: var(--link);
@@ -272,6 +291,26 @@ figure img {
   margin-inline: auto;     /* 小图不满一行时居中 */
   border-radius: 4px;
 }
+
+
+/* 代码块、表格、引用：两篇技术文章（vibe-coding、pytorch-primer）都有，放在共用里。
+   只作用于对应的元素，页面里没有这些元素时不起作用 */
+/* 代码块：缺省没有底色，长行会撑出页面。
+   底色从文字颜色派生（混 5%），不加颜色变量；行高收紧，正文的 1.85 放在代码里太松 */
+pre {
+  padding: 1em;
+  overflow-x: auto;            /* 长行在块内横向滚动 */
+  background: color-mix(in oklch, currentColor 5%, transparent);
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+/* 表格：缺省没有边框 */
+table { border-collapse: collapse; }
+th, td { border: 1px solid var(--rule); padding: .4em .8em; }
+
+/* 引用：缺省左边缩进 40px，改成一条竖线 */
+blockquote { margin-left: 0; padding-left: 1em; border-left: 4px solid var(--rule); }
 
 
 /* =====================================================================

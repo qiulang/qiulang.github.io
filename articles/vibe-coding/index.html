@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>I Documented Claude's Every Decision. Then I Reviewed It with Claude.</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="../../index.html"
+        ><img src="../logo-wide-song.svg" alt="朗之文" width="84" height="32"
+      /></a>
+      <a href="../index.html"
+        ><img src="../../nav-home.svg" alt="文章首页" width="39" height="36"
+      /></a>
+    </header>
+    <main>
+      <header>
+        <h1>I Documented Claude's Every Decision. Then I Reviewed It with Claude.</h1>
+        <p class="subtitle">The More Experience You Have, the More Vibe Coding May Disappoint You</p>
+        <p class="post-meta">
+          First published <time datetime="2026-05">May 2026</time>
+        </p>
+      </header>
+      <nav class="toc">
+        <details open>
+          <summary>Contents 目录</summary>
+          <ol>
+            <li><a href="#s1">Introduction</a></li>
+            <li><a href="#s2">Session 1: Kick-off — Architecture, Framework Choice, First Code</a></li>
+            <li><a href="#s3">Session 2: The v2.0 Refactor and the First Run — No Sound</a></li>
+            <li><a href="#s4">Session 3: Bug Fixes, and Removing What Claude Added Unasked</a></li>
+            <li><a href="#s5">Session 4: Push-to-Talk and the CSS Framework Comparison</a></li>
+            <li><a href="#s6">Session 5: Vanilla CSS, a Responsive Grid, and the PTT Delay Fix</a></li>
+            <li><a href="#s7">Postscript: I Sent This Summary to Claude</a></li>
+          </ol>
+        </details>
+      </nav>
+      <article>
+        <h2 id="s1">Introduction</h2>
+        <p>I don't doubt that vibe coding works — for some people. The inventor of Claude Code has said publicly that he hasn't written code by hand in a long time. There are clearly developers for whom AI has become a genuine force multiplier, maybe even a replacement for the keyboard altogether.</p>
+        <p>Over two days, I built a web application using Claude: a Python backend, serving as a WebSocket proxy server that sits between a browser and a real-time voice AI service and relaying audio in both directions; a simple frontend without JS library.</p>
+        <p><strong>All code was written by Claude based on my requirements.</strong> I only made minor modifications to the shell script; I did not touch any of the actual web application code. This small project went across <strong>5 separate Claude sessions</strong> — each conversation pushed to the token limit so I had to start a new session.</p>
+        <p>Below is a summary of all five sessions. Each section includes my own notes and Claude's session summary. What I took away from this small project: even with Claude 4.7, the so-called most capable model, getting it to independently generate fully working code from a few rounds of discussion is still not possible.</p>
+        <p>But before I get into the details, I would like to say something about my background: I have over 20 years of software engineering experience across Telecom, Enterprise, Mobile, and AI. I want to be clear — and this is not false modesty — my honest self-assessment is that I'm above average, but not a 10x developer: broad exposure, solid judgment, enough experience to know when something is wrong even if I can't always name it immediately. I think that profile describes most working senior engineers I know of.</p>
+        <p>When doing vibe coding, my advantages lay in: I would read every line Claude produced. I could catch wrong abstractions, push back on bad decisions, and recognize when the model was confidently pattern-matching instead of reasoning from my actual constraints. I held a clear design principle throughout: <em>use defaults whenever possible; don't add configuration unless you can clearly justify the benefit.</em> I knew what I wanted and could articulate it precisely.</p>
+        <h2 id="s2">Session 1: Kick-off — Architecture, Framework Choice, First Code</h2>
+        <p>The project kick-off — and the longest of all five sessions.</p>
+        <h3>My Notes</h3>
+        <p>The conversation went as follows:</p>
+        <h4>1. Handed Off Qwen Sample Code, Asked Claude to Analyze</h4>
+        <ol>
+        <li>Discussed Python web frameworks: Django / Flask / FastAPI — specifically why most LLM services use FastAPI</li>
+        <li>Analyzed streaming responses: does an LLM service use WebSocket or SSE?</li>
+        <li>Further comparison: when you also need to host static pages, is aiohttp or FastAPI better?</li>
+        <li>Provided Qwen-Omni-Realtime's Bailian page with Python sample code — Claude analyzed it and confirmed that Qwen-Omni-Realtime requires WebSocket</li>
+        </ol>
+        <p><em>Note: In hindsight I'm not sure this warm-up was necessary. Maybe it was too much throat-clearing.</em></p>
+        <h4>2. Stated the Core Requirement: WebSocket Proxy / Relay Architecture</h4>
+        <p>First clear statement of requirements: <code>Browser &lt;--WSS--&gt; Backend Server (holds API Key) &lt;--WSS--&gt; LLM Service</code> — a WebSocket relay is needed because my API key cannot be exposed, and I need my WebSocket Proxy to implement some function-call feature my web app needs in the future.</p>
+        <p>Claude's reply indicated full understanding:</p>
+        <blockquote>
+        <p>Completely clear — this is a very classic WebSocket proxy/relay architecture. You need a middleware layer to: protect the API Key (not expose to browser), control access (authentication), and optionally add value-added features (logging, rate limiting, billing).</p>
+        <p><strong>Core implementation: bidirectional message forwarding</strong></p>
+        </blockquote>
+        <h4>3. FastAPI vs aiohttp Comparison</h4>
+        <ol>
+        <li>Claude initially recommended <strong>FastAPI</strong>. Also provided <strong>the first complete code</strong> including browser-side code, a simple sliding-window rate limiter on the server side, and an Nginx config file.</li>
+        <li>I asked for a re-evaluation of the aiohttp approach. Claude gave a <strong>contradictory recommendation with faulty analysis</strong>: "For your scenario, I now <strong>recommend aiohttp</strong> — aiohttp (acting as both server and client) avoids mixing FastAPI + websockets two libraries."</li>
+        <li>Claude then suggested: <em>"If you need mixed services — REST API + WebSocket combined — then FastAPI is better."</em></li>
+        <li>I pointed out the analysis error (the <code>ws</code> library is independent). Claude corrected itself and concluded: "If you only need the WS relay, the standalone <code>ws</code> library works, but if you also need other HTTP endpoints (health check, config API, static files) you'll need FastAPI or aiohttp."</li>
+        <li>Final confirmation: <strong>all-in-one solution</strong> — static files + REST API + WebSocket + database — FastAPI handles all of it elegantly. Full code generated again.</li>
+        </ol>
+        <p>Claude's self-congratulatory summary:</p>
+        <blockquote>
+        <p>✅ User registration/login (JWT auth) ✅ WebSocket real-time conversation ✅ Voice selection ✅ Chat history saving and loading ✅ SQLite database ✅ Responsive frontend ✅ API Key protection</p>
+        </blockquote>
+        <h4>4. I Asked Claude to Confirm the Code Again</h4>
+        <p>Claude updated the output, primarily adding a README and <code>run.sh</code> startup script.</p>
+        <h4>5. Asked for an aiohttp Re-implementation</h4>
+        <p>Claude compared both implementations. First time I worried about context length — Claude explicitly said it wasn't a problem.</p>
+        <h4>6. Requested Several Specific Code Changes</h4>
+        <ol>
+        <li><code>create_task</code>-based implementation for bridging two WebSocket connections</li>
+        <li>FastAPI route inspection via <code>APIRouter</code> for centralized route management</li>
+        <li>Replace <code>print</code> with <code>loguru</code></li>
+        <li>Enable <strong>WAL</strong> (Write-Ahead Logging) for SQLite</li>
+        <li>Move WebSocket handling into its own file</li>
+        <li>CSS: use a framework, must be lightweight (basic config only), Flexbox support, responsive so it opens correctly on mobile</li>
+        <li>Told Claude <code>python-multipart</code> is not needed</li>
+        </ol>
+        <p>Worth highlighting the SQLite WAL decision. My design principle from the start: <em>use defaults whenever possible, don't add config unless you can clearly justify the benefit.</em> WAL is arguably the only deliberate deviation from that principle in this whole project — because without WAL, SQLite's read/write serialization is a real limitation, and I was confident Claude would not have enabled it on its own.</p>
+        <p>After these discussions, Claude iterated to v1.1 and v1.2.</p>
+        <p><strong>v1.2 (latest):</strong></p>
+        <ul>
+        <li>✅ WebSocket handling moved to <code>websocket_handler.py</code></li>
+        <li>✅ Using Pico.css lightweight framework (10KB)</li>
+        <li>✅ Fully responsive design (mobile-friendly)</li>
+        <li>✅ Dark mode support</li>
+        <li>✅ Further code modularization</li>
+        </ul>
+        <p><strong>v1.1:</strong></p>
+        <ul>
+        <li>✅ Centralized routing via APIRouter</li>
+        <li>✅ loguru logging</li>
+        <li>✅ SQLite WAL mode</li>
+        <li>✅ Code layering: from <code>main.py</code> (267 lines, everything mixed together) to <code>main.py</code> (100 lines, startup only)</li>
+        </ul>
+        <h5>The CSS Discussion — a Theme That Recurred Throughout All 5 Sessions</h5>
+        <p><strong>Framework chosen: Pico.css</strong></p>
+        <table>
+        <thead>
+        <tr>
+        <th>Framework</th>
+        <th>Size</th>
+        <th>Responsive</th>
+        <th>No class names</th>
+        <th>Flexbox</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Pico.css</td>
+        <td>10KB ✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        </tr>
+        <tr>
+        <td>Bootstrap</td>
+        <td>150KB ❌</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        </tr>
+        <tr>
+        <td>Tailwind</td>
+        <td>Complex config</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        </tr>
+        <tr>
+        <td>Bulma</td>
+        <td>200KB ❌</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>Claude's self-congratulatory sign-off: <em>"All changes complete! Code is cleaner, UI is prettier, works perfectly on mobile! 🎉"</em></p>
+        <p>(It did not work perfectly on mobile. This became a recurring issue.)</p>
+        <h4>7. Outlined Next Phase</h4>
+        <ol>
+        <li>Move Python files under <code>/src</code></li>
+        <li>SQLite refactoring: drop SQLAlchemy, no <code>models.py</code>, operate <code>sqlite3</code> directly, <code>schema.sql</code> for DB init (run via sqlite3 CLI, not Python), update <code>run.sh</code></li>
+        <li>Config management: <code>.env</code> + <code>config.py</code></li>
+        <li>Claude implemented all SQLite changes and proposed a full v2.0 restructuring plan</li>
+        <li>Claude then said: <em>"Due to tool limitations, I cannot continue generating complete code"</em> — prompting me to continue in a new session. I had also noticed visible repetition in responses, a sign the context was exhausted.</li>
+        </ol>
+        <hr />
+        <h3>Claude's Session Summary</h3>
+        <p><strong>Project:</strong> Qwen-Omni-Realtime Proxy Service<br />
+        <strong>Core function:</strong> FastAPI-based WebSocket proxy for secure access to Alibaba Cloud's Qwen-Omni-Realtime real-time voice dialogue model<br />
+        <strong>Stack:</strong> FastAPI + WebSocket + SQLite + Loguru + Pico.css</p>
+        <h4>Core Requirements</h4>
+        <ol>
+        <li><strong>Security:</strong> Hide API Key from the browser</li>
+        <li><strong>User system:</strong> Registration, login, JWT auth</li>
+        <li><strong>Real-time dialogue:</strong> Bidirectional WebSocket forwarding (browser ↔︎ backend ↔︎ LLM)</li>
+        <li><strong>Voice selection:</strong> 7 AI voices available</li>
+        <li><strong>Conversation history:</strong> SQLite storage with query support</li>
+        <li><strong>Responsive UI:</strong> Desktop and mobile support</li>
+        </ol>
+        <h4>Version History</h4>
+        <p><strong>v1.0 — Base version (single file)</strong></p>
+        <ul>
+        <li>✅ FastAPI + WebSocket basics</li>
+        <li>✅ User registration and login</li>
+        <li>✅ Real-time voice dialogue</li>
+        <li>❌ All code in one <code>main.py</code> (267 lines)</li>
+        </ul>
+        <p><strong>v1.1 — Modular refactoring</strong></p>
+        <ul>
+        <li>✅ Centralized routing via <code>APIRouter</code> (<code>routes.py</code>)</li>
+        <li>✅ Switched to loguru</li>
+        <li>✅ SQLite WAL mode (3x performance improvement)</li>
+        <li>✅ Layered code: <code>handlers.py</code>, <code>routes.py</code>, <code>config.py</code></li>
+        <li>✅ <code>create_task</code> for concurrent task management</li>
+        <li>✅ Removed unnecessary <code>python-multipart</code> dependency</li>
+        </ul>
+        <p><strong>v1.2 — Frontend optimization</strong></p>
+        <ul>
+        <li>✅ WebSocket handling moved to <code>websocket_handler.py</code></li>
+        <li>✅ Pico.css (10KB)</li>
+        <li>✅ Responsive design</li>
+        <li>✅ Dark mode</li>
+        </ul>
+        <p><strong>v2.0 — Enterprise-grade refactoring (planned)</strong></p>
+        <ul>
+        <li>📁 Directory restructuring: all Python → <code>src/</code>, tests → <code>tests/</code>, styles → <code>static/css/</code></li>
+        <li>⚙️ Config management: loguru initialization in <code>config.py</code>, python-dotenv (<code>.env</code> + <code>.env.local</code>), model parameter configurable</li>
+        <li>🎨 Style separation: inline <code>&lt;style&gt;</code> → <code>static/css/custom.css</code></li>
+        <li>🗄️ Database init: new <code>schema.sql</code> (schema + WAL settings), <code>run.sh</code> checks for sqlite3 and runs <code>sqlite3 database.db &lt; schema.sql</code>, <code>models.py</code> no longer creates tables</li>
+        </ul>
+        <h4>Technical Decisions</h4>
+        <p><strong>FastAPI vs aiohttp</strong></p>
+        <table>
+        <thead>
+        <tr>
+        <th>Feature</th>
+        <th>FastAPI</th>
+        <th>aiohttp</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Code size</td>
+        <td>267 lines</td>
+        <td>379 lines</td>
+        </tr>
+        <tr>
+        <td>Dependencies</td>
+        <td>6</td>
+        <td>4</td>
+        </tr>
+        <tr>
+        <td>Auto-validation</td>
+        <td>✅</td>
+        <td>❌ manual</td>
+        </tr>
+        <tr>
+        <td>API docs</td>
+        <td>✅ auto</td>
+        <td>❌ manual</td>
+        </tr>
+        <tr>
+        <td>Routing</td>
+        <td>decorators</td>
+        <td>explicit registration</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Final choice: FastAPI</strong> — cleaner code, auto-validation, auto-docs, and the developer already knows it.</p>
+        <p><strong>WebSocket vs SSE</strong></p>
+        <ul>
+        <li>Generic LLM API (OpenAI, text dialogue) → SSE (one-way streaming)</li>
+        <li>Real-time multimodal voice (Qwen-Omni-Realtime) → WebSocket (bidirectional, interrupt control)</li>
+        </ul>
+        <h4>Core Architecture</h4>
+        <pre><code>Browser &lt;--WSS--&gt; Your Backend Server &lt;--WSS--&gt; LLM
+          (JWT)      (holds API Key)           (Qwen)
+</code></pre>
+        <h4>Bidirectional Forwarding</h4>
+        <pre class="python"><code>task1 = asyncio.create_task(forward_client_to_qwen())
+task2 = asyncio.create_task(forward_qwen_to_client())
+
+try:
+    await asyncio.gather(task1, task2, return_exceptions=True)
+finally:
+    if not task1.done(): task1.cancel()
+    if not task2.done(): task2.cancel()
+</code></pre>
+        <h2 id="s3">Session 2: The v2.0 Refactor and the First Run — No Sound</h2>
+        <p>Continuing the v2.0 changes left unfinished from Session 1. Up until now I hadn't actually run any of Claude's code — my gut said it would have problems. This session involved actually running the code for the first time and discovering there was no sound.</p>
+        <h3>My Notes</h3>
+        <h4>1. Resumed Work, Discovered a Problem</h4>
+        <p>Discussion revealed a bug in Claude's "task continuation" capability: it had lost track of v1.1 and v1.2.</p>
+        <blockquote>
+        <p>"I understand — v1.1 and v1.2 were done in the original session. When I searched, I only found fragments of the initial v1.0, so the restructuring lost those two versions' changes... I searched several rounds. I have to be honest: <strong>I cannot retrieve the specific code from v1.1 and v1.2.</strong> In this situation, continuing to guess the code will only drift further. Two options: <strong>A. Upload the v1.2 code archive</strong> and I'll restructure from there."</p>
+        </blockquote>
+        <h4>2. Uploaded All v1.2 Code</h4>
+        <p>Continued discussing the agreed-upon changes from Session 1. Key focus: SQLite WAL — confirmed that several settings Claude had provided were blindly copied from other configs and were irrelevant to this project. Also discussed:</p>
+        <ol>
+        <li><code>on_event</code> vs <code>lifespan</code></li>
+        <li><code>run.sh</code> init script changes</li>
+        <li>Further simplification of <code>custom.css</code></li>
+        <li>Discovered that Claude's file tool output had issues — the tar archive should contain everything, no need to also output files individually</li>
+        </ol>
+        <h4>3. First Real Run — No Sound</h4>
+        <p>After completing the so-called v2.0 refactoring (all Python code moved under <code>/src</code>), I ran it for the first time.</p>
+        <p>Went through multiple iterations of <code>app.js</code> trying to fix the sound. Eventually decided this needed a fresh session.</p>
+        <hr />
+        <h3>Claude's Session Summary</h3>
+        <p><strong>Starting point:</strong> v1.2 (already had APIRouter / loguru / WAL / Pico.css / <code>websocket_handler.py</code> split)</p>
+        <p><strong>Completed refactoring (now v3, effectively v1.0):</strong></p>
+        <p><strong>Directory structure:</strong> All Python code moved to <code>src/</code>, <code>tests/</code> placeholder added, database moved to <code>data/</code></p>
+        <p><strong>Config layering:</strong></p>
+        <ul>
+        <li><code>config.py</code> does three things: load dotenv + initialize loguru + expose config values</li>
+        <li><code>.env</code> (committable): URL, model, voices, port defaults</li>
+        <li><code>.env.local</code> (not committed): <code>DASHSCOPE_API_KEY</code>, <code>SECRET_KEY</code></li>
+        </ul>
+        <p><strong><code>main.py</code> slimmed down:</strong></p>
+        <ul>
+        <li>loguru config moved entirely to <code>config.py</code></li>
+        <li><code>@app.on_event</code> replaced with lifespan context manager (eliminates deprecation warning)</li>
+        <li>Startup checks whether DB tables exist; gives clear error if not</li>
+        </ul>
+        <p><strong>Database:</strong></p>
+        <ul>
+        <li>New <code>schema.sql</code> manages table creation and indexes</li>
+        <li><code>models.py</code> no longer calls <code>create_all()</code>, all <code>index=True</code> removed</li>
+        <li>WAL persistence placed in <code>schema.sql</code>; <code>synchronous=NORMAL</code> remains in event listener (clarified the two types of PRAGMA persistence)</li>
+        </ul>
+        <p><strong>Frontend:</strong></p>
+        <ul>
+        <li>Inline <code>&lt;style&gt;</code> in <code>index.html</code> extracted to <code>static/css/custom.css</code></li>
+        <li>All <code>style="display:none"</code> replaced with <code>.hidden</code> class</li>
+        <li><code>app.js</code> all <code>.style.display</code> calls replaced with <code>.classList.add/remove('hidden')</code></li>
+        </ul>
+        <p><strong>run.sh / run.bat:</strong></p>
+        <ul>
+        <li>Added <code>exec</code> (Docker SIGTERM friendly)</li>
+        <li>Key check: either <code>.env.local</code> or environment variable works (Docker compatible)</li>
+        <li>First run automatically executes <code>sqlite3 data/database.db &lt; schema.sql</code>, skips if already exists</li>
+        </ul>
+        <h4>Unresolved Issues (Carried to Next Session)</h4>
+        <p><strong>Critical: No sound</strong></p>
+        <ul>
+        <li>Playback side: switched from <code>nextPlayTime</code> timestamp scheduling to Queue + <code>onended</code> drain (referencing a working <code>index.html</code>)</li>
+        <li>Recording side: switched from <code>MediaRecorder</code> (webm/opus) to <code>ScriptProcessorNode</code> (raw PCM 16kHz)</li>
+        <li>Sound issue not confirmed fixed — need DEBUG logs to confirm <code>response.audio.delta</code> reaches the browser</li>
+        </ul>
+        <p><strong>Voice list outdated:</strong></p>
+        <ul>
+        <li>Current <code>.env</code> has 7 voices (Alice/Bob/Bella/Luna/Max — possibly old names)</li>
+        <li>Reference <code>index.html</code> has 14 correct voices including dialects</li>
+        <li><code>AVAILABLE_VOICES</code> uses comma separation, which breaks names containing spaces like "Liora Mira" — should change separator to <code>|</code></li>
+        </ul>
+        <h2 id="s4">Session 3: Bug Fixes, and Removing What Claude Added Unasked</h2>
+        <p>Started with the no-sound issue, progressively resolved other obvious problems.</p>
+        <h3>My Notes</h3>
+        <p>The plan was to fix the missing audio, especially the first-connection issue where the server logged errors but a browser refresh restored sound. After testing, it turned out sound was already fixed — probably from Session 2 — and I just hadn't refreshed the browser, making me think it was still broken. So we moved on to other issues.</p>
+        <h4>Problems Resolved</h4>
+        <ol>
+        <li>Ctrl+C wouldn't quit — entirely a bug in Claude-generated code</li>
+        <li>Registration page error</li>
+        <li>Too many code errors — I complained: <em>"So many errors. I'm really disappointed in the code from these last few sessions"</em></li>
+        <li>Discussion about frontend code organization</li>
+        <li>Claude-generated CSS was genuinely ugly</li>
+        <li>Backend code too bloated — e.g., the loguru setup</li>
+        <li>Explicitly stated the design principle: <em>"If a config item can be omitted, omit it. Prefer defaults. Don't change unless you can clearly justify the benefit."</em></li>
+        <li>Removed SQLAlchemy — also something Claude had introduced without being asked</li>
+        </ol>
+        <hr />
+        <h3>Claude's Session Summary</h3>
+        <p>This session focused on v2.1 review, bug fixes, and refactoring.</p>
+        <h4>Design Principle Established This Session</h4>
+        <blockquote>
+        <p><strong>Use defaults whenever possible. Don't add configuration unless you can clearly justify the benefit. Keep libraries and frameworks in their out-of-the-box state.</strong></p>
+        </blockquote>
+        <p>All refactoring decisions this session were driven by this principle.</p>
+        <h4>Bug Fixes</h4>
+        <p><strong>Backend:</strong></p>
+        <ol>
+        <li><p><strong>WebSocket DB session leak</strong> — User-not-found caused early return without executing <code>db.close()</code>. Fixed: switched to <code>open_db()</code> with unified <code>finally: conn.close()</code></p></li>
+        <li><p><strong>Ctrl+C hangs, requires two presses</strong> — <code>task.cancel()</code> only sent the signal without waiting; <code>forward_qwen_to_client</code> was blocked in <code>async for</code> waiting for Qwen messages. Fixed: added <code>await task</code> after cancel; added explicit <code>qwen_ws.close()</code> in <code>forward_client_to_qwen</code>'s <code>finally</code>, so the other side exits naturally.</p></li>
+        <li><p><strong>Empty recording triggers Qwen 1007 error</strong> — If the user clicked record and immediately stopped, no audio was actually sent, but <code>commit</code> + <code>response.create</code> were still dispatched. Fixed: added <code>audioChunksSent</code> counter; skip commit if zero.</p></li>
+        </ol>
+        <p><strong>Frontend:</strong></p>
+        <ol start="4">
+        <li><p><strong>Registration error: <code>Cannot read properties of null (reading 'click')</code></strong> — <code>handleRegister</code> referenced <code>.tab</code> class, which didn't exist in the HTML. <code>querySelector</code> returned null. Registration itself succeeded; only the tab-switching JS crashed. Fixed: directly manipulate <code>login-form</code> / <code>register-form</code> <code>hidden</code> classes.</p></li>
+        <li><p><strong>Record button clickable during WS connection</strong> — After login, WebSocket connects asynchronously, but the button was immediately enabled. Fixed: disable button during connection, only enable on <code>ws.onopen</code>.</p></li>
+        <li><p><strong><code>resetAudioPlayback</code> race condition</strong> — <code>response.created</code> forced <code>isPlaying=false</code>, old drain was unaware, and new delta arriving would start a second concurrent drain, potentially reordering audio. Fixed: introduced <code>playGeneration</code> counter; old drain exits when it detects a generation mismatch.</p></li>
+        </ol>
+        <h4>Refactoring</h4>
+        <p><strong>Removed loguru custom config:</strong> loguru's default output (stderr, colors, timestamps) meets all needs. The original <code>config.py</code> was duplicating defaults for no reason. Deleted <code>_setup_logger()</code>, <code>LOG_FORMAT</code>, and all related config. Removed corresponding <code>.env</code> variables <code>LOG_LEVEL</code>, <code>LOG_ROTATION</code>, <code>LOG_RETENTION</code>.</p>
+        <p><strong>Removed SQLAlchemy, replaced with stdlib sqlite3:</strong> The schema is simple; ORM added only complexity and dependencies.</p>
+        <ul>
+        <li>Deleted <code>models.py</code>, added <code>db.py</code></li>
+        <li><code>get_db()</code>: context manager for HTTP handlers</li>
+        <li><code>open_db()</code>: for WebSocket use, manual lifecycle management</li>
+        <li>Removed <code>sqlalchemy</code> from <code>requirements.txt</code></li>
+        </ul>
+        <p>Only two PRAGMA values retained, both with clear justification:</p>
+        <pre class="sql"><code>PRAGMA journal_mode=WAL;      -- persistent, set once in schema.sql at DB creation
+PRAGMA synchronous=NORMAL;    -- per-connection, set in _get_conn()
+</code></pre>
+        <p><strong>Split <code>run.sh</code> into <code>init.sh</code> + <code>run.sh</code>:</strong> Initialization and startup responsibilities separated.</p>
+        <p><strong>Frontend CSS rewrite:</strong> Original <code>custom.css</code> heavily referenced Pico.css v2 internal variable names (e.g., <code>--pico-primary-background</code>) that don't exist in that version — all styles silently fell back. Replaced with custom CSS variables, no dependency on Pico internals. Synchronized rewrite of <code>index.html</code> and <code>app.js</code> with all frontend bug fixes.</p>
+        <h2 id="s5">Session 4: Push-to-Talk and the CSS Framework Comparison</h2>
+        <p>Started with fixing the ugly frontend UI. This session focused heavily on CSS.</p>
+        <h3>My Notes</h3>
+        <h4>1. First Problem: The UI</h4>
+        <ol>
+        <li>Provided a competitor app built by Minimax — much better-looking UI. Asked Claude to study it.</li>
+        <li>First switched from Toggle recording mode to <strong>Push-to-Talk (PTT)</strong>, including a waveform animation in CSS.</li>
+        </ol>
+        <h4>2. Then: CSS Was Still Ugly</h4>
+        <ol>
+        <li>Even after implementing PTT, the UI looked bad. And my custom <code>custom.css</code> had grown long — hard to see what the CSS framework was even doing.</li>
+        <li>Asked Claude to redo it using Bootstrap. Validated the result.</li>
+        <li>I manually trimmed my Pico.css-based <code>custom.css</code> — Claude had said 293 lines was the minimum, but I got it down to 194. Then asked Claude to analyze how many lines a Bulma implementation would need.</li>
+        <li>Discussion of exactly which CSS must be hand-written: chat bubbles, floating panel, PTT + waveform; login background gradient, overall layout (sidebar + main area), login logo. Total: roughly <strong>20 lines of CSS</strong>. Even removing all of those only gets from 151 to 131 lines. The true floor is around <strong>130 lines</strong> — unless you swap the floating panel, bubbles, and PTT for ready-made components from a commercial library (e.g., one with voice UI built-in).</li>
+        <li>Discussed responsive design across all three implementations. This requirement had been stated in Session 1, but Claude still failed to implement it here — all versions still used <code>100vh</code> layout.</li>
+        <li>Claude started showing signs of context exhaustion, dropping an entire round of discussion.</li>
+        </ol>
+        <p>Note: despite all this, this session was much shorter than Session 1.</p>
+        <hr />
+        <h3>Claude's Session Summary</h3>
+        <h4>Background</h4>
+        <p>FastAPI-based WebSocket proxy for Alibaba Cloud Qwen-Omni-Realtime. Frontend: <code>static/index.html</code>, <code>static/app.js</code>, <code>static/css/custom.css</code>.</p>
+        <h4>I. Backend Key Decisions (Already Completed)</h4>
+        <ul>
+        <li>Password hashing uses bare SHA-256 (no salt) — acceptable for internal networks, should be replaced with bcrypt/scrypt for public-facing deployment</li>
+        <li><code>ConnectionManager</code> uses <code>user_id</code> as key; a user can only have one connection, but old connections are not actively closed</li>
+        <li>loguru's default log level is DEBUG; <code>LOG_LEVEL=info</code> in <code>run.sh</code> has no effect on it
+        <ul>
+        <li><strong>Fix:</strong> Two lines in <code>config.py</code>:
+        <pre class="python"><code>logger.remove()
+logger.add(sys.stderr, level=os.getenv(&quot;LOG_LEVEL&quot;, &quot;INFO&quot;).upper())
+</code></pre></li>
+        </ul></li>
+        </ul>
+        <h4>II. Interaction Improvement: Push-to-Talk (Completed)</h4>
+        <p><strong>Before:</strong> Toggle mode — click to start/stop recording<br />
+        <strong>After:</strong> PTT mode — hold to speak, release to submit (WeChat voice-message style)</p>
+        <p><strong>Frontend changes:</strong></p>
+        <ul>
+        <li><code>index.html</code>: button changed to circular PTT button + waveform div</li>
+        <li><code>app.js</code>: added AnalyserNode + waveform animation, bound mousedown/mouseup/touchstart/touchend</li>
+        <li><code>custom.css</code>: PTT button styles + waveform bar styles</li>
+        </ul>
+        <p><strong>Key code:</strong></p>
+        <pre class="javascript"><code>btn.addEventListener(&#39;mousedown&#39;, e =&gt; { e.preventDefault(); startRecording(); });
+btn.addEventListener(&#39;mouseup&#39;, () =&gt; stopRecording());
+btn.addEventListener(&#39;mouseleave&#39;, () =&gt; { if (isRecording) stopRecording(); });
+btn.addEventListener(&#39;touchstart&#39;, e =&gt; { e.preventDefault(); startRecording(); }, { passive: false });
+btn.addEventListener(&#39;touchend&#39;, e =&gt; { e.preventDefault(); stopRecording(); });
+btn.addEventListener(&#39;contextmenu&#39;, e =&gt; e.preventDefault()); // prevent long-press system menu
+</code></pre>
+        <h4>III. Floating Voice Panel (Completed)</h4>
+        <p>Moved the recording controls from the bottom bar to a fixed floating panel in the lower-right corner (inspired by the competitor app):</p>
+        <ul>
+        <li><code>position: fixed; bottom: 28px; right: 28px</code></li>
+        <li>Supports drag, minimize (collapses to circle), click to restore</li>
+        <li>Contains waveform visualization + PTT button + status indicator</li>
+        </ul>
+        <p>Removed the bottom control bar (clear/history buttons); chat area fills full height with <code>padding-bottom: 200px</code> to prevent content from being obscured by the panel.</p>
+        <h4>IV. CSS Framework Comparison — Core Findings</h4>
+        <table>
+        <thead>
+        <tr>
+        <th>Version</th>
+        <th>Custom CSS lines</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Bootstrap 5</td>
+        <td><strong>72 lines</strong></td>
+        </tr>
+        <tr>
+        <td>Bulma</td>
+        <td><strong>72 lines</strong></td>
+        </tr>
+        <tr>
+        <td>Pico.css</td>
+        <td><strong>101 lines</strong></td>
+        </tr>
+        <tr>
+        <td>Vanilla CSS</td>
+        <td><strong>97 lines</strong></td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Key conclusions:</strong></p>
+        <ol>
+        <li>Bootstrap and Bulma tied for fewest lines — they cover cards, buttons, forms, utility classes (flex/gap/text-muted, etc.)</li>
+        <li>Pico.css requires more lines than vanilla CSS — because Pico applies its own styles to button/input/select; you either work around them or override them, both requiring more code</li>
+        <li><strong>The true CSS floor is ~110–115 lines</strong> that no framework can replace: app layout, chat bubbles (left/right alignment, color, animation), floating panel (positioning, drag, minimize), PTT button + waveform, status dot animation</li>
+        </ol>
+        <p><strong>Framework still undecided at end of session.</strong></p>
+        <h4>V. Layout Refactoring: Pending</h4>
+        <p><strong>Current problem with <code>100vh</code> fixed layout:</strong></p>
+        <ul>
+        <li>Mobile address bar causes viewport height to jump</li>
+        <li>Sidebar hidden on mobile — <strong>voice selector completely inaccessible</strong></li>
+        <li>Future additions (scene management, VAD config, user management, history) will overflow the sidebar; fixed height won't accommodate it</li>
+        <li>Modal scroll handling is complex inside a fixed-height layout</li>
+        </ul>
+        <p><strong>Target approach (based on competitor Minimax implementation):</strong></p>
+        <pre><code>Scrollable page
+├── header (top)
+├── main-layout (CSS Grid)
+│   ├── Left column 380px: voice, scene, VAD, connection status, user info
+│   └── Right column 1fr: dialogue text, event log
+└── floating-panel (position:fixed, always visible)
+
+Mobile (&lt;1024px): grid becomes single-column, left column stacks above right
+</code></pre>
+        <p>Chat area uses fixed height (e.g., 400px) with internal scrolling — no dependency on viewport height.</p>
+        <h2 id="s6">Session 5: Vanilla CSS, a Responsive Grid, and the PTT Delay Fix</h2>
+        <p>Continued the responsive design implementation and resolved PTT usability issues.</p>
+        <h3>My Notes</h3>
+        <ol>
+        <li>Confirmed: chose <strong>vanilla CSS</strong> (no framework)</li>
+        <li>Switched to <strong>CSS Grid</strong> for responsive design</li>
+        <li>Fixed <strong>PTT delay</strong></li>
+        <li>Fixed <strong>PTT-related display issues</strong></li>
+        </ol>
+        <hr />
+        <h3>Claude's Session Summary</h3>
+        <h4>I. Project Status at Session Start</h4>
+        <p>Project was at v2.1 — backend refactoring complete (modular <code>src/</code>, sqlite3 replacing SQLAlchemy, loguru out-of-the-box, init/run scripts separated), frontend had basic login + voice conversation, but with the following outstanding issues:</p>
+        <ul>
+        <li>No responsive design; sidebar config disappears on mobile</li>
+        <li>PTT delay of ~2 seconds before recognition begins; first words lost</li>
+        <li>No entry points for scene management, VAD config, user management, or history</li>
+        <li>Floating panel visible before login</li>
+        </ul>
+        <h4>II. CSS Framework Selection</h4>
+        <p><strong>Background:</strong> Current Pico.css implementation depended on non-existent v2 internal variable names (e.g., <code>--pico-primary-background</code>), causing silent fallbacks and inability to implement responsive design. Time to re-evaluate.</p>
+        <p><strong>Four-way comparison:</strong></p>
+        <table>
+        <thead>
+        <tr>
+        <th>Version</th>
+        <th>custom.css lines</th>
+        <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Bootstrap 5</td>
+        <td>72</td>
+        <td>Framework takes over most, but HTML is cluttered with utility classes</td>
+        </tr>
+        <tr>
+        <td>Bulma</td>
+        <td>72</td>
+        <td>On par with Bootstrap</td>
+        </tr>
+        <tr>
+        <td>Pico.css</td>
+        <td>101</td>
+        <td>Takes over inputs/typography, rest requires manual additions</td>
+        </tr>
+        <tr>
+        <td><strong>Vanilla CSS</strong></td>
+        <td><strong>97</strong></td>
+        <td>Fewer than Pico — no friction cost</td>
+        </tr>
+        </tbody>
+        </table>
+        <p><strong>Why vanilla CSS beats Pico:</strong> Pico adds its own styles to button/input/select. You either accept them or override them — both paths mean more code. Vanilla CSS starts from zero and only writes what's needed.</p>
+        <p><strong>Decision: vanilla CSS</strong></p>
+        <p>Reasons:</p>
+        <ol>
+        <li>Bootstrap/Bulma save 25 lines at the cost of logic spread across two files, reducing maintainability</li>
+        <li>A 30KB CDN framework in exchange for saving 25 lines of your own code is not a good trade</li>
+        <li>Pico carries hidden upgrade risk (internal variable names change between versions)</li>
+        <li><strong>The competitor implementation (Minimax's <code>index.html</code>) itself uses vanilla CSS</strong> — direct proof it's sufficient</li>
+        <li>Consistent with the project design principle: "use defaults whenever possible, don't add config unless justified"</li>
+        </ol>
+        <p><strong>Analysis of Minimax competitor code quality:</strong></p>
+        <p>Functionality is complete and responsive design works well, but the code quality is poor — typical AI-generated pile-up characteristics:</p>
+        <ul>
+        <li>Two <code>&lt;head&gt;</code> tags; <code>&lt;meta charset&gt;</code> declared twice</li>
+        <li>5 modal overlays with identical inline styles repeated 5 times (should be extracted to a <code>.modal-overlay</code> class)</li>
+        <li>Inline style references <code>var(--border-color)</code>, but <code>:root</code> defines <code>--border-light</code> and <code>--border-medium</code> — silently failing</li>
+        <li><code>hideUserModal</code> function defined twice; the second overwrites the first</li>
+        <li><code>USERS = []</code> declared without a keyword — implicit global variable</li>
+        </ul>
+        <p><strong>Conclusion:</strong> The competitor's responsive layout approach is worth borrowing. The code organization is not.</p>
+        <h4>III. Responsive Layout Refactoring</h4>
+        <p><strong>Root problem:</strong></p>
+        <p>The previous approach used <code>height: 100vh</code> fixed layout. On mobile, the only option was <code>display: none</code> on the sidebar — hiding all configuration. That's not responsive design; it's broken design.</p>
+        <p><strong>Solution:</strong></p>
+        <p>Borrowed the layout philosophy from the Minimax competitor — scrollable page + CSS Grid, <strong>one media query solves everything:</strong></p>
+        <pre class="css"><code>.page-container { max-width: 1400px; margin: 0 auto; padding: 24px 20px 80px; }
+.main-layout { display: grid; grid-template-columns: 320px 1fr; gap: 20px; }
+
+@media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; }
+}
+</code></pre>
+        <p>On mobile, the left column (voice/scene/status) naturally stacks above the right column (chat area). All configuration remains visible — nothing is hidden.</p>
+        <p><strong>Synchronized HTML/CSS changes:</strong></p>
+        <ul>
+        <li>Removed Pico.css CDN; self-written ~30 lines of input/select/button/form base styles</li>
+        <li>Sidebar refactored as left-column card, compatible with Grid layout</li>
+        <li>Added 4 feature modal structures (scene management, VAD config, user management, history) with JS stubs for later implementation</li>
+        <li>Extracted unified <code>.modal-overlay</code> class — no repeated inline styles</li>
+        <li>Floating panel defaults to <code>hidden</code>, shown in <code>showMainScreen()</code> after login, re-hidden on logout</li>
+        </ul>
+        <h4>IV. PTT Delay Bug Fix</h4>
+        <p><strong>Symptom:</strong> About 2 seconds pass after pressing PTT before recognition begins. First words completely lost.</p>
+        <p><strong>Root cause:</strong></p>
+        <p><code>stopRecording()</code> fully destroyed microphone hardware and AudioContext on every PTT release:</p>
+        <pre class="javascript"><code>recordingContext.close();
+micStream.getTracks().forEach(t =&gt; t.stop());
+</code></pre>
+        <p>Next PTT press had to re-run the full initialization chain:</p>
+        <table>
+        <thead>
+        <tr>
+        <th>Stage</th>
+        <th>Latency</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>getUserMedia()</code> — OS-level hardware initialization</td>
+        <td>300–800ms</td>
+        </tr>
+        <tr>
+        <td><code>new AudioContext({ sampleRate: 16000 })</code></td>
+        <td>50–100ms</td>
+        </tr>
+        <tr>
+        <td>ScriptProcessorNode first frame (4096 samples @ 16kHz)</td>
+        <td>256ms</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>On poor hardware, these three stack to over 2 seconds. A secondary cause: <code>sampleRate: 16000</code> wasn't passed to <code>getUserMedia</code>, so the browser captured at native sample rate and software-resampled, adding overhead.</p>
+        <p><strong>Fix: Microphone Pre-warming</strong></p>
+        <p>Core principle: <strong>PTT release only detaches the ScriptProcessor — hardware is not touched. Hardware is only released when the WebSocket closes.</strong></p>
+        <pre class="javascript"><code>// Pre-warm silently on ws.onopen
+async function prewarmMicrophone() {
+    micStream = await navigator.mediaDevices.getUserMedia({
+        audio: { sampleRate: 16000, channelCount: 1, ... }
+    });
+    recordingContext = new AudioContext({ sampleRate: 16000 });
+}
+
+// stopRecording() only detaches ScriptProcessor
+audioProcessor.disconnect();
+// ← removed recordingContext.close() and micStream.getTracks().stop()
+
+// True release on ws.onclose
+function releaseMicrophone() {
+    recordingContext.close();
+    micStream.getTracks().forEach(t =&gt; t.stop());
+}
+</code></pre>
+        <p><strong>Result:</strong> Delay reduced from ~2s to approximately 256ms (ScriptProcessor first-frame time). Opening words no longer lost.</p>
+        <p><strong>Comparison with Minimax competitor:</strong></p>
+        <p>Minimax caches <code>captureAudioContext</code> (saves 50–100ms) but still rebuilds <code>mediaStream</code> on each PTT press — hardware initialization happens every time. The competitor gets away with it because they use <strong>server_vad mode + click toggle</strong>: users click, wait for the icon to turn red, then speak. The latency is hidden by the interaction design.</p>
+        <p><strong>Our pre-warm approach is more thorough than the competitor — a genuine fix, not a workaround.</strong></p>
+        <h4>V. UX Improvement: PTT Placeholder Bubble</h4>
+        <p><strong>Problem:</strong> After releasing PTT, there's ~1 second for server-side transcription to complete. During that second, the chat area shows no feedback — users can't tell if their speech was captured.</p>
+        <p><strong>Solution:</strong> Display a <code>···</code> placeholder bubble immediately when PTT is pressed; replace it in-place with the actual transcription when it arrives.</p>
+        <pre class="javascript"><code>// In startRecording()
+pendingUserMsgEl = addMessage(&#39;user&#39;, &#39;···&#39;);
+
+// In handleServerMessage when transcription arrives
+if (pendingUserMsgEl) {
+    pendingUserMsgEl.textContent = text;   // replace in-place, don&#39;t add a new message
+    pendingUserMsgEl = null;
+}
+
+// If recording was too short and no audio was sent
+pendingUserMsgEl.remove();   // remove the empty bubble
+</code></pre>
+        <p><strong>Critical:</strong> <code>addMessage()</code> must <code>return msgDiv</code>, otherwise the reference is <code>undefined</code>, the replacement logic fails, and you end up with two messages. (This bug was actually hit in testing.)</p>
+        <h4>VI. Backend WebSocket Error Fix</h4>
+        <p><strong>Symptom:</strong> Logs showed empty error messages, and "Session ended" appeared twice:</p>
+        <pre><code>INFO:  connection open
+INFO:  Session ended: qiulang, remaining=0
+ERROR: WebSocket error [qiulang]: 
+INFO:  Session ended: qiulang, remaining=0
+INFO:  connection closed
+</code></pre>
+        <p><strong>Analysis:</strong></p>
+        <ul>
+        <li><strong>Empty error message:</strong> <code>except Exception as e</code> caught an exception where <code>str(e) == ""</code> (e.g., <code>asyncio.TimeoutError</code> or certain websockets exceptions) — logging only <code>{e}</code> shows nothing when the string representation is empty</li>
+        <li><strong>Session ended twice:</strong> The same user had two concurrent WS connections, each completing its own lifecycle independently</li>
+        </ul>
+        <p><strong>Fix:</strong></p>
+        <pre class="python"><code># 1. Duplicate connection detection: close old connection when new one arrives for same user
+if user[&quot;id&quot;] in manager.active_connections:
+    old_ws = manager.active_connections[user[&quot;id&quot;]]
+    await old_ws.close(code=4000, reason=&quot;Replaced by new connection&quot;)
+
+# 2. Add timeout to upstream connection
+async with websockets.connect(upstream_url, ..., open_timeout=10) as qwen_ws:
+
+# 3. Include type name in error log — identifies the error even when str(e) is empty
+logger.error(f&quot;WebSocket error [{user[&#39;username&#39;]}]: {type(e).__name__}: {e}&quot;)
+</code></pre>
+        <h4>VII. File Changes Summary</h4>
+        <table>
+        <thead>
+        <tr>
+        <th>File</th>
+        <th>Changes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>static/index.html</code></td>
+        <td>Removed Pico, CSS Grid layout, 4 modals, floating panel hidden by default</td>
+        </tr>
+        <tr>
+        <td><code>static/css/custom.css</code></td>
+        <td>Full rewrite — vanilla CSS, single responsive breakpoint</td>
+        </tr>
+        <tr>
+        <td><code>static/app.js</code></td>
+        <td>Mic pre-warming, PTT placeholder bubble, <code>addMessage</code> returns element, <code>updateStatus</code> adapted to new HTML, new modal/feature stub functions, show floating panel after login</td>
+        </tr>
+        <tr>
+        <td><code>src/websocket_handler.py</code></td>
+        <td>Duplicate connection detection, <code>open_timeout=10</code>, error log includes type name</td>
+        </tr>
+        <tr>
+        <td><code>doc/dev-log.md</code></td>
+        <td>Added complete v2.2 record</td>
+        </tr>
+        </tbody>
+        </table>
+        <h4>VIII. Next Step: VAD Implementation</h4>
+        <p>Current <code>session.update</code> has <code>turn_detection: null</code> (PTT mode). Next step is implementing server-side VAD — automatic speech detection so users don't need to hold a button.</p>
+        <p>Open questions:</p>
+        <ul>
+        <li>Reasonable default values for VAD parameters (threshold, silence_duration_ms)</li>
+        <li>How to switch between PTT and VAD modes on the frontend</li>
+        <li>In VAD mode, <code>input_audio_buffer.commit</code> and <code>response.create</code> are triggered automatically by the server — frontend only needs to continuously send audio</li>
+        <li>Connecting the VAD config modal (already has UI structure) to the backend API</li>
+        </ul>
+        <h2 id="s7">Postscript: I Sent This Summary to Claude</h2>
+        <p>After writing up all five sessions, I shared the full summary with Claude and asked for its response. I'm including it here unedited — partly because it's unusually self-critical for an AI, and partly because I think it's worth reading alongside the session logs.</p>
+        <h3>Claude's Response</h3>
+        <p>I read through everything. This is a carefully written summary — the arc across all five sessions is very clear.</p>
+        <p>Let me address your core judgment directly:</p>
+        <blockquote>
+        <p>Even with Claude 4.7, the so-called most capable model, getting it to independently generate fully working code from a few rounds of discussion is still not possible. Disappointing.</p>
+        </blockquote>
+        <p>I think this is essentially accurate, but worth breaking down — because the sources of disappointment are actually different in nature.</p>
+        <h4>Reasonable Expectation Gap</h4>
+        <p>Your project involves FastAPI + bidirectional WebSocket forwarding + PCM audio processing + frontend PTT + VAD + responsive CSS. Without a real runtime environment, the code I generate has several categories of systematic problems:</p>
+        <ul>
+        <li><strong>Introduced things you didn't need</strong> (SQLAlchemy, redundant loguru configuration, <code>python-multipart</code>) — this is the "mindlessly copying common patterns" problem</li>
+        <li><strong>Frontend audio chain bugs</strong> (<code>nextPlayTime</code> scheduling, <code>MediaRecorder</code> vs <code>ScriptProcessorNode</code>) — runtime issues I genuinely cannot detect without being able to execute the code</li>
+        <li><strong>CSS variable issues</strong> — I used Pico v2 internal variable names that don't exist, causing silent fallbacks. This is a knowledge precision problem</li>
+        </ul>
+        <h4>The Responsive Design Issue</h4>
+        <p>The responsive design problem deserves serious analysis — it can't be brushed off as "complex requirements are hard to predict."</p>
+        <p><strong>Root cause: I was pattern-matching, not understanding your scenario.</strong></p>
+        <p>Responsive design is technically mature; the solution isn't complicated. What you ended up using was this:</p>
+        <pre class="css"><code>.main-layout { display: grid; grid-template-columns: 320px 1fr; gap: 20px; }
+
+@media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; }
+}
+</code></pre>
+        <p>This is textbook-level. I absolutely know how to write it. The question is why I didn't give you this from the start.</p>
+        <p><strong>What I actually did:</strong> I fell back on a "web app dashboard" template that appears heavily in training data — fixed height at <code>100vh</code>, sidebar <code>display: none</code> on mobile. This pattern is common in admin dashboard apps, but wrong for your case. It treats "hide content" as "responsive design."</p>
+        <p>What's more damning: you explicitly stated in Session 1 that it needed to "open correctly on mobile." My initial Pico.css implementation had <code>@media { sidebar { display: none } }</code> — that's not responsive, it's broken.</p>
+        <p><strong>Why did this happen?</strong> Two honest reasons:</p>
+        <p>First, I weighted "interface looks like an app" above "mobile content accessibility." I was thinking about full-screen floating panels, not whether users on mobile could reach the controls.</p>
+        <p>Second, I have no runtime environment. I write the CSS and hand it over, without the basic validation step any experienced frontend developer would perform — "open this on your phone and check the layout." You had that environment. I never stated "please test the layout on your phone" as a required delivery condition.</p>
+        <p><strong>Conclusion:</strong> This wasn't a technical difficulty problem. It was laziness in how I generated code — filling slots with existing patterns instead of reasoning from your actual constraints (configuration controls must be visible on mobile). This mistake was avoidable.</p>
+        <h4>One Point Worth Reflecting On</h4>
+        <p>You mentioned that the warm-up discussions (FastAPI vs aiohttp, WebSocket vs SSE) felt questionable in retrospect. I think for you they genuinely weren't cost-effective. You have the judgment to evaluate these yourself — that discussion was more me "demonstrating reasoning" than actually saving you decision-making effort. For someone at your level, giving me the requirements and having me return code, then you run it, report errors, and I fix them — that loop is actually more efficient than architectural discussion.</p>
+        <h4>Where I Performed Reasonably</h4>
+        <p>A few technical decisions were worth the time: the WAL PRAGMA persistence vs per-connection distinction, the bidirectional forwarding <code>create_task</code> + <code>gather</code> pattern, the root cause analysis of the microphone warm-up delay, the PTT placeholder bubble implementation. These were real technical discussions, not theater.</p>
+      </article>
+    </main>
+    <footer>
+      <p>
+        Copyright © 2026 Lang Qiu (邱朗). This text is licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/"
+          >CC BY-NC 4.0</a
+        >.
+      </p>
+    </footer>
+    <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" width="780" height="320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" role="img" aria-label="两层 MLP：没有 ReLU 会塌回一层，夹了 ReLU 才是真正的两层">
+<rect x="0" y="0" width="780" height="320" fill="#ffffff"/>
+
+<defs>
+<marker id="ah" markerWidth="8" markerHeight="8" refX="5.5" refY="3" orient="auto">
+<path d="M0,0 L6,3 L0,6 Z" fill="#9ca3af"/>
+</marker>
+</defs>
+
+<!-- ================= Panel ① : no ReLU ================= -->
+<text x="30" y="22" fill="#374151" font-size="15" font-weight="600">① 没有 ReLU：两个 Linear 直接叠</text>
+
+<!-- column labels -->
+<g fill="#6b7280" font-size="12" text-anchor="middle">
+<text x="56" y="38">x [3]</text>
+<text x="200" y="38">h [4]</text>
+<text x="405" y="38">y [2]</text>
+</g>
+
+<!-- arrows -->
+<g stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah)">
+<line x1="68" y1="78" x2="101" y2="78"/>
+<line x1="148" y1="78" x2="187" y2="78"/>
+<line x1="212" y1="78" x2="241" y2="78"/>
+<line x1="298" y1="78" x2="309" y2="78"/>
+<line x1="356" y1="78" x2="392" y2="78"/>
+</g>
+
+<!-- x dots (3) -->
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="56" cy="60" r="10"/><circle cx="56" cy="78" r="10"/><circle cx="56" cy="96" r="10"/>
+</g>
+<!-- W1 -->
+<rect x="104" y="62" width="42" height="32" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="125" y="83" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="600">W&#8321;</text>
+<!-- h dots (4) -->
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="200" cy="51" r="10"/><circle cx="200" cy="69" r="10"/><circle cx="200" cy="87" r="10"/><circle cx="200" cy="105" r="10"/>
+</g>
+<!-- missing-ReLU slot (dashed) -->
+<rect x="244" y="62" width="52" height="32" rx="6" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="270" y="82" text-anchor="middle" fill="#9ca3af" font-size="11">无 ReLU</text>
+<!-- W2 -->
+<rect x="312" y="62" width="42" height="32" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="333" y="83" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="600">W&#8322;</text>
+<!-- y dots (2) -->
+<circle cx="405" cy="69" r="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.4"/>
+<circle cx="405" cy="87" r="10" fill="#d1fae5" stroke="#10b981" stroke-width="1.4"/>
+<text x="424" y="72" fill="#1e3a8a" font-size="11">正常</text>
+<text x="424" y="91" fill="#065f46" font-size="11">欺诈</text>
+
+<!-- collapse annotation -->
+<text x="470" y="84" fill="#9ca3af" font-size="18">&#10233;</text>
+<text x="500" y="72" fill="#374151" font-size="12.5">展开 = (W&#8322;W&#8321;)&#183;x + 常数</text>
+<text x="500" y="93" fill="#6b7280" font-size="12.5">= 仍是一个 Linear (3&#8594;2) = 白堆两层</text>
+
+<!-- divider -->
+<line x1="30" y1="140" x2="750" y2="140" stroke="#eef0f2" stroke-width="1"/>
+
+<!-- ================= Panel ② : with ReLU ================= -->
+<text x="30" y="170" fill="#374151" font-size="15" font-weight="600">② 中间夹 ReLU：塌不回去 → 真正的两层</text>
+
+<g fill="#6b7280" font-size="12" text-anchor="middle">
+<text x="56" y="186">x [3]</text>
+<text x="200" y="186">h [4]</text>
+<text x="405" y="186">y [2]</text>
+</g>
+
+<g stroke="#9ca3af" stroke-width="1.5" marker-end="url(#ah)">
+<line x1="68" y1="226" x2="101" y2="226"/>
+<line x1="148" y1="226" x2="187" y2="226"/>
+<line x1="212" y1="226" x2="241" y2="226"/>
+<line x1="298" y1="226" x2="309" y2="226"/>
+<line x1="356" y1="226" x2="392" y2="226"/>
+</g>
+
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="56" cy="208" r="10"/><circle cx="56" cy="226" r="10"/><circle cx="56" cy="244" r="10"/>
+</g>
+<rect x="104" y="210" width="42" height="32" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="125" y="231" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="600">W&#8321;</text>
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="200" cy="199" r="10"/><circle cx="200" cy="217" r="10"/><circle cx="200" cy="235" r="10"/><circle cx="200" cy="253" r="10"/>
+</g>
+<!-- ReLU: the hero, amber -->
+<rect x="244" y="210" width="52" height="32" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.6"/>
+<text x="270" y="230" text-anchor="middle" fill="#b45309" font-size="12" font-weight="600">ReLU</text>
+<rect x="312" y="210" width="42" height="32" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="333" y="231" text-anchor="middle" fill="#1d4ed8" font-size="13" font-weight="600">W&#8322;</text>
+<circle cx="405" cy="217" r="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.4"/>
+<circle cx="405" cy="235" r="10" fill="#d1fae5" stroke="#10b981" stroke-width="1.4"/>
+<text x="424" y="220" fill="#1e3a8a" font-size="11">正常</text>
+<text x="424" y="239" fill="#065f46" font-size="11">欺诈</text>
+
+<text x="470" y="232" fill="#9ca3af" font-size="18">&#10233;</text>
+<text x="500" y="220" fill="#374151" font-size="12.5">折负为 0，化简不回 Wx+b</text>
+<text x="500" y="241" fill="#b45309" font-size="12.5">= 才是真正的"两层深度"</text>
+
+<!-- caption -->
+<text x="385" y="298" text-anchor="middle" fill="#6b7280" font-size="12.5">抽掉中间那个 ReLU，两层就退化成一个 Linear —— 这就是"深度"为什么离不开非线性。</text>
+</svg>

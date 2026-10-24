@@ -5,11 +5,3 @@ article {
   user-select: none;           /* 正文里的文字不能被选中，也就没法复制 */
 }
 :root { --bg: #fdf6e3; }   /* 淡黄色底 */
-
-/* 分节线：只有这一篇有 hr。缺省是凹陷的双色线，改成一条细线 */
-article hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--rule); }
-
-/* 嵌套目录：Fun Facts 那一项里还套着一层 ol。
-   site.css 的 .toc ol 两层都匹配，两层各成一个跟踪组、各选一个当前项，结果同时高亮两项。
-   里层关掉跟踪，Fun Fact 的链接就都归外层那一组，整个目录只有一个当前项 */
-.toc ol ol { scroll-target-group: none; }

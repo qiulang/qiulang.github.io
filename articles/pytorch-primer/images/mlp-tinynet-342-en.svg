@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 492" width="720" height="492" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif" role="img" aria-label="TinyNet 3-4-2: the weights of the two layers are the two sets of edges in the diagram; W1 is [4,3], W2 is [2,4]">
+<rect x="0" y="0" width="720" height="492" fill="#ffffff"/>
+
+<!-- column labels -->
+<g fill="#6b7280" font-size="13" text-anchor="middle">
+<text x="80" y="95">x [3]  input</text>
+<text x="230" y="95">h [4]  hidden</text>
+<text x="380" y="95">y [2]  output</text>
+</g>
+<text x="155" y="70" text-anchor="middle" fill="#9ca3af" font-size="12">fc1 = Linear(3,4)</text>
+<text x="305" y="70" text-anchor="middle" fill="#9ca3af" font-size="12">fc2 = Linear(4,2)</text>
+
+<!-- edges x -> h : 12 edges, all gray -->
+<g stroke="#9ca3af" stroke-width="1.2" opacity="0.65">
+<line x1="102" y1="150" x2="208" y2="120"/>
+<line x1="102" y1="150" x2="208" y2="180"/>
+<line x1="102" y1="150" x2="208" y2="240"/>
+<line x1="102" y1="150" x2="208" y2="300"/>
+<line x1="102" y1="210" x2="208" y2="120"/>
+<line x1="102" y1="210" x2="208" y2="180"/>
+<line x1="102" y1="210" x2="208" y2="240"/>
+<line x1="102" y1="210" x2="208" y2="300"/>
+<line x1="102" y1="270" x2="208" y2="120"/>
+<line x1="102" y1="270" x2="208" y2="180"/>
+<line x1="102" y1="270" x2="208" y2="240"/>
+<line x1="102" y1="270" x2="208" y2="300"/>
+</g>
+
+<!-- edges h -> y : zero weights dashed -->
+<g stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 3" opacity="0.75">
+<line x1="252" y1="180" x2="358" y2="180"/>
+<line x1="252" y1="300" x2="358" y2="180"/>
+<line x1="252" y1="120" x2="358" y2="240"/>
+<line x1="252" y1="240" x2="358" y2="240"/>
+</g>
+<!-- nonzero into y0 (blue) -->
+<g stroke="#3b82f6" stroke-width="2.5">
+<line x1="252" y1="120" x2="358" y2="180"/>
+<line x1="252" y1="240" x2="358" y2="180"/>
+</g>
+<!-- nonzero into y1 (teal) -->
+<g stroke="#10b981" stroke-width="2.5">
+<line x1="252" y1="180" x2="358" y2="240"/>
+<line x1="252" y1="300" x2="358" y2="240"/>
+</g>
+
+<!-- fc2 edge weight labels -->
+<text x="292" y="132" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">1</text>
+<text x="292" y="228" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="600">2</text>
+<text x="292" y="200" text-anchor="middle" fill="#0f766e" font-size="12" font-weight="600">1</text>
+<text x="292" y="290" text-anchor="middle" fill="#0f766e" font-size="12" font-weight="600">3</text>
+
+<!-- input nodes (3) -->
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="80" cy="150" r="22"/>
+<circle cx="80" cy="210" r="22"/>
+<circle cx="80" cy="270" r="22"/>
+</g>
+<g fill="#1f2937" font-size="14" text-anchor="middle">
+<text x="80" y="155">x&#8320;</text>
+<text x="80" y="215">x&#8321;</text>
+<text x="80" y="275">x&#8322;</text>
+</g>
+
+<!-- hidden nodes (4) -->
+<g fill="#f3f4f6" stroke="#9ca3af" stroke-width="1">
+<circle cx="230" cy="120" r="22"/>
+<circle cx="230" cy="180" r="22"/>
+<circle cx="230" cy="240" r="22"/>
+<circle cx="230" cy="300" r="22"/>
+</g>
+<g fill="#1f2937" font-size="14" text-anchor="middle">
+<text x="230" y="125">h&#8320;</text>
+<text x="230" y="185">h&#8321;</text>
+<text x="230" y="245">h&#8322;</text>
+<text x="230" y="305">h&#8323;</text>
+</g>
+
+<!-- output nodes (2) -->
+<circle cx="380" cy="180" r="22" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+<circle cx="380" cy="240" r="22" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+<text x="380" y="185" text-anchor="middle" fill="#1e3a8a" font-size="14">y&#8320;</text>
+<text x="380" y="245" text-anchor="middle" fill="#065f46" font-size="14">y&#8321;</text>
+<text x="408" y="171" fill="#6b7280" font-size="12">normal</text>
+<text x="408" y="188" fill="#6b7280" font-size="12">= 14</text>
+<text x="408" y="231" fill="#6b7280" font-size="12">fraud</text>
+<text x="408" y="248" fill="#6b7280" font-size="12">= 31</text>
+
+<!-- under-column notes -->
+<text x="80" y="345" text-anchor="middle" fill="#6b7280" font-size="12">3 features</text>
+<text x="230" y="345" text-anchor="middle" fill="#b45309" font-size="12">h = ReLU(W&#8321;x + b&#8321;)</text>
+<text x="230" y="364" text-anchor="middle" fill="#6b7280" font-size="12">assume h = [2, 5, 1, 2] here</text>
+
+<!-- ===== W1 matrix ===== -->
+<text x="480" y="112" fill="#1f2937" font-size="13" font-weight="600">W&#8321; = [out, in] = [4, 3]</text>
+<g fill="#6b7280" font-size="12" text-anchor="middle">
+<text x="537" y="134">x&#8320;</text>
+<text x="571" y="134">x&#8321;</text>
+<text x="605" y="134">x&#8322;</text>
+</g>
+<rect x="520" y="142" width="102" height="104" rx="4" fill="#f9fafb" stroke="#cbd5e1" stroke-width="1"/>
+<g stroke="#e5e7eb" stroke-width="1">
+<line x1="520" y1="168" x2="622" y2="168"/>
+<line x1="520" y1="194" x2="622" y2="194"/>
+<line x1="520" y1="220" x2="622" y2="220"/>
+</g>
+<g fill="#9ca3af" font-size="13" text-anchor="middle">
+<text x="537" y="160">w</text><text x="571" y="160">w</text><text x="605" y="160">w</text>
+<text x="537" y="186">w</text><text x="571" y="186">w</text><text x="605" y="186">w</text>
+<text x="537" y="212">w</text><text x="571" y="212">w</text><text x="605" y="212">w</text>
+<text x="537" y="238">w</text><text x="571" y="238">w</text><text x="605" y="238">w</text>
+</g>
+<g fill="#6b7280" font-size="12" text-anchor="end">
+<text x="512" y="160">h&#8320;</text>
+<text x="512" y="186">h&#8321;</text>
+<text x="512" y="212">h&#8322;</text>
+<text x="512" y="238">h&#8323;</text>
+</g>
+<text x="632" y="196" fill="#9ca3af" font-size="12">12 edges</text>
+
+<!-- ===== W2 matrix ===== -->
+<text x="480" y="290" fill="#1f2937" font-size="13" font-weight="600">W&#8322; = [out, in] = [2, 4]</text>
+<g fill="#6b7280" font-size="12" text-anchor="middle">
+<text x="537" y="312">h&#8320;</text>
+<text x="571" y="312">h&#8321;</text>
+<text x="605" y="312">h&#8322;</text>
+<text x="639" y="312">h&#8323;</text>
+</g>
+<rect x="520" y="320" width="136" height="26" fill="#eff6ff"/>
+<rect x="520" y="346" width="136" height="26" fill="#ecfdf5"/>
+<rect x="520" y="320" width="136" height="52" rx="4" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="520" y1="346" x2="656" y2="346" stroke="#cbd5e1" stroke-width="1"/>
+<g font-size="13" text-anchor="middle">
+<text x="537" y="338" fill="#1d4ed8" font-weight="600">1</text>
+<text x="571" y="338" fill="#cbd5e1">0</text>
+<text x="605" y="338" fill="#1d4ed8" font-weight="600">2</text>
+<text x="639" y="338" fill="#cbd5e1">0</text>
+<text x="537" y="364" fill="#cbd5e1">0</text>
+<text x="571" y="364" fill="#0f766e" font-weight="600">1</text>
+<text x="605" y="364" fill="#cbd5e1">0</text>
+<text x="639" y="364" fill="#0f766e" font-weight="600">3</text>
+</g>
+<g font-size="12" text-anchor="end">
+<text x="512" y="338" fill="#1e3a8a">y&#8320;</text>
+<text x="512" y="364" fill="#065f46">y&#8321;</text>
+</g>
+<text x="664" y="346" fill="#9ca3af" font-size="12">8 edges</text>
+
+<!-- captions -->
+<text x="360" y="404" text-anchor="middle" fill="#6b7280" font-size="12.5">Count the edges, get the shape: 3×4 = 12 edges &#8594; W&#8321; [4,3]; 4×2 = 8 edges &#8594; W&#8322; [2,4]</text>
+<text x="360" y="426" text-anchor="middle" fill="#6b7280" font-size="12.5">(fully connected: every output node connects to all input nodes)</text>
+<text x="360" y="448" text-anchor="middle" fill="#6b7280" font-size="12.5">Each row = all incoming edges of one neuron &#8594; rows = out, columns = in; dashed = weight 0</text>
+<text x="360" y="470" text-anchor="middle" fill="#6b7280" font-size="12.5">Note: the inputs stacked in a column are the textbook "column vector" [in, 1] — see Appendix Two</text>
+</svg>
