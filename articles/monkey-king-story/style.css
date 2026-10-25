@@ -4,4 +4,3 @@ article {
   -webkit-user-select: none;   /* Safari 还需要带前缀的写法 */
   user-select: none;           /* 正文里的文字不能被选中，也就没法复制 */
 }
-:root { --bg: #fdf6e3; }   /* 淡黄色底 */

@@ -12,7 +12,7 @@ title: false
 
 [vllm vs sglang](https://github.com/qiulang/vllm-sglang-perf) 记录我从2025 至今做的一个主要工作。2026年5月份，我总结了一次我使用 [vibe coding的经历](./articles/vibe-coding/index.html)（英文）。vibe coding 的体验一直在变，所以我特意写明时间。很想听听别人的意见。
 
-我还写了一篇 [PyTorch 速通（基础篇）](./articles/pytorch-primer/index.html)（英文），写给在部署模型、但没系统学过 PyTorch 的人。
+我还写了一篇 [PyTorch 速通（基础篇）](./articles/pytorch-primer/index.html)（英文），因为市面上那些 PyTorch 书和文章绝大多数在回答**另一个问题**：怎么从零造一个模型、并把它训出来，而我这篇文章针对的是已经实际部署和使用了各种基于PyTorch的模型，但对PyTorch本身还不了解的人。
 
 我从2024开始做大模型开发，当时写了一篇[怎么鉴定大模型胡说八道的文章](./articles/llm-hallucination-2024/index.html)，两年过去了，但我觉得情况并没改善多少。
 
@@ -36,7 +36,7 @@ On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly ans
 
 [vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](./articles/vibe-coding/index.html). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
 
-I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath.
+I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath, almost all of the PyTorch books and articlea out there answer **a different question**: how to build a model from scratch and train it.
 
 ### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
 

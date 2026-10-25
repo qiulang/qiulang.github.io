@@ -63,5 +63,11 @@
   /* logo 里已经有"朗之文"三个字，主题在 logo 右边再显示一遍站名，这里藏掉。
      要写成 .masthead .site-title：主题的 .greedy-nav a { display: block } 比单写 .site-title 优先 */
   .masthead .site-title { display: none; }
+  /* 文章列表页（articles/index.md 的 front matter 写了 classes: hide-site-nav）不显示页头导航：
+     "中文 / English" 跳的是首页的两个小标题，在这一页没有意义。
+     导航窄屏时会把放不下的项收进一个按钮（.greedy-nav__toggle），按钮也一起藏掉。
+     前面加 .hide-site-nav：主题的 .greedy-nav .visible-links 设了 display: flex，要比它更具体才能盖住 */
+  .hide-site-nav .greedy-nav .visible-links,
+  .hide-site-nav .greedy-nav__toggle { display: none; }
 </style>
 <!-- end custom head snippets -->
