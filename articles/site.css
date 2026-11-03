@@ -104,11 +104,7 @@ body {
   margin: 0;                 /* 去掉浏览器缺省的 8px 边距，页头页脚才能贴满窗口 */
   background: var(--bg);
   color: var(--text);
-  /* 字体栈：从左往右，用第一个系统里有的。苹果系统用苹方，Windows 用微软雅黑，
-     最后的 sans-serif 兜底，避免 Windows 上显示成宋体 */
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
-               "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Helvetica Neue",
-               Arial, sans-serif;
+  font-family: system-ui, sans-serif;   /* 系统界面字体：苹果是苹方，Windows 是微软雅黑；不写时缺省是衬线体（英文 Times、Windows 中文宋体） */
   font-size: 1.25rem;        /* 20px，全站唯一的正文字号。用 rem，读者调大浏览器字号时跟着变 */
   line-height: 1.85;         /* 汉字是满格方块，缺省约 1.2 会挤；长文阅读 1.7–1.9 合适 */
 
@@ -198,7 +194,7 @@ main > header h1 {
   list-style: none;          /* 去掉编号：整块高亮时编号会落在色块外面 */
   margin: .75rem 0 0;
   padding: 0;
-  line-height: 1.6;          /* 目录项比正文行高小一点，更紧凑 */
+  line-height: 1.5;          /* 查阅用的内容（目录、代码、表格）统一 1.5，比正文紧凑 */
   border-left: 2px solid var(--rule);   /* 目录左侧一条贯穿的竖线 */
   /* 让目录跟随阅读位置：读到哪一节，对应的链接匹配 :target-current。
      2025 年的新特性，Chrome 和 Edge 支持，Safari 和 Firefox 暂不支持；
@@ -303,7 +299,7 @@ pre {
   overflow-x: auto;            /* 长行在块内横向滚动 */
   background: color-mix(in oklch, currentColor 5%, transparent);
   border-radius: 6px;
-  line-height: 1.5;
+  line-height: 1.5;            /* 和目录、表格一样 */
 }
 
 /* 引用：缺省左边缩进 40px，改成一条竖线 */
