@@ -5,22 +5,20 @@
 <style>
   :root {
     --hue: 251;
-    --bg: #fdf6e3;                           /* 米黄底 */
-    --text: #1f1f1f;                          /* 正文文字 */
-    --rule: #e2ddd3;                          /* 分隔线 */
-    --link: oklch(48% 0.134 var(--hue));      /* 链接 */
+    --bg: oldlace;                                         /* 米黄底 */
+    --text: oklch(from black 24% c h);                     /* 正文：黑色提亮到 24% */
+    --rule: gainsboro;                                     /* 分隔线：浅灰 */
+    --link: oklch(from darkslateblue 48% c var(--hue));    /* 链接：深石板蓝的饱和度，亮度 48% */
   }
   html { background-color: var(--bg); }      /* 主题在 html 上设了白底 */
   body { color: var(--text); }
   /* 主题给标题单独设了字体，所以标题也要写上 */
   body, h1, h2, h3, h4, h5, h6 {
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
-                 "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Helvetica Neue",
-                 Arial, sans-serif;
+    font-family: system-ui, sans-serif;   /* 系统界面字体：苹果是苹方，Windows 是微软雅黑 */
   }
   /* 正文链接。页头导航（中文 / English）的选择器比这里具体，保持主题的灰色 */
   a, a:visited { color: var(--link); }
-  a:hover { color: oklch(38% 0.134 var(--hue)); }
+  a:hover { color: oklch(from darkslateblue 38% c var(--hue)); }   /* 悬停：比链接再暗一点 */
   .masthead { border-bottom-color: var(--rule); }
   .greedy-nav { background: var(--bg); }     /* 主题给页头导航条单独设了白底，换成页面底色 */
   /* 页脚：主题设了浅灰底，换成页面底色；底色一样后加一条细线和正文分开，和页头下边那条线对应 */

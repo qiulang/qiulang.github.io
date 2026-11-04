@@ -6,9 +6,13 @@ title: "文章 Articles"
 classes: hide-site-nav
 ---
 
+- [读《通往奴役之路》的一点感受](./The-road-to-serfdom/index.html) · 中文 · 2026年11月  
+  读完哈耶克《通往奴役之路》的感受：中文世界对这本书的几处常见误读，书里的 socialism 到底指什么，还有我和 Bruce Caldwell 的通信。  
+  Notes on Hayek's _The Road to Serfdom_: common misreadings of the book in the Chinese-speaking world, what Hayek meant by socialism, and my emails with Bruce Caldwell (in Chinese).
+
 - [PyTorch Crash Course (Part 1)](./pytorch-primer/index.html) · English · 2026年10月  
   市面上那些 PyTorch 书和文章绝大多数在回答**另一个问题**：怎么从零造一个模型、并把它训出来，而我这篇文章针对的是已经实际部署和使用了各种基于PyTorch的模型，但对PyTorch本身还不了解的人。  
-  For people who deploy models but never learned the framework underneath because almost all of the PyTorch books and articlea out there answer **a different question**: how to build a model from scratch and train it.
+  For people who deploy models but never learned the framework underneath because almost all of the PyTorch books and articles out there answer **a different question**: how to build a model from scratch and train it.
 
 - [I Documented Claude's Every Decision. Then I Reviewed It with Claude.](./vibe-coding/index.html) · English · 2026年5月  
   我一次 vibe coding 经历的完整记录：五个会话，代码全部由 Claude 写。  

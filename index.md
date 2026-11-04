@@ -1,7 +1,31 @@
 ---
-# GitHub Pages 会把第一个标题"简单的自我介绍"当成页面标题，主题再把它显示成一个大标题，
+# GitHub Pages 会把第一个标题"About Me"当成页面标题，主题再把它显示成一个大标题，
 # 和正文里的同一行重复。设成 false 就不显示那个大标题；浏览器标签页上显示站名。
 title: false
+---
+
+## About Me
+
+### ![Software development](/nav-dev.svg){: .heading-icon} Software & AI
+
+On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.
+
+[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](./articles/vibe-coding/index.html). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
+
+I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath, almost all of the PyTorch books and articles out there answer **a different question**: how to build a model from scratch and train it.
+
+### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
+
+This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese).
+
+I read Hayek's _The Road to Serfdom_ and wrote [some notes on it](./articles/The-road-to-serfdom/index.html) (in Chinese): a few common misreadings of the book in the Chinese-speaking world, and what Hayek meant by socialism.
+
+I put a lot of effort into translating [Flying the Hump](./articles/flying-hump-2016/index.html) into Chinese. The page is bilingual, with the English original and my Chinese translation side by side. If you are interested in the history of the Flying Tigers and [The Hump](https://en.wikipedia.org/wiki/The_Hump) , please take a look.
+
+I also wrote a picture book, [Monkey King](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title). It faithfully follows the narrative of the classic _Journey to the West_, retold for easy reading. I have [open-sourced its text](./articles/monkey-king-story/index.html); if you like it, please buy the printed edition so I can keep improving the story.
+
+I am very interested in history and have discussed [many questions on History Stack Exchange](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97).
+
 ---
 
 ## 简单的自我介绍
@@ -20,33 +44,13 @@ title: false
 
 这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。
 
+我读了哈耶克的《通往奴役之路》，写了一篇[读后感](./articles/The-road-to-serfdom/index.html)，讲中文世界对这本书的几处常见误读，还有书里的 socialism 到底指什么。
+
 我花了很多心思翻译[这篇 flying hump](./articles/flying-hump-2016/index.html)，如果对飞虎队、驼峰航线的的历史感兴趣，一定看看。
 
 我还创作一本英文图画书 [美猴王](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title)，[我把这本书的文字版开源了](./articles/monkey-king-story/index.html)，如果喜欢请购买纸质版，以便我能进一步打磨这个故事。
 
 我对历史很感兴趣， [SO和别人讨论过不少问题](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97)。
-
----
-
-## About Me
-
-### ![Software development](/nav-dev.svg){: .heading-icon} Software & AI
-
-On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly answered questions about Node.js and iOS, before AI basically killed it.
-
-[vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](./articles/vibe-coding/index.html). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
-
-I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath, almost all of the PyTorch books and articlea out there answer **a different question**: how to build a model from scratch and train it.
-
-### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
-
-This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese).
-
-I put a lot of effort into translating [Flying the Hump](./articles/flying-hump-2016/index.html) into Chinese. The page is bilingual, with the English original and my Chinese translation side by side. If you are interested in the history of the Flying Tigers and [The Hump](https://en.wikipedia.org/wiki/The_Hump) , please take a look.
-
-I also wrote a picture book, [Monkey King](https://www.amazon.com/dp/1763731669?ref=ppx_yo2ov_dt_b_fed_asin_title). It faithfully follows the narrative of the classic _Journey to the West_, retold for easy reading. I have [open-sourced its text](./articles/monkey-king-story/index.html); if you like it, please buy the printed edition so I can keep improving the story.
-
-I am very interested in history and have discussed [many questions on History Stack Exchange](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97).
 
 ---
 

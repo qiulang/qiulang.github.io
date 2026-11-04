@@ -6,7 +6,7 @@
   python3 md2html.py 文章.md 输出/index.html --date 2026-11
   可选：--lang en（缺省 zh-CN） --subtitle "副标题" --layout css-h2 / standalone（缺省 articles）
 
-需要 pandoc（-f gfm）。转换后自动处理 page-css skill 原则 19 里的几处：
+需要 pandoc（-f gfm）。转换后自动处理 article-css skill 原则 19 里的几处：
   - md 的第一个 # 标题作为页面标题，放进标题区，不进正文；正文里还有别的 # 会提示
   - h2 编号 s1、s2…，h3 编号 s1-1、s1-2…，按这两级生成目录
   - 删掉 <hr>：article h2 自带上边线，再有 hr 就是两条线
