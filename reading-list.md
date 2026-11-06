@@ -23,7 +23,7 @@
 10. **通往奴役之路** 
 11. **自私的基因**  在读 
 12. **Krakatoa**  
-13. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，这次看完  
+13. **New Ideas from Dead Economists: The Introduction to Modern Economic Thought**  去年听了几遍，后面部分没听懂
 14. **Economix: How Our Economy Works (and Doesn't Work), in Words and Pictures** 也是经济类入门  
 15. 李飞飞 **我看见的世界**  
 16. 丘成桐 **我的几何人生**  

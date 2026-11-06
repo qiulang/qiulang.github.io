@@ -17,6 +17,7 @@
   - 裸网址加尖括号：GFM 的自动链接一直延伸到空格，网址后面紧跟中文（如"）时"）会被一起吞进链接
   - 没被识别的 **加粗**：结尾的 ** 前面是标点、后面紧跟汉字时（"……。**哈耶克"），
     CommonMark 的规则不认它是加粗，转出来还是两个星号，这里补成 <strong>
+  - articles 布局在 </body> 前加 GoatCounter 访问统计脚本（练习仓库和 standalone 不加）
 """
 import argparse, html, re, subprocess, sys
 
@@ -25,7 +26,8 @@ import argparse, html, re, subprocess, sys
 # standalone：单独一个目录，图标都在当前目录，只引一份完整的 style.css
 LAYOUTS = {
     "articles":   dict(favicon="../../favicon.ico", site="../../index.html", logo="../logo-wide-song.svg",
-                       home="../index.html", home_icon="../../nav-home.svg", css=["../site.css", "style.css"]),
+                       home="../index.html", home_icon="../../nav-home.svg", css=["../site.css", "style.css"],
+                       stats=True),
     "css-h2":     dict(favicon="../favicon.ico", site="../", logo="../logo-wide-song.svg",
                        home="../", home_icon="../nav-home.svg", css=["../site.css", "style.css"]),
     "standalone": dict(favicon="favicon.ico", site="index.html", logo="logo-wide-song.svg",
@@ -117,6 +119,10 @@ def main():
     title_text = html.unescape(re.sub(r"<[^>]+>", "", title_html))
     subtitle = f'\n        <p class="subtitle">{html.escape(a.subtitle)}</p>' if a.subtitle else ""
 
+    # 访问统计，只在后台 https://qiulang.goatcounter.com 看
+    stats = ('\n    <!-- 访问统计（GoatCounter） -->'
+             '\n    <script data-goatcounter="https://qiulang.goatcounter.com/count"'
+             '\n            async src="//gc.zgo.at/count.js"></script>') if L.get("stats") else ""
     css_links = "\n".join(f'    <link rel="stylesheet" href="{c}" />' for c in L["css"])
     page = f"""<!doctype html>
 <html lang="{a.lang}">
@@ -157,7 +163,7 @@ def main():
         <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
       </p>
     </footer>
-    <a class="to-top" href="#top" aria-label="{'回到顶部' if zh else 'Back to top'}">↑</a>
+    <a class="to-top" href="#top" aria-label="{'回到顶部' if zh else 'Back to top'}">↑</a>{stats}
   </body>
 </html>
 """
