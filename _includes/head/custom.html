@@ -67,5 +67,30 @@
      前面加 .hide-site-nav：主题的 .greedy-nav .visible-links 设了 display: flex，要比它更具体才能盖住 */
   .hide-site-nav .greedy-nav .visible-links,
   .hide-site-nav .greedy-nav__toggle { display: none; }
+  /* 访问量方框：只在"读书笔记"和"文章"两个目录页底部（HTML 和脚本在那两个 index.md 里）。
+     上面一行小字标签，下面是数字；访问量不到 100 时整个方框不显示。
+     写成 :not([hidden])：设了 display 会盖过 hidden 属性，不到 100 时方框就藏不住了 */
+  #site-visits:not([hidden]) {
+    display: flex;
+    flex-direction: column;     /* 标签和数字上下排 */
+    width: fit-content;         /* 宽度按内容，不占满一行 */
+    margin: 2rem auto;          /* 水平居中 */
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;           /* 标签行的底色不超出圆角 */
+    box-shadow: 0 2px 6px color-mix(in oklch, var(--link) 20%, transparent);   /* 带链接色调的淡阴影 */
+    text-align: center;
+  }
+  #site-visits span {
+    padding: .25rem 1.25rem;
+    background: color-mix(in oklch, currentColor 6%, transparent);   /* 标签行比数字行略深，从文字颜色派生 */
+    font-size: .85rem;
+  }
+  #site-visits strong {
+    padding: .3rem 1.25rem;
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;   /* 数字等宽，位数相同时宽度不跳 */
+    color: var(--link);
+  }
 </style>
 <!-- end custom head snippets -->

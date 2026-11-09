@@ -30,16 +30,20 @@ classes: hide-site-nav
   飞虎队、驼峰航线的历史，英文原文和我的中文翻译对照。  
   The history of the Flying Tigers and the Hump, English original and my Chinese translation side by side.
 
+- [My take on the ending of _Endurance: Shackleton's Incredible Voyage_ by Alfred Lansing](./shackleton/index.html) · English · 2022年11月  
+  Lansing 的《Endurance》结尾一句"Some said that Sørlle turned away and wept"一直让我想不通。我对照沙克尔顿和沃斯利本人的记述，查这句话是从哪儿来的。  
+  Lansing's _Endurance_ ends with "Some said that Sørlle turned away and wept." I checked it against what Shackleton and Worsley wrote themselves to find where the line came from.
+
 <!-- 全站访问量，数据来自 GoatCounter（需在 GoatCounter 设置里打开 "Allow adding visitor counts on your website"）。
      只放在"读书笔记"和"文章"两个目录页。数字最多有 4 小时延迟；访问量不到 100 或读取失败时不显示 -->
-<p id="site-visits" hidden>本站累计访问量 Site visits：<span>…</span></p>
+<p id="site-visits" hidden><span>访问量 Visitors</span><strong>…</strong></p>
 <script>
   fetch('https://qiulang.goatcounter.com/counter/TOTAL.json')
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (d) {
       // count 是带千位分隔符的字符串，如 "1,234"
       if (parseInt(String(d.count).replace(/,/g, ''), 10) >= 100) {
-        document.querySelector('#site-visits span').textContent = d.count;
+        document.querySelector('#site-visits strong').textContent = d.count;
         document.getElementById('site-visits').hidden = false;
       }
     })
