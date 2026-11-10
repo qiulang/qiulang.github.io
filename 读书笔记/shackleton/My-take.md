@@ -1,5 +1,7 @@
 # My take on the ending of "[Endurance: Shackleton's Incredible Voyage](https://en.wikipedia.org/wiki/Endurance:_Shackleton's_Incredible_Voyage)" by Alfred Lansing
 
+## Alfred Lansing's ending
+
 I think Alfred Lansing's *Endurance: Shackleton's Incredible Voyage* is the best account of the expedition. I have read it about ten times. I love every bit of it except **the very last sentence** before the epilogue:
 
 > When he saw the three men he stepped back and a look of disbelief came over his face. For a long moment he stood shocked and silent before he spoke. "Who the hell are you?" he said at last. The man in the center stepped forward. "My name is Shackleton," he replied in a quiet voice. Again there was silence. Some said that Sørlle turned away and wept.
@@ -75,3 +77,17 @@ PS: I wrote to [Nathaniel Philbrick](https://en.wikipedia.org/wiki/Nathaniel_Phi
 > All the best,
 >
 > Nat Philbrick
+
+
+
+## Appendix
+
+https://www.nhh.no/en/employees/faculty/bjorn-lorens-basberg/ 
+
+[Shackleton’s unexpected arrival in Stromness, South Georgia, 20 May 1916](https://www.semanticscholar.org/paper/Shackleton%E2%80%99s-unexpected-arrival-in-Stromness%2C-South-Basberg/90da429cf9998891b8b93f7609cd374fd03b93b0)
+
+- Published in [Polar Record](https://www.semanticscholar.org/venue?name=Polar Record) 9 July 2026
+
+Abstract:
+
+In the afternoon 20 May 1916, Ernest Shackleton with Frank Worsley and Tom Crean unexpectedly arrived at the whaling station in Stromness, South Georgia after completing one of the most extraordinary journeys in the history of Antarctic exploration. There are numerous versions of what actually happened on arriving at Stromness, whom they met and what was said during this first encounter between the whalers and the explorers. There has also at times been a confusion about which whaling station and at which building they arrived. Despite the discrepancies between several accounts dealing with the Stromness arrival, **there has been little explicit analysis to try to separate fact from fiction**. Despite some attempts to get the records straight, books and other publications on Shackleton still appear where details on the arrival are marred by fiction. This paper, therefore, continues the search for a “sober” narrative of what happened that afternoon in South Georgia more than a hundred years ago. A main reason to revisit the questions surrounding the arrival in Stromness now is the renewed focus on the Stromness Manager’s Villa that was finally repaired and stabilised during the Antarctic summer 2025/26.
