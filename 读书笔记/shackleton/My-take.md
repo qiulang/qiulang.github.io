@@ -64,6 +64,8 @@ Lansing also writes:
 
 Neither Shackleton nor Worsley mentions Anton Andersen at all. Both say they asked for Sørlle directly. It seems unlikely that both eyewitnesses would leave out the same exchange.
 
+Lansing's version once again shaped later books. Both Caroline Alexander and Kim Heacox's version said they asked for Anton Andersen first. 
+
 ## Conclusion
 
 The three men who were there do not record anyone weeping. The weeping comes from an old whaler who was present. He says he wept himself, and only thinks that Sørlle wept too. Lansing kept the uncertain part, softened it with "Some said", and made it the last line of the book. The source of the whaler's account is still unclear, since Dunnett also introduces it with "The story goes". Together with the Anton Andersen exchange, which neither Shackleton nor Worsley mentions, I think Lansing chose the most dramatic version available for his ending.
