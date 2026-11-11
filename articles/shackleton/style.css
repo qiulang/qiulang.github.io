@@ -1,7 +1,5 @@
-/* 长篇英文技术文章：正文栏放宽，每行约 110 个字母（接近 Typora 的显示效果）；目录和正文的间距收窄。
-   20px 字号下 56em = 1120px。窗口不够宽时正文栏会自己缩窄，见 site.css 第六节
-   注意：和封面并排的那几段，右列只有 39.5em–47.5em（790–950px，按校准后的 9.2px/字是 86–103 个字母），
-        每段的列宽由那一段自己的文字高度反解出来，写在 HTML 的 figure style="width: …" 上 */
+/* 长篇英文文章：正文栏放宽，每行约 110 个字母；目录和正文的间距收窄。
+   20px 字号下 56em = 1120px。窗口不够宽时正文栏会自己缩窄，见 site.css 第六节 */
 :root {
   --measure: 56em;
   --toc-gap: 3rem;
@@ -12,109 +10,52 @@ article h2 {
   padding-top: 1rem;
 }
 
-/* 封面宽度。
-   每段并排的封面把实际宽度写在 HTML 的 <figure style="width: 10.5em"> 上（站点本来就有这个用法，
-   见 flying-hump-2016 的 figure style="width: 81%"）。为什么不能统一成一个数：
-   封面是竖构图（宽/高 0.63–0.91），十段的文字高度却从 131px（点名+一句引文，3 行）到 450px（那封信），差 3.4 倍。
-   统一 9em 时偏差 −100…+144px、合计 |差| 620px；统一 11em 更差（−159…+84，894px）。
-   解的是这个不动点：图越高 → 左列越宽 → 右列越窄 → 文字越高，两边单调相反，必有唯一解。
+/* 封面和点到这本书的那段文字左右并排：
+   <div class="pair"> 里先放 <figure>（封面），再放 <div class="pair-text">（介绍段 + 引文块）。
 
-   字宽校准（2026-11-11，重要）：以前一直按 10.2px/字（system-ui 20px 英文）估，
-   但截图里 183 字在 340px 列宽下实际排成 5 行 → 反推 ≤9.3px/字，也就是我高估近 10%、行数常被多算一行。
-   现在按 9.2px/字估；凡是算出来接近整数边界（像 5.06 行）的解一律当不稳定解，往平台中间退。
-   实测量法：比 figure img 与 .pair-text 的 getBoundingClientRect().height。
-   不要量 figure 本身 —— align-items 缺省 stretch 会把它的盒子拉到整行高，量出来永远等于文字高（假齐平）。
+     ┌─ .pair ───────────────────────────────────────────┐
+     │ ┌────────┐       ┌─ .pair-text ──────────────────┐ │
+     │ │ 封面   │ 1.5em │ Caroline Alexander … writes:  │ │
+     │ │ 8em 宽 │       │ ┃ An old Norwegian whaler …   │ │
+     │ │        │       └───────────────────────────────┘ │
+     │ └────────┘                                         │
+     └───────────────────────────────────────────────────┘
 
-   按校准后的字宽，现状十段的偏差是 −74…+3px、合计 |差| 296px，分三类：
-   ① 已经对上（±3px 内）：Alexander 9em、Boat Journey 8em、Ice Story 11em、100th 周年 15em。
-   ② 被 7em 下限托住的：Heacox −71、Epic −74、South −40、Armstrong −28。
-      严格解只有 4.5em–5.75em（图 90–115px 宽），再小就认不出书名，所以宁可图高出文字 28–74px。
-      要换回严格匹配：Heacox 4.5em、Epic 4.5em、South 5.75em、Armstrong 5.75em。
-   ③ 上一轮按 10.2px/字解出来、现在偏大的：Lansing §1（现 10.5em，解 9.25em，差 −38）、
-      Dunnett（现 13.5em，解 10em，差 −37）。这两条还没按新字宽重解，要动就一起动。
-
-   下面这条 9em 是没写行内宽度时的缺省（比如以后新加一段忘了配宽度）：
-   用 em 不用 rem，em 跟着 article 继承的正文字号（20px）走，读者调大字号封面跟着变大，
-   手机正文降到 18px（site.css 第十节）时自动等比缩小。 */
-figure { width: 9em; }
-
-/* ===== 封面和它对应的文字左右并排 =====
-   HTML 结构：<div class="pair"> 里两个 grid item —— <figure>（封面）在前，
-   <div class="pair-text">（点名这本书的那段 + 它的引文块）在后。
-
-   顺序必须是 figure 在前，这是踩出来的：自动放置的光标只前进不后退。
-   上一版把 figure 写在文字后面、再用 grid-column: 1 钉它到左列，结果 pair-text 先落到 row1/col2，
-   光标停在那儿，figure 虽然钉在 col1 但那一列在光标"后面"，算法不肯倒退，就把它推到 row2 ——
-   页面上就是截图里那种"文字在上、封面掉到左下方"的错开。
-   现在 DOM 顺序 = 列顺序（col1 → col2），自动放置自然把两个 item 排在同一行，
-   两条 grid-column 声明也就不需要了（写了反而是下一个坑：手机上单列时 grid-column: 2
-   会凭空多出一条隐式列，堆叠直接失效）。代价是 CSS 万一失效，读到的顺序变成"先封面后文字"。
-
-   为什么不用 float（三条都会踩）：
-   ① float 环绕的是行盒，不是"那一段"。封面高 159–448px，多数段落只有 3–5 行（≈111–185px），
-      图比文字高的那几段会一路把后面第二、第三段挤窄，"对应到哪句为止"失控，还得给 h2 补 clear。
-   ② float 元素只能影响它在文档顺序之后的行盒，figure 必须挪到段落前面才可能并排。
-   ③ blockquote 是块盒，float 不改它的宽度，只压窄它里面的行 —— 它那条 border-left: 4px 竖线
-      仍然画在栏的左边缘，正好穿到封面底下。
-   grid 把这一组关在自己的格子里：图再高也出不了这一行，文字变窄后 border 跟着变窄，不用 clear。
-
-   下面的像素都是从规则算出来的，不是在这台机器上实测的；核对片段见对话里的 console.table。 */
+   用 grid 不用 float：封面再高也只占这一组，不会挤窄后面的段落；
+   引文块的左竖线跟着文字列变窄，不会画到封面底下。
+   封面统一 8em 宽，不按文字高度逐张调：文字有多高取决于读者的字体、缩放和窗口宽度，逐张调只在一台电脑上对得上
+   （只留了一个例外，那封回信，见下面 .large 那段） */
 .pair {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);   /* 左列 = figure 自己的宽度（行内写的 7em–15em，即 140–300px），
-                                                    右列吃掉剩下的 790–950px（column-gap 现在 1.5em=30px）。
-                                                    写 minmax(0, 1fr) 而不是 1fr：1fr 的最小尺寸是 auto，
-                                                    右列里有长网址时会把列顶宽、溢出正文栏 */
-  column-gap: 1.5em;                              /* 两列之间 30px。gap 就是两列之间唯一的间距，
-                                                    不像 padding 那样左右各来一份、实际间距翻倍 */
+  grid-template-columns: auto minmax(0, 1fr);   /* 左列按封面宽度；右列写 minmax(0, 1fr)，长网址不会把列撑出正文栏 */
+  column-gap: 1.5em;
+  align-items: start;                           /* 封面和文字都从顶上开始，高度各按内容 */
 }
-
-/* 这里故意不写 align-items。缺省是 stretch，但它拉的是 grid item（figure 这个盒子），
-   图片本身由 site.css 的 figure img { height: auto } 决定，永远按 1668x2516 的比例走，
-   不会因为拉伸变形；盒子变高后 img 仍在盒子顶部，和 align-items: start 的结果一模一样。
-   两种写法唯一的区别是那段空白算在 item 里还是算在行里，页面上看不出来 → 按"三问"不该写。
-   什么时候才需要写 start：figure 自己有 border 或底色，拉伸会把边框拉成一条比图高的空框。 */
-.pair > figure { margin: 0; }                    /* site.css 给 figure 的上下 1.8rem/2rem 会把这一行撑高、
-                                                     左右 auto 在定宽列里也不起作用，全部清零；
-                                                     垂直间距改由下面的 first/last child 规则负责 */
-.pair > .pair-text > :first-child { margin-top: 0; }    /* grid item 自带一个 BFC，子元素的顶边距不会"漏"出去
-                                                            和上一段的底边距合并，两处各留一份会叠成两倍高 */
-.pair > .pair-text > :last-child,                       /* 直接最后一个孩子（p 或 blockquote）*/
-.pair > .pair-text > :last-child > p:last-child {       /* 以及 blockquote 里面那个 p：
-                                                            它的 1em 下边距会和 blockquote 被清零的下边距合并，
-                                                            合完的 20px 仍留在 .pair-text 这个 BFC 里出不去，
-                                                            于是和下一段自己的 20px 顶边距叠成 40px。
-                                                            Alexander 那段就是这样把 "In this account…" 推远的。
-                                                            两层都清掉，pair 之后的间距就回到普通段落之间的 1em */
-  margin-bottom: 0;
+.pair > figure {
+  width: 8em;   /* em 跟着正文字号走：读者调大字号、手机正文变小，封面都跟着等比变 */
+  margin: 0;    /* 去掉 site.css 给 figure 的上下外边距，否则这一组顶上和底下会多出一截空白 */
 }
+/* 文字特别长的两组（Dunnett、Ice Story 的长引文）封面放大一号，HTML 写成 <div class="pair large">。
+   两张用同一个宽度，想再大或小一点改这个数。
+   例外一处：Lansing 100 周年版那封回信（blockquote 里 4 段，文字块 ≈450px）
+   用 11em 时封面只有 329px，比文字矮 84px，所以它不用 .large，
+   改在 HTML 里写行内 <figure style="width: 15em">：300×448，和文字差 +2px，
+   字宽 9.2 和 9.6 都只差 2px（字宽 8.8 时反过来高出 35px）。
+   它不再挂 .large 是因为 11em 对它没有意义，留着只会让类名和实际宽度不一致。 */
+.pair.large > figure { width: 11em; }
 
-/* 两个 pair 直接相邻时（§2 的 Heacox 接 Armstrong）中间原本一点空隙都没有：
-   pair 自己不设上下边距，figure 的边距又被清零，last child 的下边距也清了 → 两张封面贴在一起。
-   只针对"相邻"这一种情况加间距，不动 .pair 的通用边距，
-   免得 pair 夹在段落之间时又叠出一份。2em = 40px，约一行正文的高度，就是一个空行的量。
-   要更松改这个数；想全部 pair 都留白就别用 +，直接给 .pair 写 margin-block。 */
-.pair + .pair { margin-top: 2em; }
+/* 去掉文字列首尾的外边距。.pair-text 里的外边距出不去，会和前后段落的间距叠成两倍；
+   引文块里最后一段的下边距也算在内 */
+.pair-text > :first-child { margin-top: 0; }
+.pair-text > :last-child,
+.pair-text > blockquote:last-child > p:last-child { margin-bottom: 0; }
 
-/* ===== 这里原来有 .duo（两本书并排成一行），2026-11-11 删掉 =====
-   做过什么：§2 的 Heacox 和 Armstrong 各只有一句点名，单独并排时封面比文字高一大截，
-   于是把两个 .pair 塞进一个 .duo（repeat(2, minmax(0,1fr)) + 外层 column-gap 比内层大一档），
-   让两本书左右并排、文字列各自对折。
-   为什么撤：文字列一对折，行数是被版面"逼"出来的（同样 180 字，通栏 3 行、对折 6 行），
-   封面高度就跟着虚涨；再叠上两张图宽高比不同（Heacox 0.692 瘦高、Armstrong 0.879 偏方），
-   "两张等高"、"各侧和它自己的文字等高"、"两侧看着一样重"三件事怎么调 em 都只能满足两条，
-   改成谁大都像在动内容而不是在动版面。所以回到和全篇一致的结构：一本书一个 .pair，
-   点名段用 <p>（以 writes: 收尾），引文用 <blockquote>，宽度按通栏列宽单独解（见上面 figure 那段）。
-   要恢复并排需要三样一起：新的 HTML 外层 + 一套 .duo 规则 + 按对折列宽重解两张封面的 em；
-   别直接抄旧数值，旧的 530px 组宽、3em/2em 间距是配着当时 .pair 的 column-gap: 2em 算的，现在已失效。 */
+.pair + .pair { margin-top: 2em; }   /* 两组紧挨着时，中间空出约一行的距离 */
 
+/* 手机上改成一列：封面在上，文字在下 */
 @media (max-width: 600px) {
   .pair {
-    grid-template-columns: minmax(0, 1fr);      /* 退回一列：两个 item 按文档顺序堆叠，封面在上、文字在下 */
-    row-gap: 1em;                               /* 堆叠时两行之间的距离。用 row-gap 而不是给 figure 加 margin：
-                                                     顺序换了（图在上），margin 得跟着换边，gap 不用 */
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1em;
   }
-  .pair > figure { max-width: 55%; }            /* 行内宽度是按桌面 1120px 栏解出来的，最大那条 15em = 300px，
-                                                     手机上栏宽只有 335px 左右，不封顶就占掉九成屏宽、
-                                                     一屏只剩一张封面。55% ≈ 184px，图高跟着等比缩 */
 }

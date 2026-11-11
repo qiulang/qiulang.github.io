@@ -1,4 +1,4 @@
-# My take on the ending of "[Endurance: Shackleton's Incredible Voyage](https://en.wikipedia.org/wiki/Endurance:_Shackleton's_Incredible_Voyage)" by Alfred Lansing
+# My take on the ending of *[Endurance: Shackleton's Incredible Voyage](https://en.wikipedia.org/wiki/Endurance:_Shackleton's_Incredible_Voyage)* by Alfred Lansing
 
 ## Alfred Lansing's ending
 
@@ -10,15 +10,15 @@ This never made sense to me. Why would Sørlle weep, and not Shackleton? Sørlle
 
 ## Later books repeat it, but disagree on who wept
 
-Lansing's account seems to have shaped later books. Caroline Alexander, in "[The Endurance: Shackleton's Legendary Antarctic Expedition](https://en.wikipedia.org/wiki/The_Endurance:_Shackleton's_Legendary_Antarctic_Expedition)", writes:
+Lansing's account seems to have shaped later books. Caroline Alexander, in *[The Endurance: Shackleton's Legendary Antarctic Expedition](https://en.wikipedia.org/wiki/The_Endurance:_Shackleton's_Legendary_Antarctic_Expedition)*, writes:
 
 > An old Norwegian whaler who was also present gave an account, in his broken English, of the meeting. "Manager say: 'Who the hell are you?' and terrible bearded man in the centre of the three say very quietly: 'My name is Shackleton.' Me—I turn away and weep."
 
 In this account the one who wept is the old whaler himself ("Me—I turn away and weep"), not Sørlle.
 
-Jennifer Armstrong, in "[Shipwreck at the Bottom of the World](https://www.penguinrandomhouse.com/books/4859/shipwreck-at-the-bottom-of-the-world-by-jennifer-armstrong/)", writes that "Sørlle, turned his head away and wept".
+Jennifer Armstrong, in *[Shipwreck at the Bottom of the World](https://www.penguinrandomhouse.com/books/4859/shipwreck-at-the-bottom-of-the-world-by-jennifer-armstrong/)*, writes that "Sørlle, turned his head away and wept".
 
-Kim Heacox, in "[Shackleton: The Antarctic Challenge](https://www.kimheacox.com/books)", writes: "The disbelief was unanimous, and at least one old whaler who witnessed the exchange turned away and wept tears of joy."
+Kim Heacox, in *[Shackleton: The Antarctic Challenge](https://www.kimheacox.com/books)*, writes: "The disbelief was unanimous, and at least one old whaler who witnessed the exchange turned away and wept tears of joy."
 
 So depending on the book, the one who wept is Sørlle or an old whaler. None of them says it was Shackleton, Worsley or Crean.
 
@@ -26,33 +26,33 @@ So depending on the book, the one who wept is Sørlle or an old whaler. None of 
 
 This puzzled me for a long time, until I realized the way to settle it was to read what the men at the door wrote themselves. Three men walked into Stromness: Shackleton, Worsley and Tom Crean. Shackleton and Worsley both described the meeting in their own books.
 
-Shackleton, in "South":
+Shackleton, in *South*:
 
-> Mr. Sørlle came out to the door and said, 'Well?' 'Don't you know me?' I said. 'I know your voice,' he replied doubtfully. 'You're the mate of the Daisy.' 'My name is Shackleton,' I said. Immediately he put out his hand and said, 'Come in. Come in.' ...
+> Mr. Sørlle came out to the door and said, 'Well?' 'Don't you know me?' I said. 'I know your voice,' he replied doubtfully. 'You're the mate of the *Daisy*.' 'My name is Shackleton,' I said. Immediately he put out his hand and said, 'Come in. Come in.' ...
 
 No one weeps.
 
-Worsley wrote two books about the expedition. In "Endurance: An Epic of Polar Adventure" he writes:
+Worsley wrote two books about the expedition. In *Endurance: An Epic of Polar Adventure* he writes:
 
 > Our old friend Captain Sorlle, who had entertained us two years previously when the Expedition had touched Stromness Bay, failed to recognise us as we stood on his doorstep.
 
-In "Shackleton's Boat Journey" he gives more detail:
+In *Shackleton's Boat Journey* he gives more detail:
 
 > Sørlle came out and Shackleton said "Do you know me?" Sørlle said "No." Then I said "Do you know me?" He looked at me and said emphatically "No", and evidently did not want to! When Shackleton told him we had lost our ship and crossed the island, Sørlle almost dragged us in. Sir Ernest, to be polite, said to Sørlle: "I'm afraid we smell." But he replied: "That doesn't matter, we're used to it on a whaling station!"
 
-No one weeps in either book. Worsley's account also differs from Shackleton's: in Worsley's version Sørlle says he does not know them, and in Shackleton's he mistakes Shackleton for the mate of the Daisy. The third man, Tom Crean, left no written account.
+No one weeps in either book. Worsley's account also differs from Shackleton's: in Worsley's version Sørlle says he does not know them, and in Shackleton's he mistakes Shackleton for the mate of the *Daisy*. The third man, Tom Crean, left no written account.
 
 ## Where the weeping comes from
 
-None of the three eyewitnesses mentions anyone weeping, or the line "Who the hell are you?". Both come from an old Norwegian whaler who was present. Harding McGregor Dunnett, in "Shackleton's Boat: The Story of the James Caird", gives the fullest version of his account I have found:
+None of the three eyewitnesses mentions anyone weeping, or the line "Who the hell are you?". Both come from an old Norwegian whaler who was present. Harding McGregor Dunnett, in *Shackleton's Boat: The Story of the James Caird*, gives the fullest version of his account I have found:
 
-> The story goes that an old Norwegian whaler, who was present, gave his own version of the meeting, in his broken English: 'Everbody know Shackleton well, and we very sorry he is lost in ice with all hands. We not know three terrible-looking bearded men who walk into office off the mountainside. Manager say "Who the hell are you?" And terrible bearded man in the centre of the three say, very quietly: "My name is Shackleton." Me, I turn aside and weep. I think manager weep too.'
+> The story goes that an old Norwegian whaler, who was present, gave his own version of the meeting, in his broken English: 'Everbody [sic] know Shackleton well, and we very sorry he is lost in ice with all hands. We not know three terrible-looking bearded men who walk into office off the mountainside. Manager say "Who the hell are you?" And terrible bearded man in the centre of the three say, very quietly: "My name is Shackleton." Me, I turn aside and weep. I think manager weep too.'
 
 This explains both versions of the story. The whaler says he wept, and he thinks Sørlle wept too. Alexander quotes the first part ("Me—I turn away and weep"). Lansing and Armstrong use the second part, in which Sørlle weeps. Lansing's "Some said" matches the whaler's "I think".
 
 It also answers my original question. The whalers wept because they believed Shackleton had died in the ice with all his men, and now he was standing in front of them.
 
-Elizabeth Cody Kimmel, in "[Ice Story](https://www.codykimmel.com/IceStory.html)", handles the disagreement honestly:
+Elizabeth Cody Kimmel, in *[Ice Story](https://www.codykimmel.com/IceStory.html)*, handles the disagreement honestly:
 
 > There are different stories about what happened next. Worsley remembered Sorlle denying he knew them, until Shackleton revealed his name. Shackleton recalled Sorlle confusing him with another man. A sailor standing next to Sorlle said that upon hearing Shackleton give his name, Sorlle began to weep with amazement and shock. Whatever happened, all agree that Sorlle quickly took the three men into his home.
 
@@ -64,7 +64,7 @@ Lansing also writes:
 
 Neither Shackleton nor Worsley mentions Anton Andersen at all. Both say they asked for Sørlle directly. It seems unlikely that both eyewitnesses would leave out the same exchange.
 
-Lansing's version once again shaped later books. Both Caroline Alexander and Kim Heacox's version said they asked for Anton Andersen first. 
+Here too Lansing's version shaped later books: both Caroline Alexander and Kim Heacox write that Shackleton asked for Anton Andersen first. 
 
 ## Conclusion
 
