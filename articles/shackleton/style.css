@@ -29,11 +29,12 @@ article h2 {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);   /* 左列按封面宽度；右列写 minmax(0, 1fr)，长网址不会把列撑出正文栏 */
   column-gap: 1.5em;
-  align-items: start;                           /* 封面和文字都从顶上开始，高度各按内容 */
+
 }
 .pair > figure {
   width: 8em;   /* em 跟着正文字号走：读者调大字号、手机正文变小，封面都跟着等比变 */
   margin: 0;    /* 去掉 site.css 给 figure 的上下外边距，否则这一组顶上和底下会多出一截空白 */
+  align-self: center;    /* 封面在自己那一格里垂直居中；文字列不受影响，仍贴顶 */
 }
 /* 文字特别长的两组（Dunnett、Ice Story 的长引文）封面放大一号，HTML 写成 <div class="pair large">。
    两张用同一个宽度，想再大或小一点改这个数。
@@ -47,8 +48,7 @@ article h2 {
 /* 去掉文字列首尾的外边距。.pair-text 里的外边距出不去，会和前后段落的间距叠成两倍；
    引文块里最后一段的下边距也算在内 */
 .pair-text > :first-child { margin-top: 0; }
-.pair-text > :last-child,
-.pair-text > blockquote:last-child > p:last-child { margin-bottom: 0; }
+.pair-text > :last-child > p:last-child { margin-bottom: 0 } 
 
 .pair + .pair { margin-top: 2em; }   /* 两组紧挨着时，中间空出约一行的距离 */
 
