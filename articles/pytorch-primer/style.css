@@ -1,4 +1,5 @@
-/* PyTorch Crash Course (Part 1) 独有的样式：加宽的正文栏。表格、代码、引用在 site.css 里。共用部分在 ../site.css */
+/* PyTorch Crash Course (Part 1) 和 Inference Engines (Part 2) 共用的样式：加宽的正文栏、系列导航。
+   表格、代码、引用在 site.css 里。共用部分在 ../site.css */
 
 /* 长篇英文技术文章：正文栏放宽，每行约 110 个字母（接近 Typora 的显示效果）；目录和正文的间距收窄。
    20px 字号下 56em = 1120px。窗口不够宽时正文栏会自己缩窄，见 site.css 第六节 */
@@ -6,3 +7,26 @@
   --measure: 56em;
   --toc-gap: 3rem;
 }
+
+/* ===== 系列导航：Part 1 / Part 2 互跳 =====
+   HTML 在标题区 <p class="post-meta"> 后面，两页各写一份，当前那一页用
+   <strong aria-current="page">（不链接），另一页用 <a rel="prev/next">。 */
+.parts {
+  margin: .5rem 0 0;
+  font-size: .875rem;              /* 和 .post-meta 同一号（14px）：两条都是标题区里的次要信息。
+                                      用 .9em 会算出 18px，比日期大，反而和 h1 抢层级 */
+}
+
+/* 关键一条：标题区是深色色块，正文那套链接色放进来会看不见。
+   --header-bg = oklch(from steelblue 46% c 251) 算出 #0058aa，
+   --link      = oklch(from darkslateblue 48% c 251) 算出 #005eb0，
+   两者色相相同、亮度 46% 对 48%，对比度只有 1.08:1（WCAG 正文要求 4.5:1）——等于没写。
+   所以标题区里的链接一律用 --header-text（白，7.06:1）。
+   这是全站第一次在标题区放链接：site.css 没有这条规则，也没有别的页面需要它。
+   等第二篇文章也要在标题区放链接时，把这条提到 site.css 的 main > header 那一段，别在各篇重复 */
+.parts a { color: var(--header-text); }
+
+/* 当前页那条：不链接、稍微压暗，和左边的链接区分开。
+   不能用 var(--muted)（dimgray）——它压在这个色块上只有 1.29:1，同样看不见。
+   opacity .8 合成后是 #ccdeee，对比度 5.12:1，过 4.5 这条线；.7 就只有 4.29:1，差一点点 */
+.parts [aria-current="page"] { opacity: .8; }

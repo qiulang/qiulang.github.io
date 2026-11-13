@@ -12,7 +12,7 @@ On [Stack Overflow](https://stackoverflow.com/users/301513/qiulang) I mainly ans
 
 [vLLM vs SGLang](https://github.com/qiulang/vllm-sglang-perf) records one of my main pieces of work from 2025 to now. In May 2026 I wrote up [one of my vibe coding experiences](./articles/vibe-coding/index.html). I give the date because the experience of vibe coding keeps changing. I would like to hear what others think.
 
-I also wrote [PyTorch Crash Course (Part 1)](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath, almost all of the PyTorch books and articles out there answer **a different question**: how to build a model from scratch and train it.
+I also wrote [PyTorch Crash Course](./articles/pytorch-primer/index.html), for people who deploy models but never learned the framework underneath, almost all of the PyTorch books and articles out there answer **a different question**: how to build a model from scratch and train it.
 
 ### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
 

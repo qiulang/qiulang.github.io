@@ -14,6 +14,10 @@ classes: hide-site-nav
   市面上那些 PyTorch 书和文章绝大多数在回答**另一个问题**：怎么从零造一个模型、并把它训出来，而我这篇文章针对的是已经实际部署和使用了各种基于PyTorch的模型，但对PyTorch本身还不了解的人。  
   For people who deploy models but never learned the framework underneath because almost all of the PyTorch books and articles out there answer **a different question**: how to build a model from scratch and train it.
 
+- [Inference Engines (Part 2)](./pytorch-primer/part-2.html) · English · 2026年10月  
+  承接 Part 1，回答的是另一个问题：这个模型该跑在哪个推理引擎上、为什么、慢的时候去哪里查——vLLM、Xinference 和我自己的语音技术栈。全文只用一条判断标准：**有没有自回归解码 + 随序列增长的 KV cache**。开头有一节 Part 1 的十条要点回顾，不回头翻 Part 1 也接得上。  
+  Picks up where Part 1 stops and answers "which engine should this model run on, why, and where do I look when it's slow": vLLM, Xinference and my own voice stack, judged throughout by **one criterion** — is there autoregressive decoding plus a KV cache that grows with the sequence? It opens with ten takeaways from Part 1, so you can start here without going back.
+
 - [I Documented Claude's Every Decision. Then I Reviewed It with Claude.](./vibe-coding/index.html) · English · 2026年5月  
   我一次 vibe coding 经历的完整记录：五个会话，代码全部由 Claude 写。  
   A full record of one vibe coding project: five sessions, all code written by Claude.
