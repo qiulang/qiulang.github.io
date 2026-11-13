@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inference Engines (Part 2): vLLM / Xinference and your voice stack</title>
+    <link rel="icon" href="../../favicon.ico" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="toc-follow.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="../../index.html"><img src="../logo-wide-song.svg" alt="朗之文" width="84" height="32" /></a>
+      <a href="../index.html"><img src="../../nav-home.svg" alt="文章首页" width="39" height="36" /></a>
+    </header>
+    <main>
+      <header>
+        <h1>Inference Engines (Part 2): vLLM / Xinference and your voice stack</h1>
+        <p class="post-meta">
+          First published <time datetime="2026-10">October 2026</time>
+        </p>
+      </header>
+      <nav class="toc">
+        <details open>
+          <summary>Contents</summary>
+          <ol>
+            <li><a href="#s1">Recap: ten takeaways from Part 1</a></li>
+            <li><a href="#s2">0. What this part answers</a></li>
+            <li><a href="#s3">Reading map</a></li>
+            <li><a href="#s4">1. The two meanings of "embedding": even LLMs have an embedding table</a>
+              <ol>
+                <li><a href="#s4-1">LLM and bge share the entire front half</a></li>
+                <li><a href="#s4-2">What that "sample → loop (generation)" is: the autoregressive LLM decoder</a></li>
+                <li><a href="#s4-3">Weight tying: why lm_head and embed_tokens can share weights</a></li>
+                <li><a href="#s4-4">How multimodal inputs plug in: "cutting the line" at the embedding table (EmbedsPrompt)</a></li>
+              </ol>
+            </li>
+            <li><a href="#s5">2. From text to tensor: tokenize, token id, vocab</a>
+              <ol>
+                <li><a href="#s5-1">vocab.json: the same vocab as in Part 1 §3 and §1 here</a></li>
+                <li><a href="#s5-2">Vocab file names vary by algorithm</a></li>
+                <li><a href="#s5-3">Two traps that only show up when you run it (invisible in the config)</a></li>
+              </ol>
+            </li>
+            <li><a href="#s6">3. tokenizer_config.json and special tokens</a>
+              <ol>
+                <li><a href="#s6-1">chat_template (directly relevant to your work)</a></li>
+                <li><a href="#s6-2">added_tokens_decoder: per-token attributes of special tokens</a></li>
+                <li><a href="#s6-3">The prompt-engineering footgun</a></li>
+                <li><a href="#s6-4">Why chat_template exists (you can't just invent your own format)</a></li>
+                <li><a href="#s6-5">Two endpoints: <code>/v1/completions</code> vs <code>/v1/chat/completions</code></a></li>
+              </ol>
+            </li>
+            <li><a href="#s7">4. Batching: how concurrent requests become one forward</a>
+              <ol>
+                <li><a href="#s7-1">4.1 Why batch: the weights are read once</a></li>
+                <li><a href="#s7-2">4.2 A third-party comparison</a></li>
+                <li><a href="#s7-3">4.3 Two ailments of the naive approach: padding waste and head-of-line blocking</a></li>
+                <li><a href="#s7-4">4.4 The decision point: when can the batch's composition still be rewritten</a></li>
+                <li><a href="#s7-5">4.5 The three-rung ladder: who actually forms the batch</a></li>
+                <li><a href="#s7-6">4.6 Two instances</a></li>
+                <li><a href="#s7-7">4.7 A counterintuitive corollary</a></li>
+              </ol>
+            </li>
+          </ol>
+        </details>
+      </nav>
+      <article>
+<blockquote>
+<p><strong>Audience</strong>: you've read Part 1 (or already know PyTorch well) and now have to decide "which engine should this model run on, why, and where do I look when it's slow."
+<strong>Scope of this part</strong>: starts from <strong>the model already loads</strong>. PyTorch itself (tensors, VRAM, <code>nn.Module</code>, <code>state_dict</code>, model file formats) is in <strong>Part 1</strong>.
+<strong>One criterion for the whole document</strong>: <strong>is there autoregressive decoding + a KV cache that grows with the sequence?</strong> Every selection, tuning and troubleshooting decision in this part follows from it.
+<strong>Test environment</strong>: source references and measured numbers correspond to vLLM V1, Xinference 1.x, transformers 5.x; the transformers / vLLM internals in §8 are the fastest-expiring part of the whole set — treat this as the baseline when re-verifying later.</p>
+</blockquote>
+<h2 id="s1">Recap: ten takeaways from Part 1</h2>
+<p>If you don't want to go back and flip through it, this page is enough to pick up the thread. Each item cites where it came from in Part 1.</p>
+<p><strong>① A tensor = a flat block of memory + a way of reading it</strong> (Part 1 §1)
+A tensor is a <code>Storage</code> (the flat buffer that actually holds the numbers) + metadata <code>(shape, stride, offset, dtype)</code>. <strong>Several tensors can be different views over the same Storage</strong> — <code>transpose</code> only swaps strides, broadcasting sets one dimension's stride to 0, only <code>contiguous()</code> really copies. <strong>The price of zero-copy is "non-contiguous,"</strong> and many CUDA kernels (attention included) require contiguous input — that's where <code>view size is not compatible</code> in a traceback comes from.</p>
+<p><strong>② Two separate rules for shape alignment — don't mix them</strong> (Part 1 §1, Appendix Two)</p>
+<ul>
+<li><strong>Broadcasting</strong>: governs <strong>elementwise ops</strong>, aligns from the <strong>last dimension backwards</strong>, equal or 1. It checks only "can they be aligned," never "did you mean this" — so when shapes happen to be legal, <strong>it computes the wrong thing without an error</strong>.</li>
+<li><strong>matmul</strong>: governs matrix multiply; A's <strong>last dim</strong> = B's <strong>first dim</strong>.</li>
+</ul>
+<p>And PyTorch's foundation is <strong>features always in the last dimension</strong>: <code>nn.Linear</code> eats <code>[*, in]</code> and emits <code>[*, out]</code>, with any number of leading dims (<code>[B,in]</code>, <code>[B,seq,in]</code>, <code>[B,heads,seq,in]</code> all work), because matmul broadcasts the leading dims away uniformly. That foundation is what forces the <code>x @ W.T</code> in the code.</p>
+<p><strong>③ The batch dimension is only "how many are in the shape"</strong> (Part 1 Appendix Two)
+The B in <code>[B, seq, hidden]</code> means one thing: <strong>this forward processed B samples at once</strong>. Where those B came from — cut from a training set (mini-batch), passed by you in one call, or bundled by the server — <strong>the model neither knows nor cares</strong>. And <strong>the samples in a batch are independent of each other</strong>, exchanging no information; computed separately the results are identical.</p>
+<blockquote>
+<p><strong>These two items are the entire premise of Chapter 4</strong>: because samples are independent, a server can freely bundle and unbundle requests; and because one forward reads the weights once and shares them across B samples, batching speeds things up.</p>
+</blockquote>
+<p><strong>④ VRAM = weights + KV cache + activations + overhead</strong> (Part 1 §2, §3)
+The weights are mental arithmetic: <code>param_count × bytes_per_param</code> (bf16=2, fp8/int8=1, int4≈0.5); for sharded models read <code>total_size</code> from <code>index.json</code>. The KV cache grows linearly with context length × concurrency and can rival the weights at long context and high concurrency — Part 1 gave the formula, <strong>this part covers how engines manage it</strong> (§5, §10). <strong>What <code>nvidia-smi</code> shows is reserved + CUDA context + non-PyTorch allocations</strong>; larger than <code>allocated</code> is normal, <strong>not a leak</strong>.</p>
+<p><strong>⑤ bf16 is the modern inference default</strong> (Part 1 §3)
+Same 2 bytes as fp16 but the exponent range of fp32, so <strong>far less prone to NaN/inf</strong>. Quantization (AWQ/GPTQ/FP8) changes only "bytes per parameter"; <strong>it doesn't touch the tokenizer, the vocab or the model structure</strong>.</p>
+<p><strong>⑥ Inference = <code>model.eval()</code> + <code>inference_mode()</code></strong> (Part 1 §4)
+The former changes <strong>layer behavior</strong> (Dropout off, BatchNorm uses running statistics), the latter <strong>builds no computation graph</strong>. What's saved is the graph and the intermediate activations — the entire reason inference needs less VRAM than training. Real engines run in this mode throughout.
+The criterion is "<strong>does this step update weights</strong>": prompt engineering is pure inference; LoRA fine-tuning brings all of autograd back.</p>
+<p><strong>⑦ Model = structure + weights + tokenizer</strong> (Part 1 §7)
+<code>config.json</code> (the structure spec, including the <code>architectures</code> field that decides "which code loads this") + <code>safetensors</code> (the weights, i.e. the <code>state_dict</code>) + <code>vocab / tokenizer_config</code> (the tokenizer). Stored separately, aligned via <code>vocab_size</code>.
+<strong><code>.pt</code> is a container</strong> (holds any Python object, optimizer state included, so training checkpoints have no other option); <strong>safetensors is a data format</strong> (only a flat "name → tensor" map, but mmap-able, executes no code, and its header is the manifest).</p>
+<p><strong>⑧ <code>state_dict</code> keys are attribute paths</strong> (Part 1 §5, Appendix One)
+From the root module to this tensor, joined with <code>.</code> — so <code>fc1.weight</code> and <code>model.layers.0.self_attn.q_proj.weight</code> follow one rule, and so <strong>stripping one prefix promotes a submodule into a standalone model</strong> (Chapter 8 of this part shows the real use). <code>state_dict</code> holds <strong>parameters + persistent buffers</strong>, not just "learnable parameters." Registration has four tiers, and <strong>the last one bites</strong>:</p>
+<table>
+<thead>
+<tr class="header">
+<th>What you write</th>
+<th>Learnable</th>
+<th>In state_dict</th>
+<th>Moved by <code>.to()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nn.Parameter(t)</code></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td><code>register_buffer("m", t)</code></td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+<tr>
+<td><code>register_buffer("m", t, persistent=False)</code></td>
+<td>✗</td>
+<td><strong>✗</strong></td>
+<td>✓</td>
+</tr>
+<tr>
+<td><code>self.m = torch.zeros(...)</code></td>
+<td>✗</td>
+<td>✗</td>
+<td><strong>✗</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>⑨ transformers doesn't replace PyTorch; it lifts it to the "model" level</strong> (Part 1 §8)
+<code>PreTrainedModel</code> is literally a subclass of <code>nn.Module</code>; the few dozen extra methods (<code>from_pretrained</code>, <code>device</code>/<code>dtype</code>, <code>tie_weights</code>, <code>can_generate</code>, <code>set_attn_implementation</code>…) are the layer it adds. <strong>PyTorch provides the foundation; transformers supplies "structure + weights + tokenizer."</strong>
+— This part goes on to ask: <strong>what does vLLM change on top of that? What does Xinference add?</strong></p>
+<p><strong>⑩ <code>from_pretrained</code> doesn't error by default</strong> (Part 1 §5)
+<code>load_state_dict</code> defaults to <code>strict=True</code> and errors on a key mismatch; <code>from_pretrained</code> <strong>does not</strong> — weights missing from the file are filled with random initialization, extra keys are dropped, and all you get is one log line, <code>Some weights ... are newly initialized</code>. The model loads, runs, and produces nonsense — a major source of that. §9 of this part lists three causes of "silent garbage"; this is the most common.</p>
+<h2 id="s2">0. What this part answers</h2>
+<p>Three questions, and read in order they form one line:</p>
+<ol type="1">
+<li><strong>Which engine should my model run on?</strong> — One criterion: <strong>is there autoregressive decoding + a growing KV cache?</strong> Where your LLM, ASR and TTS each land is cut through one by one in Chapters 5–6.</li>
+<li><strong>What do engines actually do on top of PyTorch?</strong> — Two answers in opposite directions: <strong>vLLM changes things downward</strong> (replacing memory management and attention kernels so that <strong>one</strong> model runs fast); <strong>Xinference adds things upward</strong> (touches not one line of compute; adds process management, batch scheduling and a unified API so that <strong>a pile of</strong> models is easy to use).</li>
+<li><strong>Where do I look when it's slow or wrong?</strong> — Loading problems: the PyTorch/HF layer. VRAM and throughput problems: engine scheduling. Garbage output with no error: look at <code>architectures</code> first.</li>
+</ol>
+<h2 id="s3">Reading map</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Chapter</th>
+<th>What question it answers</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>§1 Two meanings of embedding</strong></td>
+<td>What is <code>embed_tokens</code> when I dump an LLM? Is it the same thing as a BGE-style "text embedding model"? How does multimodal input plug in?</td>
+<td>required</td>
+</tr>
+<tr>
+<td><strong>§2 tokenize</strong></td>
+<td>How does text become something the model can eat? Why doesn't <code>vocab_size</code> match <code>len(tokenizer)</code>?</td>
+<td>required</td>
+</tr>
+<tr>
+<td><strong>§3 tokenizer_config</strong></td>
+<td>What is a chat_template and why can't I invent my own format? What's the difference between <code>/v1/completions</code> and <code>/v1/chat/completions</code>?</td>
+<td>required</td>
+</tr>
+<tr>
+<td><strong>§4 Batching</strong> ⭐</td>
+<td>How do concurrent requests become one forward? Why must some workloads "wait" and others not?</td>
+<td><strong>read this</strong></td>
+</tr>
+<tr>
+<td><strong>§5 vLLM</strong> ⭐</td>
+<td>What does it <strong>replace</strong> on top of PyTorch? Which stages of my LLM / ASR / TTS can go on it, and which can't?</td>
+<td><strong>read this</strong></td>
+</tr>
+<tr>
+<td><strong>§6 Xinference</strong></td>
+<td>What do embedding / rerank workloads look like? What does Xinference <strong>add</strong> on top of PyTorch?</td>
+<td>required</td>
+</tr>
+<tr>
+<td><strong>§7 Scaling out</strong></td>
+<td>Are model parallelism and load balancing the same thing? What does multi-machine actually buy?</td>
+<td>required</td>
+</tr>
+<tr>
+<td><strong>§8 transformers</strong></td>
+<td>Why does vLLM depend on both pytorch and transformers? Who provides the serving-layer engine?</td>
+<td>recommended</td>
+</tr>
+<tr>
+<td><strong>§9 Engineering traps</strong></td>
+<td>What goes wrong when a model directory is handed to an engine? Why is the output sometimes garbage with no error?</td>
+<td>lookup</td>
+</tr>
+<tr>
+<td><strong>§10 Troubleshooting table</strong></td>
+<td>What to check first when the engine layer misbehaves</td>
+<td>lookup</td>
+</tr>
+<tr>
+<td><strong>§11 Mental model</strong></td>
+<td>One page to take away</td>
+<td>wrap-up</td>
+</tr>
+<tr>
+<td>Appendix</td>
+<td>Why is the transformer ecosystem almost entirely on PyTorch? Where does ONNX fit?</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
+<p><strong>§4 and §5 are the core of this part</strong>; §5 and §6 are each other's mirror image (<strong>change downward vs add upward</strong>). Skip the appendix on a first read.</p>
+<h2 id="s4">1. The two meanings of "embedding": even LLMs have an embedding table</h2>
+<p>"embedding" is an overloaded word — distinguishing the two uses is key:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>embedding <strong>table</strong> (<code>nn.Embedding</code>)</th>
+<th>embedding <strong>model</strong> (bge)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>what it is</td>
+<td>lookup table: token id → vector</td>
+<td>the whole model's purpose: text → one vector</td>
+</tr>
+<tr>
+<td>where</td>
+<td>the <strong>input</strong> of every transformer</td>
+<td>a type of model</td>
+</tr>
+<tr>
+<td>is it the output?</td>
+<td>no, internal component</td>
+<td>yes, the model's output IS an embedding</td>
+</tr>
+<tr>
+<td>who has it</td>
+<td><strong>both LLM and bge</strong></td>
+<td>only embedding models</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>embedding table (input side)</strong>: any transformer that ingests token ids first looks each id up into a vector. Shape <code>[vocab_size, hidden]</code> — <strong>LLMs have it too, and it's often the single largest tensor</strong> (Qwen3's ~150k vocab × a few-thousand hidden ≈ hundreds of millions of params).</li>
+<li><strong>embedding model (output side)</strong>: bge's product is that one pooled sentence vector.</li>
+</ul>
+<p>Key names per family: bge → <code>embeddings.word_embeddings.weight</code>; Qwen3 → <code>model.embed_tokens.weight</code>; GPT-2 → <code>transformer.wte.weight</code>.</p>
+<h3 id="s4-1">LLM and bge share the entire front half</h3>
+<pre><code>token id
+  → embed_tokens table (lookup → vector)   ← identical step for LLM and bge
+  → transformer layers (N layers)
+  → one hidden vector per token [N, D]
+  → ┬─ LLM:  LM head → next-token logits → sample → loop (generation)
+    └─ bge:  Pooler  → sentence vector (see §6 pooling)</code></pre>
+<p>They differ <strong>only in the final head</strong> — which ties into §6 "why they're called pooling models."</p>
+<h3 id="s4-2">What that "sample → loop (generation)" is: the autoregressive LLM decoder</h3>
+<p>The "sample → loop (generation)" at the LLM branch above is the core of the criterion that recurs in §5/§6/§11. Let's unpack it. Three words:</p>
+<p><strong>auto (self) + regression = each step's output regresses on its own previous outputs.</strong> The model doesn't spit out an entire sentence at once; it predicts <strong>one</strong> token at a time, appends it to the input, and predicts the next, looping until it emits <code>eos</code>. Mathematically, the joint probability of the whole sentence factors into a chain of conditionals:</p>
+<pre><code>P(y₁…yₙ | prompt) = ∏ₜ P(yₜ | y₁…yₜ₋₁, prompt)
+                         └─ each step conditioned on &quot;prompt + all tokens generated so far&quot;</code></pre>
+<p>The key property is <strong>inherent seriality</strong>: you can't compute token t+1 without first having token t — because t+1's input includes t. That's the fundamental reason LLM decoding is slow and latency-bound, and the source of §4.1's "weight reloading saturates the bandwidth" (each step produces just one token, compute is nearly idle, the bottleneck is reading through all the weights once).</p>
+<p><strong>"Decoder" refers to the structure</strong>: a decoder uses <strong>causal attention (a causal mask)</strong> — each position can only attend to tokens to its <strong>left</strong>, never to the right. This "see only the past" property is what makes the factorization above valid, and it directly gives rise to the <strong>KV cache</strong>: because past tokens' K and V don't depend on the future and never change, they can be computed once and cached; each new token only needs Q/K/V for its one new position, attended against the cached history. Without the cache you'd recompute the whole prefix's K/V every step (O(n²) redundancy); with the cache each step is O(n), but the cache <strong>grows token by token</strong> with the sequence — exactly what §5's PagedAttention manages.</p>
+<p>So <strong>"autoregressive LLM decoder" = causal-attention structure + one-token-at-a-time serial generation + a KV cache that grows with sequence length — this trio.</strong> vLLM's entire machinery is built for exactly this trio — commit this sentence to memory; in §5/§6, who can use vLLM and who can't is decided by it alone.</p>
+<p><strong>A single autoregressive decode has two phases: prefill and decode (engine-independent — any autoregressive generation has them).</strong> The "serial loop" above actually starts with a parallel beginning:</p>
+<ul>
+<li><strong>prefill</strong>: passes the entire prompt through <strong>one parallel forward</strong> — computes K/V for all prompt positions at once, fills them into the cache, and produces the <strong>first</strong> output token. Because it's one big parallel matmul over all prompt tokens, it's <strong>compute-bound, GPU fully utilized</strong>.</li>
+<li><strong>decode</strong>: the autoregressive loop after prefill, <strong>one token at a time</strong> — each step computes Q/K/V only for the new position and attends against the cached history, yet must <strong>read all weights once</strong> to produce one token — <strong>memory-bound</strong> (§4.1's "a single request leaves compute idle" is this phase).</li>
+</ul>
+<p>This naturally yields two latency metrics: <strong>TTFT</strong> (time to first token, determined by prefill) and <strong>TPOT</strong> (time per output token, determined by decode). <strong>This split is engine-independent</strong> — transformers' <code>generate</code>, any autoregressive decode has prefill/decode phases; vLLM didn't invent it, it just schedules them specifically (§5). Even LLM-based ASR (Fun-ASR-Nano prefilling the sequence spliced from <code>audio_embeds + prompt</code>, then decoding the transcript) has these same two phases.</p>
+<p><strong>Counterexample (confirming the criterion):</strong> Paraformer-style ASR is <strong>non-autoregressive</strong> — it predicts all output tokens <strong>in parallel</strong> in one forward, with no "previous feeds into next" dependency chain, no loop, no KV cache. So it's fast, but precisely because it lacks the trio, vLLM <strong>has nothing to optimize</strong>. ASR can afford non-autoregressive because output length/alignment is predictable; open-ended generation can't, which is why it must be autoregressive. (This comes up again in §6's embedding/rerank and §5's two FunASR generations.)</p>
+<h3 id="s4-3">Weight tying: why lm_head and embed_tokens can share weights</h3>
+<p>Look at shapes first — <strong>this is the precondition for sharing</strong>: <code>embed_tokens</code> is <code>[vocab, hidden]</code> (token id t → grab row t, input); <code>lm_head</code> is <code>Linear(hidden, vocab)</code> with weight <code>[vocab, hidden]</code> (final hidden → vocab logits, output). <strong>Both are <code>[vocab, hidden]</code> — same shape.</strong></p>
+<p><strong>Why sharing makes sense (the intuition):</strong> lm_head computes token t's logit = <code>hidden · lm_head[t]</code> (final hidden dotted with row t of lm_head). If <code>lm_head = embed_tokens</code>, then token t's logit = <code>hidden · embed_tokens[t]</code> = <strong>"how aligned the final hidden state is with token t's embedding."</strong> Elegant: <strong>"predict the next token = find the token whose embedding is most similar (highest dot product) to the current hidden state"</strong> — the input representation space and the output prediction space are the <strong>same space</strong>; a token's "meaning vector" serves double duty, representing it on input and scoring it on output. Mathematically input indexes rows while output projects via the same rows (a transpose relationship), so you can literally set <code>lm_head.weight = embed_tokens.weight</code> to share one tensor.</p>
+<p><strong>Benefits and tradeoff:</strong></p>
+<ul>
+<li><strong>Parameter savings.</strong> Qwen3's ~150k vocab × ~few-thousand hidden ≈ 600M params; sharing saves that copy. For <strong>small models</strong> this is a big fraction of total params (a 0.5B model's embedding is huge), so <strong>small models usually tie</strong> (<code>tie_word_embeddings: true</code>), often with a slight quality / regularization gain.</li>
+<li><strong>Large models often don't tie</strong>: 600M is negligible against 70B, and untying gives the output projection independent freedom, which can slightly improve quality.</li>
+</ul>
+<p>So if you dump keys and see no standalone <code>lm_head.weight</code>, it's been tied — there's only <code>embed_tokens.weight</code> and lm_head reuses it. <strong>And "why can the file hold only one copy" has a hard reason at the format level too: safetensors doesn't allow two keys pointing at the same storage — see Part 1 §7.</strong></p>
+<h3 id="s4-4">How multimodal inputs plug in: "cutting the line" at the embedding table (EmbedsPrompt)</h3>
+<p>The embedding table above is exactly where multimodal (audio/image) inputs plug into the LLM. Recall the standard input path:</p>
+<pre><code>token_id ──embed_tokens lookup──▶ text vectors [seq, hidden] ──▶ transformer layers</code></pre>
+<p>Normally the engine receives <code>token_id</code> and <strong>does the lookup internally</strong>. But audio <strong>has no token_id</strong> — it's not a discrete symbol and can't be looked up in a vocabulary. Using FunASR's LLM-based ASR (see §5) as an example, the approach is:</p>
+<ol type="1">
+<li>Text parts go through the normal lookup: <code>prefix/suffix text → embed_tokens → text vectors</code>;</li>
+<li>Audio part: <code>fbank → audio encoder → adaptor</code>, <strong>directly producing vectors that live in the LLM's input embedding space, with the same hidden dimension</strong> (the adaptor's job is to project/align the encoder output into this space);</li>
+<li>The two are <strong>concatenated along the sequence dimension</strong>: <code>[prefix_emb | audio_emb | suffix_emb]</code>;</li>
+<li>This <strong>already-looked-up vector sequence</strong> is fed to the engine as <code>prompt_embeds</code> (vLLM calls it <code>EmbedsPrompt</code>), <strong>bypassing its own lookup step</strong>, starting from transformer layer 0.</li>
+</ol>
+<blockquote>
+<p><strong>A side glance at the front half of this chain — it's the cleanest example on your stack of Part 1 §0.5's three-tier criterion.</strong></p>
+<p>What <code>fbank</code> is: a spectrogram plus two steps. The PCM waveform is cut into frames and put through a short-time Fourier transform to get each frame's spectrum; the frequency axis is merged into 80 bands on a perceptual scale (fine at low frequencies, coarse at high — the scale is called mel), taking each band's energy; finally take the log. The product is a <code>[frames, 80]</code> matrix, one frame every 10 ms. <strong>Not a single learnable parameter in the whole process</strong> — it's <strong>Tier 1</strong> (a fixed transform people decided on); SenseVoice, Paraformer and Whisper (128 bands) all take it as input. From the encoder onward it's <strong>Tier 3</strong> (representations the network learned itself):</p>
+<pre><code>audio → [ fbank: human-designed, fixed ] → [ encoder: learned by the network ] → [ adaptor ] → LLM
+               gradient stops here           gradient flows through here</code></pre>
+<p><strong>One pipeline with Tier 1 and Tier 3 joined end to end, cleanly divided.</strong> It also shows that <strong>"hand-crafted features" weren't eliminated</strong> — on the ASR line fbank is cheap and good enough and mainstream models still use it; models that learn the front end directly from the waveform do exist (self-supervised models like wav2vec 2.0 and HuBERT, whose front end is a learned 1-D convolution), they just aren't on your stack. What was replaced is "hand-crafted features followed directly by a classifier."</p>
+<p>Verify it yourself: after loading Fun-ASR-Nano, <code>sum(p.numel() for p in model.frontend.parameters())</code> should be 0 (FunASR's <code>WavFrontend</code> wraps <code>torchaudio.compliance.kaldi.fbank</code>).</p>
+</blockquote>
+<p>One-liner: <strong>EmbedsPrompt = "I'm handing you the post-embedding-layer tensors directly — don't tokenize, don't look up, just run from here."</strong> This completes the diagram from this section into its multimodal version — <strong>the essence of multimodal is splicing other modalities' vectors into the same sequence at the embedding-table layer</strong>; the audio/image encoder's job is turning non-text into vectors of the same dimension and space as token embeddings. This is the direct low-level picture behind end-to-end audio models (like Qwen-Omni): what end-to-end eliminates is exactly "audio → text → re-tokenize," letting audio embeddings enter the LLM sequence directly. (Why the encoder stage can only stay in PyTorch while the decoder goes to vLLM — see §5.)</p>
+<p><strong>The cost: on this path there are no token IDs — and some things go with them.</strong> The engine side has to explicitly enable <code>enable_prompt_embeds=True</code>, and the most immediate loss once it's on is that <strong><code>repetition_penalty</code> can't be used</strong>: the penalty's algorithm is "take the prompt's and the generated <strong>token IDs</strong>, index into the logits, and lower those positions." In prompt-embeds mode there are no IDs to index → out-of-range index → <strong>CUDA device-side assert</strong> (not a friendly error; the whole engine goes down).</p>
+<p>To be precise, this is <strong>a limitation of vLLM's implementation, not something inherent to prompt-embeds mode</strong>: the penalty indexes "prompt tokens + generated tokens"; the prompt has no IDs, but the generated tokens do — penalizing only the generated part is entirely feasible in principle, and transformers' <code>generate(inputs_embeds=...)</code> does exactly that (<code>input_ids</code> is empty; the penalty acts only on the generated part). vLLM indexes both halves together, so in prompt-embeds mode it goes out of range. So on vLLM's path, what you can do is fall back to output-side post-processing (e.g. detect repeated n-grams and truncate). <strong>Remember this, and §5's "why LLM-based ASR needs dedicated anti-repetition" has its complete answer: not only does autoregressive sampling naturally fall into repetition attractors, the standard remedy happens to be unavailable in this engine's this mode.</strong></p>
+<h2 id="s5">2. From text to tensor: tokenize, token id, vocab</h2>
+<p>Before text enters the model it travels a "text → integers → vectors" pipeline. Tokenization is really two small steps:</p>
+<ol type="1">
+<li><strong>text → token pieces</strong>: the string is split into subwords (<code>"unhappiness"</code> → <code>["un","happiness"]</code>); the output is strings.</li>
+<li><strong>token pieces → token ids</strong>: each piece is looked up in the <strong>vocabulary</strong> and turned into an integer. Those integers are the <strong>token ids</strong>.</li>
+</ol>
+<p>The actual product of tokenization is <strong>a list of integers</strong> (<code>input_ids</code> in HF), which then gets wrapped into a tensor:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tok(<span class="st">&quot;Hello world&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># {&#39;input_ids&#39;: [9906, 1917], &#39;attention_mask&#39;: [1, 1]}   ← Python list</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tok(<span class="st">&quot;Hello world&quot;</span>, return_tensors<span class="op">=</span><span class="st">&quot;pt&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># {&#39;input_ids&#39;: tensor([[9906, 1917]]), ...}   ← tensor, shape [1,2], dtype int64</span></span></code></pre></div>
+<p><strong>Key: a token id is an integer index, not a vector, dtype int64.</strong> It's just the "row number" into the embedding table — telling the model to grab the vector at row 9906. So this integer tensor isn't the compute input yet; it first passes through the §1 embedding table to become float vectors before entering the transformer. (<code>attention_mask</code> is a separate array marking real tokens vs padding.)</p>
+<h3 id="s5-1">vocab.json: the same vocab as in Part 1 §3 and §1 here</h3>
+<p><code>vocab.json</code> is the <strong>"token string ↔︎ id" map</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">&quot;!&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span> <span class="er">...</span><span class="fu">,</span> <span class="dt">&quot;Hello&quot;</span><span class="fu">:</span> <span class="dv">9906</span><span class="fu">,</span> <span class="dt">&quot;Ġworld&quot;</span><span class="fu">:</span> <span class="dv">1917</span><span class="fu">,</span> <span class="er">...</span> <span class="fu">}</span></span></code></pre></div>
+<p>(In BPE, the <code>Ġ</code> is a <strong>space marker</strong> meaning "this word has a leading space.")</p>
+<p>Hard constraint: <strong>number of entries in vocab.json = <code>vocab_size</code> in config = number of rows in the embedding table.</strong> All three must align — the tokenizer emits id=k, and row k of the embedding table must be that token's vector. So "wrong tokenizer for a model" produces garbage and <strong>doesn't error</strong>.</p>
+<h3 id="s5-2">Vocab file names vary by algorithm</h3>
+<ul>
+<li><strong>BPE</strong> (GPT/Qwen): <code>vocab.json</code> + <code>merges.txt</code></li>
+<li><strong>WordPiece</strong> (BERT/bge): <code>vocab.txt</code> (one per line, line number = id)</li>
+<li><strong>SentencePiece</strong> (Llama/T5): <code>tokenizer.model</code> (binary)</li>
+<li><strong>modern all-in-one</strong>: <code>tokenizer.json</code> (vocab + merges + normalization + pre-tokenization, packed together)</li>
+</ul>
+<p>The vocab belongs to the tokenizer, <strong>not in safetensors</strong>, but it must agree with the embedding table on vocab_size.</p>
+<h3 id="s5-3">Two traps that only show up when you run it (invisible in the config)</h3>
+<p>The "entries in vocab.json = config <code>vocab_size</code>" above is a simplification; reality has two subtleties:</p>
+<ol type="1">
+<li><p><strong><code>config.vocab_size</code> is often padded, ≠ <code>len(tokenizer)</code>.</strong> <code>vocab_size</code> is the <strong>number of rows in the embed_tokens matrix</strong>, frequently <strong>padded up to a multiple of 128</strong> for GPU/tensor-core alignment (e.g. Qwen3-8B's config says <code>151936 = 128×1187</code>, but <code>len(tokenizer)</code> is only <code>151669</code>; the 267-row gap is <strong>padding rows the tokenizer never emits</strong>). So <strong>don't subtract two configs' <code>vocab_size</code> values</strong> to infer "how many tokens differ" — compare <code>len(tokenizer)</code> instead.</p></li>
+<li><p><strong><code>add_special_tokens</code> makes "the same text" produce different id sequences.</strong> <code>tokenizer(s)</code> adds special tokens by default, and different models add them differently (e.g. some embedding tokenizers append <code>&lt;|endoftext|&gt;</code> as a last-token-pooling anchor). So "the same plain text tokenizes to different ids under two tokenizers" may be <strong>just a wrapping difference, not a segmentation difference</strong> — diagnostic: compare <code>tok(s, add_special_tokens=False)</code> for the core text. (§6 has a full Qwen3-Embedding vs Qwen3-8B worked example.)</p></li>
+</ol>
+<blockquote>
+<p>Note: the specific numbers in this section and §6 (<code>151936</code> / <code>len(tokenizer)=151669</code>, etc.) are <strong>local measured snapshots</strong>; padding amounts and special-token counts will vary with model version — don't memorize the numbers, remember the <strong>method</strong>: "<code>config.vocab_size</code> is padded; to compare, compare <code>len(tokenizer)</code>." Reproduce it yourself: <code>from transformers import AutoConfig, AutoTokenizer; AutoConfig.from_pretrained(p).vocab_size; len(AutoTokenizer.from_pretrained(p))</code>.</p>
+</blockquote>
+<h2 id="s6">3. tokenizer_config.json and special tokens</h2>
+<p><code>tokenizer_config.json</code> is the tokenizer's <strong>"config.json"</strong> — it holds settings/metadata, not the vocab data. The parallel: a model has <code>config.json</code> (structure) + safetensors (weights); a tokenizer has <code>tokenizer_config.json</code> (settings) + vocab (data).</p>
+<p>Main fields:</p>
+<ul>
+<li><strong><code>tokenizer_class</code></strong> — which tokenizer class to build (the analog of <code>architectures</code> in config.json).</li>
+<li><strong>special tokens</strong> — <code>bos/eos/pad/unk_token</code> etc.; Qwen's <code>eos_token</code> is <code>&lt;|im_end|&gt;</code>.</li>
+<li><strong>behavior flags</strong> — <code>model_max_length</code>, <code>padding_side</code> (LLM generation usually left-pads), <code>add_bos/eos_token</code>, etc.</li>
+<li><strong><code>chat_template</code></strong> — the field that matters most for your prompt engineering.</li>
+</ul>
+<h3 id="s6-1">chat_template (directly relevant to your work)</h3>
+<p>It's a <strong>Jinja2 template</strong> defining "how a list of <code>{role, content}</code> messages becomes the final prompt" (in older model directories it's a field of <code>tokenizer_config.json</code>; from transformers 5 it's stored as a standalone <code>chat_template.jinja</code>, and loaders accept both). Qwen uses ChatML, rendering to <code>&lt;|im_start|&gt;role\n...&lt;|im_end|&gt;</code>. <strong>vLLM reads this at serve time</strong>, turning your OpenAI-style messages into the real prompt. So the model actually sees the rendered string, not your messages. When debugging DST (dialogue state tracking) / step drift, print it out:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tok.chat_template)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tok.apply_chat_template(msgs, tokenize<span class="op">=</span><span class="va">False</span>, add_generation_prompt<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># prints the full prompt the model actually receives (with all &lt;|im_start|&gt; markers)</span></span></code></pre></div>
+<h3 id="s6-2">added_tokens_decoder: per-token attributes of special tokens</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;151644&quot;:</span> <span class="fu">{</span> <span class="dt">&quot;content&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;|im_start|&gt;&quot;</span><span class="fu">,</span> <span class="dt">&quot;special&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;normalized&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span> <span class="dt">&quot;single_word&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;lstrip&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span> <span class="dt">&quot;rstrip&quot;</span><span class="fu">:</span> <span class="kw">false</span> <span class="fu">}</span></span></code></pre></div>
+<p>(151644/151645 are Qwen's ChatML delimiters; their ids sit at the top of the vocab — appended after the base vocab.) Field meanings:</p>
+<table>
+<thead>
+<tr class="header">
+<th>field</th>
+<th>meaning</th>
+<th>why this value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>content</code></td>
+<td>the literal token string</td>
+<td>matched as <strong>one atom</strong> → single id, never split by BPE</td>
+</tr>
+<tr>
+<td><code>special</code></td>
+<td>is it a control token</td>
+<td><code>true</code>: registered as special; dropped under <code>skip_special_tokens=True</code>; atomic match</td>
+</tr>
+<tr>
+<td><code>normalized</code></td>
+<td>normalize before matching</td>
+<td><code>false</code>: matched <strong>byte-for-byte exactly</strong>, never altered</td>
+</tr>
+<tr>
+<td><code>single_word</code></td>
+<td>only match at word boundaries</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>lstrip</code>/<code>rstrip</code></td>
+<td>absorb adjacent left/right whitespace</td>
+<td><code>false</code>: leave whitespace alone; spacing/newlines are controlled explicitly by the template</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why control tokens use this combo</strong>: <code>special:true</code> + <code>normalized:false</code> → recognized atomically and exactly as one id. The model learned message boundaries from this <strong>single</strong> token; once it's split into multiple BPE pieces, the model can't recognize the boundary.</p>
+<h3 id="s6-3">The prompt-engineering footgun</h3>
+<p>Because these are registered added tokens, as long as the string in your prompt matches <code>content</code> exactly, it maps to that single id. But if you have an <strong>extra space, a missing bar, or wrong case</strong> (<code>&lt;| im_start |&gt;</code>), it won't match — it gets shattered into a string of BPE pieces, the model loses the turn structure, and you get rambling / off-topic / state-drift behavior, while the prompt looks nearly identical to the eye. Triage trick: encode with <code>tok(prompt)["input_ids"]</code> and confirm <code>151644</code>/<code>151645</code> appear as <strong>single integers</strong> at the expected positions.</p>
+<h3 id="s6-4">Why chat_template exists (you can't just invent your own format)</h3>
+<p>Key realization: <strong>the model never sees <code>{role, content}</code>.</strong> It's a next-token predictor over a flat token sequence, with no concept of "role" or "message." <code>{role, content}</code> is a developer abstraction that <strong>must be serialized into one flat string</strong> before reaching the model — and chat_template is that serialization rule.</p>
+<p>You <strong>do</strong> define the message content (what goes in system/user is yours), but you <strong>can't freely invent the serialization format</strong>: the model was <strong>fine-tuned on one specific format</strong> (Qwen's ChatML: <code>&lt;|im_start|&gt;role\n...&lt;|im_end|&gt;</code>, down to the exact special tokens and newlines). That format is what it learned a conversation looks like. Deviate → <strong>out of distribution</strong> → worse instruction-following (a likely root cause of step drift / state errors). So chat_template is a <strong>contract</strong> the model author ships: it travels with the model, and vLLM / transformers render it to the same string whoever reads it, so you needn't memorize each family's format (ChatML / Llama's <code>[INST]</code> / Gemma's <code>&lt;start_of_turn&gt;</code>...).</p>
+<p><strong>Not all LLMs have a chat_template:</strong> Base/pretrained models <strong>don't</strong> (and shouldn't — they're raw continuators with no chat notion); Instruct/Chat models <strong>should</strong> (it's their format contract). But it's a <strong>convention</strong> standardized only in 2023 — older or poorly-packaged models may lack it or ship a wrong one, needing a <code>--chat-template</code> override. <strong>For your voice system: use the Instruct variant, go through the chat API or <code>apply_chat_template</code>, don't hand-roll full ChatML; put your survey state inside the role content, and don't alter the <code>&lt;|im_start|&gt;</code> delimiters.</strong></p>
+<p><strong>The other solution: the framework maintains its own format table.</strong> The "may lack it or ship a wrong one" above is a real pain point, and chat_template isn't the only answer. Xinference (§6) early on took the opposite route — <strong>it stores a prompt format in its own model-metadata JSON</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;prompt_style&quot;:</span> <span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;style_name&quot;</span><span class="fu">:</span> <span class="st">&quot;LLAMA3&quot;</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;system_prompt&quot;</span><span class="fu">:</span> <span class="st">&quot;You are a helpful assistant.&quot;</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;roles&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;user&quot;</span><span class="ot">,</span> <span class="st">&quot;assistant&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;stop_token_ids&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">128001</span><span class="ot">,</span> <span class="dv">128009</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;stop&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;&lt;|end_of_text|&gt;&quot;</span><span class="ot">,</span> <span class="st">&quot;&lt;|eot_id|&gt;&quot;</span><span class="ot">]</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>The same job (serializing <code>{role, content}</code> into a string), two ways of shipping it:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>chat_template</code></th>
+<th>framework-maintained <code>prompt_style</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>who maintains it</td>
+<td><strong>the model author</strong>, ships with the model</td>
+<td><strong>the serving framework</strong>, in its own config</td>
+</tr>
+<tr>
+<td>adding a new model</td>
+<td>no framework change</td>
+<td>append a metadata entry</td>
+</tr>
+<tr>
+<td>upside</td>
+<td>always consistent with the model</td>
+<td><strong>covers old models that have no chat_template</strong></td>
+</tr>
+<tr>
+<td>risk</td>
+<td>old models may lack it or have it wrong</td>
+<td>can lag model updates; may differ from the official rendering</td>
+</tr>
+</tbody>
+</table>
+<p>Knowing both routes exist gives you one more suspect when "the same model behaves differently under two frameworks": <strong>it may not be the model at all — the two sides rendered the messages into different strings.</strong> The diagnostic is the same as before: print the final prompt and compare.</p>
+<h3 id="s6-5">Two endpoints: <code>/v1/completions</code> vs <code>/v1/chat/completions</code></h3>
+<p>They are <strong>not two models or two capabilities</strong> — they're two <strong>formatting front-ends</strong> over the same next-token engine. Same forward pass; they differ only in the layer in front:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>/v1/completions</code></th>
+<th><code>/v1/chat/completions</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>you send</td>
+<td><code>prompt</code>: a raw string</td>
+<td><code>messages</code>: <code>[{role, content}]</code></td>
+</tr>
+<tr>
+<td>server does</td>
+<td>tokenize → run</td>
+<td><strong>render via chat_template</strong> → tokenize → run</td>
+</tr>
+<tr>
+<td>chat_template</td>
+<td>not applied</td>
+<td>applied automatically</td>
+</tr>
+<tr>
+<td>also handles</td>
+<td>nothing</td>
+<td>auto-appends `&lt;</td>
+</tr>
+<tr>
+<td>returns</td>
+<td><code>choices[].text</code> (raw continuation)</td>
+<td><code>choices[].message</code> (assistant message object)</td>
+</tr>
+</tbody>
+</table>
+<p>In one line: <strong>chat = completions + auto chat_template rendering + structured I/O + auto "your turn" cue + auto stops.</strong> Both converge to one flat token sequence.</p>
+<p><strong>When to use which:</strong> default to <strong>chat</strong> (Instruct models, roles/multi-turn, staying on the training distribution, 95% of cases). Switch to <strong>completions</strong> when you need <strong>full prompt control</strong>: serving a Base model, prefilling the assistant's opening to force a format (useful for structured output / DST), hand-crafted few-shot, reproducible eval, or bypassing a model's template bug. The cost: you must assemble ChatML correctly yourself — back to the footgun above, so always self-check with <code>tok(prompt)["input_ids"]</code> after hand-rolling.</p>
+<h2 id="s7">4. Batching: how concurrent requests become one forward</h2>
+<p>This chapter is the <strong>second main line</strong> of this part, and the foundation that §5 and §6 keep coming back to when they discuss engines. It's about one thing: <strong>how multiple requests become one forward on the GPU, and why sometimes they can't.</strong></p>
+<h3 id="s7-1">4.1 Why batch: the weights are read once</h3>
+<p>Recall two points from Part 1 (recap ③): <strong>the B samples in the batch dimension are independent</strong>, and <strong>within one forward the weights are read from VRAM once and shared by all samples</strong>. The latter is the entire value of batching.</p>
+<p>From this follows a point that must be nailed down, and is counterintuitive: <strong>"concurrency" and "batching" are not the same thing.</strong></p>
+<p>The real dividing line isn't "memory-bound vs compute-bound" — it's <strong>what saturates the bandwidth, and whether that traffic can be amortized across requests</strong>:</p>
+<ul>
+<li><strong>LLM decode is itself memory-bound</strong> — each step of a single request reads all the weights to produce one token, leaving compute nearly idle. But <strong>that's precisely why batching is meaningful</strong>: what saturates bandwidth is <strong>weight reloading</strong>, and that is <strong>shared</strong> within a batch. Merge multiple requests into the same forward, the weights are read once, arithmetic intensity goes up, and you keep gaining right up until you hit compute-bound.</li>
+<li><strong>A deployment like "2 containers + nginx rate-limiting" does not merge concurrent requests into one forward</strong> — they're independent forwards fighting over the same memory bus, each reading its own copy, none amortizing any other. So the bandwidth saturates quickly and <strong>adding concurrency gains nothing</strong>.</li>
+</ul>
+<blockquote>
+<p><strong>One sentence to nail it: merged into the same forward, the weights are read once; each in its own forward, they're fighting over the same memory bus.</strong></p>
+</blockquote>
+<p>This also explains a common misjudgment: measuring "a single concurrent request already saturates VRAM bandwidth, more concurrency gains little" <strong>proves less that "this model is memory-bound so concurrency is useless" than that "this deployment never batched at all."</strong> With the same memory-bound property, whether requests are merged into one forward or not gives completely opposite outcomes.</p>
+<h3 id="s7-2">4.2 A third-party comparison</h3>
+<p>Not our own measurement. The Xinference paper (EMNLP 2024 Demo), Appendix A.3, compares four engines on Llama 3 8B on an A800, concurrency from 10 to 50:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Engine</th>
+<th>concurrency 10 (token/s)</th>
+<th>concurrency 50 (token/s)</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PyTorch (bare transformers)</strong></td>
+<td>36.69</td>
+<td><strong>37.10</strong></td>
+<td><strong>1.01×</strong></td>
+</tr>
+<tr>
+<td>vLLM</td>
+<td>487.94</td>
+<td>1276.29</td>
+<td>2.6×</td>
+</tr>
+<tr>
+<td>SGLang</td>
+<td>627.83</td>
+<td>2087.81</td>
+<td>3.3×</td>
+</tr>
+<tr>
+<td>llama.cpp</td>
+<td>77.68</td>
+<td>77.99</td>
+<td>1.00×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The bare transformers backend's concurrency rises 5×, throughput doesn't move (36.69 → 37.10); llama.cpp likewise (1.00×).</strong> That's the clean sample of "no batching" — requests each run their own forward, none amortizing any other. vLLM / SGLang, by merging requests into one forward, reap the concurrency dividend.</p>
+<p>But the two 1.0× rows have different causes, worth separating: the transformers backend at the time <strong>had no continuous-batching mechanism at all</strong>; llama.cpp proper <strong>does</strong> — in <code>common/common.h</code>, <code>cont_batching = true</code> is the default, with <code>n_parallel</code> defaulting to <code>1</code>, so with <code>llama-server</code> <strong>the mechanism is there but the slots aren't open</strong> — one startup flag away. However, what Xinference wrapped back then was <code>llama-cpp-python</code>'s <code>Llama</code> class, a path with no cross-request concurrency at all (it later switched to <code>xllamacpp</code>), so that row is more likely "the entry point lacks the capability" than "the slots aren't open" — the paper's appendix doesn't say which entry point, and we won't conclude on its behalf. What it means for the reader: when you see "throughput doesn't rise with concurrency," first ask <strong>is the mechanism absent, or just not turned on</strong> — the former means changing engines, the latter means changing a parameter.</p>
+<blockquote>
+<p>Note: that's 2024 data, <strong>when Xinference's transformers backend had no continuous batching yet</strong> (added later, see §6). So that 1.01× happens to be a clean "no batching" control; it does not represent today's Xinference. Cite this table for the <strong>mechanism</strong>, not the current state.</p>
+</blockquote>
+<h3 id="s7-3">4.3 Two ailments of the naive approach: padding waste and head-of-line blocking</h3>
+<p>GPUs need <strong>large batches</strong> to be well-utilized. But autoregressive generation has two heterogeneities that make "pack multiple requests into one batch" awkward: ① different requests have <strong>different prompt lengths</strong>; ② different requests produce <strong>different output lengths</strong>, and you <strong>don't know in advance</strong> how many tokens each will generate (until it emits <code>eos</code>).</p>
+<p><strong>The naive approach: static batch + manual padding.</strong> To pack N requests into <strong>one rectangular tensor</strong> <code>[N, seq_len]</code> for a single compute, unequal-length sequences must be <strong>padded to the longest</strong> with pad tokens, plus an <code>attention_mask</code> telling the model "these are filler, ignore." The cost is two layers:</p>
+<ul>
+<li><strong>Wasted compute/VRAM</strong>: one prompt is 1000 tokens, the rest are 50 — you pad everyone to 1000; the GPU computes attention and FFN on the pad positions just the same (masked out only at the end), and the KV cache holds VRAM for them too.</li>
+<li><strong>The real killer is head-of-line blocking</strong>: a static batch marches step by step as one unit, waiting for the <strong>longest-generating</strong> request to emit <code>eos</code> before the entire batch finishes. A request that only wants 10 tokens gets dragged for 490 idle steps by a batch-mate that wants 500; and <strong>newly arriving requests can only wait</strong> until the batch finishes. GPU utilization collapses as requests in the batch finish one after another.</li>
+</ul>
+<pre><code>static batch: batch locked, waits for the slowest, new requests blocked
+  step→   1   2   3   4   5   6   7   8
+  R1     ■   ■  eos  ·   ·   ·   ·   ·      ← R1 done at step 3, but slot locked until step 8
+  R2     ■   ■   ■   ■   ■   ■   ■  eos
+  R3     ■   ■   ■  eos  ·   ·   ·   ·
+  R4(new) wait wait wait wait wait wait wait wait → can only start after the whole batch finishes</code></pre>
+<p>(This isn't saying HF <code>generate</code> can't batch — it <strong>can</strong>, but it does exactly the static padding above, with the waste and head-of-line blocking baked in.)</p>
+<h3 id="s7-4">4.4 The decision point: when can the batch's composition still be rewritten</h3>
+<p>Whether those two ailments can be fixed depends on one thing. <strong>The mechanism is one sentence:</strong></p>
+<blockquote>
+<p><strong>One <code>model.forward(batch)</code> is atomic</strong> — the tensor shapes are fixed at the moment of the call, and once the kernels are running you cannot add a row to the input. <strong>So the composition of a batch can be decided only in the instant before a forward begins.</strong></p>
+</blockquote>
+<p>Call that instant the <strong>decision point</strong>; the entire difference between the two classes of workload is <strong>how many decision points there are</strong>:</p>
+<pre><code>single forward (embedding / rerank / encoder) — exactly one decision point, ever
+   R1 arrives ──┐
+   R2 arrives ──┼─ wait one window ─→ [form batch] ─→ one forward ─→ all leave
+   R3 arrives ──┘                  ↑
+                          the only decision point; miss it and you wait for the next batch
+
+autoregressive decode (LLM) — a decision point at every step, and the steps are happening anyway
+   step:   1      2      3      4      5
+   R1     ■      ■      ■      ■     eos
+   R2            ■      ■      ■      ■      ← R2 arrives at step 2, goes straight in
+   R3                   ■      ■      ■      ← R3 arrives at step 3, goes straight in
+          ↑      ↑      ↑      ↑      ↑
+        every step is a decision point; no need to wait specially</code></pre>
+<p><strong>So a "wait window" isn't an optimization choice; it compensates for the defect of "only one decision point."</strong> Don't wait and you get a handful of stragglers; wait and you can form a batch. Autoregressive decode <strong>has no such defect</strong> — it has a decision point at every step, and <strong>those decision points weren't designed in; the autoregressive structure gives them away for free</strong>. Putting a wait window on a batch that reorganizes every step would be pointless.</p>
+<p>This is explicit in the vLLM V1 scheduler source: there is <strong>no <code>delay_factor</code> / <code>batch_timeout</code> or any other waiting mechanism anywhere</strong>; every call to <code>schedule()</code> is "scan the running requests first, then pull from the waiting queue until <code>max_num_batched_tokens</code> or <code>max_num_seqs</code> is used up." Its comment even states the abstraction outright:</p>
+<blockquote>
+<p>"There's <strong>no 'decoding phase' nor 'prefill phase'</strong> in the scheduler. Each request just has the <code>num_computed_tokens</code> and <code>num_tokens_with_spec</code>. At each step, the scheduler tries to assign tokens to the requests so that each request's <code>num_computed_tokens</code> can catch up its <code>num_tokens_with_spec</code>."</p>
+</blockquote>
+<p><strong>The scheduler sees no prefill/decode distinction, only "how many tokens does this request still owe"</strong> — and the same abstraction covers chunked prefill, prefix caching and speculative decoding along the way.</p>
+<p><strong>Then could a single forward be split into layer-by-layer execution, with decision points between layers?</strong> No — <strong>the layers don't line up</strong>: when R1 is at layer 8 and R2 just arrived, R2 has to start at layer 0, and layer 0 and layer 8 use <strong>different weight matrices</strong>. The entire benefit of batching is <strong>multiple requests sharing one weight read</strong> (§4.1); different layer = different weights = nothing to share — you've just split one big matmul into two small ones, which is worse.</p>
+<blockquote>
+<p><strong>To batch, they must leave layer 0 together; to leave together, someone has to wait.</strong> That's an inherent constraint of single-forward workloads, not anyone's clumsy implementation.</p>
+<p>Contrast with autoregressive: at every step <strong>every request is doing the same thing</strong> — computing its next token, each running the full network once. So a request joining at any moment is <strong>naturally aligned</strong> with the existing ones at the next step.</p>
+</blockquote>
+<h3 id="s7-5">4.5 The three-rung ladder: who actually forms the batch</h3>
+<p>With the mechanism clear, "batching" turns out to be three different things, differing in <strong>who forms the batch</strong>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Who forms it</th>
+<th>Example</th>
+<th>What the server has to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① In-request batch</strong></td>
+<td><strong>The client</strong>: one call carries N items</td>
+<td>one <code>/v1/embeddings</code> call with 100 texts</td>
+<td>nothing; the batch is already in hand</td>
+</tr>
+<tr>
+<td><strong>② Request-level</strong><br>dynamic batching</td>
+<td><strong>The server</strong>: N clients send 1 each, the server <strong>waits a window</strong> and bundles them</td>
+<td>Xinference's <code>BatchMixin</code></td>
+<td>queue, wait, form the batch, compute, split and return</td>
+</tr>
+<tr>
+<td><strong>③ Iteration-level</strong><br>continuous batching</td>
+<td><strong>The server, redone at every token step</strong></td>
+<td>vLLM</td>
+<td>reassemble every step; evict the finished, insert the waiting</td>
+</tr>
+</tbody>
+</table>
+<p><strong>②③ aren't two parallel options; it's a containment relationship</strong>: ③ has ②'s batching capability, just implemented by other means, and eliminates head-of-line blocking as a bonus.</p>
+<p><strong>Note that ① is often overlooked, but it's the easiest</strong> — the batch is already inside the request; the server forms nothing and so bypasses the wait window and scheduling overhead entirely. Offline jobs like index building and bulk transcription are faster on ① than on ② or ③.</p>
+<h3 id="s7-6">4.6 Two instances</h3>
+<p><strong>vLLM's continuous batching (③).</strong> The core in one line: <strong>scheduling granularity drops from "request level" to "each token-step level"</strong> — the batch is reassembled every step. Any request that emits <code>eos</code> is <strong>evicted immediately and its result returned at once</strong>, and the freed slot is <strong>filled right away by a queued request</strong>.</p>
+<p>How it makes "unequal lengths" disappear: <strong>no padding needed</strong>. PagedAttention stores each sequence's KV cache as <strong>non-contiguous fixed-size blocks (pages)</strong>, each taking only what it needs, and the attention kernel gathers per sequence — no rectangular tensor has to be formed.</p>
+<pre><code>Continuous batching: slots reclaimed every step, new requests fill in immediately
+  step→   1   2   3   4   5   6   7   8
+  slotA  R1  R1 eos→R4 R4  R4 eos→R6 ...   ← R1 finishes, R4 fills in immediately
+  slotB  R2  R2  R2  R2  R2  R2  R2 eos
+  slotC  R3  R3 eos→R5 R5 eos→R7 R7  ...
+                  ↑ the GPU is always full of useful tokens — no idling, no padding</code></pre>
+<p><strong>What this means for the two kinds of scenario:</strong></p>
+<ul>
+<li><strong>Offline batch</strong> (e.g. bulk transcription): all requests arrive at once. The win is ① inputs of different lengths aren't padded to the longest; ② short ones finish early and their slots are refilled immediately, so the batch stays full; ③ PagedAttention saves VRAM so the effective batch can be larger. <strong>Not faster per token — the GPU just stops idling.</strong></li>
+<li><strong>Online</strong> (e.g. a voice agent): requests <strong>arrive continuously</strong>, and here "new requests are inserted in-flight into the running batch without waiting for the batch to finish" is the most valuable property; it directly decides <strong>tail latency</strong> once concurrency rises.</li>
+</ul>
+<p><strong>Xinference's <code>BatchMixin</code> (②).</strong> A request-level batcher for embedding / rerank; the implementation is an asyncio queue plus a short window:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(first_args, first_kwargs), first_future <span class="op">=</span> <span class="cf">await</span> <span class="va">self</span>._queue.get()   <span class="co"># the first one: block indefinitely</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> size <span class="op">&lt;</span> <span class="va">self</span>.batch_size:                                        <span class="co"># for every subsequent one</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        (args, kwargs), future <span class="op">=</span> <span class="cf">await</span> asyncio.wait_for(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._queue.get(), timeout<span class="op">=</span><span class="va">self</span>.batch_interval)           <span class="co"># ← returns IMMEDIATELY if the queue has items</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> asyncio.<span class="pp">TimeoutError</span>:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>                                                        <span class="co"># only gives up once it&#39;s empty; ships the batch as is</span></span></code></pre></div>
+<p>Defaults are <code>XINFERENCE_BATCH_SIZE=32</code> and <code>XINFERENCE_BATCH_INTERVAL=0.003</code> (3 milliseconds); both are tunable via environment variables.</p>
+<p><strong>That 3 ms is smarter than it looks.</strong> It's easily misread as "every batch adds a fixed 3 ms of latency," but it isn't — <code>wait_for</code> <strong>returns immediately when the queue already has requests; it never actually waits out the window</strong>. So the value is "<strong>the maximum idle gap allowed</strong>":</p>
+<ul>
+<li><strong>High load</strong> (the queue is already backed up) → returns immediately every time, ships once 32 are collected, <strong>almost no added latency</strong></li>
+<li><strong>Low load</strong> (sparse requests) → only then does it really wait and give up. <strong>And at low load latency isn't the bottleneck anyway</strong></li>
+</ul>
+<p><strong>No waiting when busy, waiting only when idle, and waiting when idle costs nothing</strong> — it's already load-adaptive.</p>
+<h3 id="s7-7">4.7 A counterintuitive corollary</h3>
+<blockquote>
+<p><strong>What decides the kind of batching is the workload, not the engine.</strong></p>
+</blockquote>
+<p>vLLM supports pooling models too (start of §6), and an embedding <strong>request is done in one step</strong> — there is no "next step" for a new request to slip into, <strong>so continuous batching here automatically degrades to ②</strong>.</p>
+<p>That also explains why Xinference, even with vLLM as its embedding backend, still wraps its own <code>BatchMixin</code> around it: it merges requests at the HTTP layer, <strong>regardless of which engine sits underneath</strong>.</p>
+<p><strong>Back to this part's criterion: autoregressive decoding is what creates "steps," and steps are what make iteration-level scheduling possible; a single forward has no steps, so all that's possible is request-level batching.</strong> The next two chapters on vLLM and Xinference are two expansions of this one sentence.</p>
+      </article>
+    </main>
+    <footer>
+      <p>
+        Copyright © 2026 Lang Qiu (邱朗). This text is licensed under
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+      </p>
+    </footer>
+    <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+    <!-- 访问统计（GoatCounter） -->
+    <script data-goatcounter="https://qiulang.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+  </body>
+</html>
