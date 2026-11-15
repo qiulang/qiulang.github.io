@@ -1,0 +1,125 @@
+/* ===== 中英对照诗：blockquote 里的表格 =====
+   为什么要动结构：md 里那串对齐空格到不了布局层。
+   pandoc 只把行尾 ≥2 个空格变成 <br />，段内连续空格原样写进 HTML；
+   浏览器缺省 white-space: normal 又把它们折成一个空格。
+   就算折不掉也没用——数空格用的是编辑器的等宽字体，页面是 system-ui 比例字体，
+   两者没有共用的长度单位。列宽交给布局盒，不再交给字符。
+
+   site.css 第六节的表格样式是给"查阅用表格"设计的：小一号、1.5 行高、1px 边框。
+   这首诗不是查阅表格，是把正文按列排，所以下面每条都在撤销那套外观。
+
+   选择器用 blockquote 限定：本篇只有这一张表，别的 blockquote 里没有 table。
+   以后如果再加第二张表（哪怕不在引用里），要换成更具体的钩子。 */
+
+blockquote > table {
+  /* width 故意不写。原来这里写的是 width: 100%，在 --measure: 38em 时看不出问题；
+     改成 56em 之后它把中英之间撑成一条 446px 的空沟。完整理由和"什么时候补回来"在文末决策记录。 */
+  table-layout: fixed;         /* 不写：automatic 布局在手机上会把第一列压到"最长单词"宽，英文折成一竖条 */
+  font-size: 1em;              /* 撤销 site.css 的 .875em，诗句和正文同为 20px（手机 18px） */
+}
+blockquote td {
+  border: 0;                   /* 撤销 site.css 的 1px 实线：诗句之间不要网格线 */
+  padding: 0;                  /* 撤销 .5em .75em：留白改由下面一条统一控制，两列才共用同一个间距 */
+}
+blockquote td:first-child {
+  padding-right: 2.5em;        /* ← 唯一的列间距旋钮。
+                                  表格宽度不写死之后，桌面表格收到 (最长英文行 + 这个间距 + 7em)，
+                                  往大调只是把中文列整体往右推，不会挤到英文折行；
+                                  直到表格顶到 blockquote 可用宽（--measure − 1em − 4px 边框）才开始折：
+                                  56em → 可用 1096px，英文最长行约 460px（估算）→ 间距上限约 24.8em。
+                                  往小调：低于 1em 两句读成一串，对照关系糊掉 */
+}
+blockquote td:nth-child(2) {
+  width: 7em;                  /* 7 个全角字。全角字的 ideal typographic width = 1em（CSS Text 3 / UAX#11），
+                                  苹方、微软雅黑都按 1em 出字 → 桌面 140px、手机 126px。
+                                  这是规范值不是估算；换字体或改中文列字数时才需要重核 */
+}
+
+/* ===== 书封和李于阳那首诗左右并排（§1）=====
+   照搬 shackleton/style.css 的 .pair 模式，但介绍段留在 .pair 外面（满栏 1120px，约 3 行），
+   并列组里只有封面和诗：
+     <p>When I read Tambora … :</p>                    ← 不在 .pair 里，满宽
+     ┌─ .pair ───────────────────────────────────────────┐
+     │ ┌──────────┐      ┌─ .pair-text ─────────────────┐ │
+     │ │ 封面     │ 1.5em │ ┃ The clouds like a dragon’s…│ │
+     │ │ 20em 宽  │      │ ┃ 16 行                      │ │
+     │ │ 400×535  │      └──────────────────────────────┘ │
+     │ └──────────┘                                       │
+     └───────────────────────────────────────────────────┘
+   用 grid 不用 float：封面再高也只占这一组，不会挤窄后面的段落；
+   引文块的左竖线跟着文字列变窄，不会画到封面底下。
+
+   桌面（推算，9.2px/字 ±5%，非实测）：
+     正文栏 1120px − 封面 400px − 间距 30px = 文字列 690px
+     blockquote 再减 padding-left 1em(20px) 和 4px 边框 = 内容宽 666px
+     诗最长一行 57 字符约 524px（最坏 550px）→ 不折行，右边还剩约 116–142px
+     诗 16 行 × 37px（line-height 1.85）= 592px；封面高 535px（400 × 1318/984）
+     → 居中后上下各空约 28px。把介绍段挪出 .pair 之后，文字列高度和封面高度基本齐平，
+       这才是 20em 好看的原因：8em 时文字列 ≈700px、封面只有 214px，上下各空 243px，
+       封面像被吊在一大片空白中间。 */
+.pair {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);   /* 左列按封面宽度；右列写 minmax(0, 1fr)，长网址不会把列撑出正文栏 */
+  column-gap: 1.5em;
+}
+.pair > figure {
+  width: 20em;                   /* em 跟着正文字号走：读者调大字号、手机正文变小，封面都跟着等比变 */
+  margin: 0;                     /* 去掉 site.css 给 figure 的上下外边距，否则这一组顶上和底下会多出一截空白 */
+  align-self: center;            /* 封面在自己那一格里垂直居中；文字列不受影响，仍贴顶 */
+}
+/* 去掉文字列首尾的外边距。外边距出不去，会和前后段落的间距叠成两倍；引文块里最后一段的下边距也算在内 */
+.pair-text > :first-child { margin-top: 0; }
+.pair-text > :last-child > p:last-child { margin-bottom: 0; }
+
+/* 手机上改成一列：封面在上，诗在下 */
+@media (max-width: 600px) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1em;
+  }
+  .pair > figure {
+    width: 100%;                 /* 必须补这条：20em 在手机上 = 18px × 20 = 360px，
+                                    而 375px 视口的正文栏只有 375 − 2×1.25rem = 335px，
+                                    figure 是定宽的 grid item、不会自己缩，会溢出 25px 顶出横向滚动条
+                                    （320px 的旧手机溢出 80px）。shackleton 用 8em=144px 时碰不到这条。
+                                    改 100% 后封面 335×448，和手机正文栏同宽，单列摆着不挤。 */
+  }
+}
+
+/* shackleton 里还有两条，这里故意不搬，写了零可观察差别：
+   .pair.large > figure { width: 11em }  —— 那是给"文字特别长、8em 封面显得太小"的两组用的；
+                                            本页已经直接写 20em，再挂 .large 只会让类名和实际宽度不一致。
+   .pair + .pair { margin-top: 2em }     —— 两组紧挨着时才需要，本页只有一组。
+   figure img { max-width: 15em }        —— 上一版写的，2026-11-15 删掉。那是"封面单独占一段"的做法；
+                                           封面进了 .pair 之后它和 .pair > figure { width } 打架：
+                                           两条 max-width 特指度都是 (0,0,2)、style.css 在后所以它赢，
+                                           于是 site.css 的 100%（= figure 宽）被顶掉。
+                                           规则用 em 说：max-width 的 em 数 > figure width 的 em 数 → 图溢出 figure、
+                                           压到文字列上（当时 15em > 8em，溢出 140px）；反过来 15em < 20em 时
+                                           不溢出，但会把 400px 的格子只填 300px，白留 100px。两种都不对。
+                                           必须补回来的条件：封面不再放在 .pair 里、单独成一段。 */
+
+/* 上面表格部分故意不写的规则，留档免得被当冗余加回来：
+   line-height     —— 保留 site.css 表格的 1.5（诗句间距 30px）。
+                       要它和下面 "Du Fu, Chang’an, 754" 那段的 1.85 一致，才补 line-height: inherit。
+   vertical-align  —— site.css 的 th, td 已经写了 top，这里重复零可观察差别。
+                       必须补回来的条件：改了 site.css 那条，或英文折成多行时中文飘到行中间。
+   border-collapse —— site.css 已设，边框清零后在这张表上没有可观察对象，
+                       但别撤：共用文件里别的表格要靠它把两条线合成一条。
+   width             —— 原来这里写了 width: 100%，2026-11-15 删掉，留档免得被当漏掉的规则加回来。
+                       --measure: 38em 时可用 736px、表格内容宽约 650px，100% 只多推 86px，看不出脱节。
+                       --measure 改成 56em 后可用 1096px：fixed 布局把多出的 446px 全分给唯一没有
+                       指定宽度的第一列（CSS 2.1 §17.4.1.1），英文列撑到 956px、内容盒 906px，
+                       而最长英文行只要约 460px → 中英之间空 446px，两列读起来脱节。
+                       删掉后走 §17.4 的 shrink-to-fit：桌面 ≈650px，中文列紧跟最长英文行 + 2.5em；
+                       手机被夹到可用宽，第二列的 7em 仍由 table-layout: fixed 保住、不会折成两行。
+                       必须把 100% 补回来的条件：想要"中文列贴正文栏右端"的满栏观感；
+                       或以后把 --measure 调回 38em 上下；或英文列长到需要自己折行。
+
+   英文 9.2px/字 是从前一次在本机渲染校准的估算值（±5%），不是这一页的实测。
+   依赖它之前先用 canvas measureText 重新校准。 */
+
+:root {
+  --measure: 56em;
+  --toc-gap: 3rem;
+}
