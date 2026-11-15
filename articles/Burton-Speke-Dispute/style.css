@@ -1,0 +1,27 @@
+:root {
+  --measure: 56em;
+  --toc-gap: 3rem;
+}
+
+/* ===== 四本书的封面：§1 引言段之后一行四张 =====
+   第一段一句话点到全部四本书，所以四张封面集中放在这段后面，
+   不再各自散在 §2–§4——单张 300px 居中在 1120px 的栏里两边全是空白。
+   一行四张：列宽 (1120 − 3×30) / 4 = 257.5px。四张原图（1464–1696px）都比格子宽，
+   site.css 的 figure img { max-width: 100% } 会把它们夹到正好满格，
+   高度由 width/height 属性的保比例换算（约 381–384px，四张宽高比 0.670–0.675，几乎齐平）。
+   15em 一张（300px）的话 4×15em + 间距 = 1290px，超出正文栏，一行放不下；
+   要保住 15em 的替代方案是两行两列 repeat(2, 15em) + justify-content: center。
+   以后如果混进一张比格子还窄的小图，max-width 只夹不放、那张会不满格，
+   那时再给 .books img 补 width: 100% */
+.books {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1.5em;
+  row-gap: 1.5em;                /* 手机两列时行与行之间也要有缝；桌面只有一行，不产生任何位移 */
+  margin: 1.8rem auto 2rem;      /* 原来每张 figure 的上下节奏（site.css 第六节），挪到这一组上 */
+}
+.books figure { margin: 0; }     /* site.css 给 figure 的上下边距在格子里会变成格内空隙，四张就错位了，清零 */
+
+@media (max-width: 600px) {
+  .books { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* 手机退两列：每张约 154px，一行四张就只剩 77px，认不出封面 */
+}
