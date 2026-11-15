@@ -38,7 +38,9 @@ classes: hide-site-nav
   Lansing 的《Endurance》结尾一句"Some said that Sørlle turned away and wept"一直让我想不通。我对照沙克尔顿和沃斯利本人的记述，查这句话是从哪儿来的。  
   Lansing's _Endurance_ ends with "Some said that Sørlle turned away and wept." I checked it against what Shackleton and Worsley wrote themselves to find where the line came from.
   
-- [My take on Tim Jeal’s account of the Burton–Speke Nile dispute](./Burton-Speke-Dispute/index.html) English · Octorber 2026  
+- [My take on Tim Jeal’s account of the Burton–Speke Nile dispute](./Burton-Speke-Dispute/index.html) · English · 2026年10月  
+  Tim Jeal 的《Explorers of the Nile》对伯顿与斯皮克之争的说法，和我读过的其他所有记载都对不上，包括 Candice Millard 的《River of the Gods》以及 Farwell、Brodie 的两本伯顿传记。我先从"伯顿到底有没有说过他要经耶路撒冷回家"这一个小问题查起。  
+  Tim Jeal's _Explorers of the Nile_ contradicts every other account of the Burton–Speke dispute I have read, including Candice Millard's _River of the Gods_ and the biographies by Farwell and Brodie. I started from one narrow question — did Burton really say he would go home via Jerusalem?
 
 - [A Sigh for Autumn Rain and Tambora Eruption](./Tambora-A-Sigh-for-Autumn-Rain/index.html) · English · 2026年11月  
   杜甫写过三首《秋雨叹》；Wood 的 _Tambora_ 里引了另一首同名的，作者是一个几乎无人知晓的云南诗人李于阳，正赶上 1816–1817 年的饥荒。我始终没找到 Wood 这段引文的中文原文，顺着查下去，查到复旦团队把 1815 年坦博拉爆发和嘉庆年间云南大饥荒联系起来的论文，也发现 Wood 把云南鸦片"突然爆发"定在 1820 年这个时间线站不住。  
