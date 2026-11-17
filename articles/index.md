@@ -45,6 +45,12 @@ classes: hide-site-nav
 - [A Sigh for Autumn Rain and Tambora Eruption](./Tambora-A-Sigh-for-Autumn-Rain/index.html) · English · 2026年11月  
   杜甫写过三首《秋雨叹》；Wood 的 _Tambora_ 里引了另一首同名的，作者是一个几乎无人知晓的云南诗人李于阳，正赶上 1816–1817 年的饥荒。我始终没找到 Wood 这段引文的中文原文，顺着查下去，查到复旦团队把 1815 年坦博拉爆发和嘉庆年间云南大饥荒联系起来的论文，也发现 Wood 把云南鸦片"突然爆发"定在 1820 年这个时间线站不住。  
   Du Fu wrote three poems titled 秋雨叹; Gillen D'Arcy Wood's _Tambora_ quotes another one under the same title, by a near-obscure Yunnan poet, Li Yuyang, writing through the 1816–1817 famine. I never found the Chinese original of Wood's quotation, but following that trail led me to the Fudan University paper linking the 1815 Tambora eruption to the Jiaqing famine in Yunnan — and to where I think Wood gets the timeline wrong on the "sudden explosion" of Yunnan opium in 1820.
+  
+- [What Were Lord Macartney's Original Words About the Chinese Under the Qianlong Emperor's Brutal Regime in the 18th Century?](./From-the-Macartney-Embassy-to-later-observers/index.html) · English · 2026年11月  
+
+  满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧！马戛尔尼使团的成员在250多年前就看得一清二楚。当我整理、记录下他们文字的时候，心里充满了敬佩和羞愧的双重复杂情感。
+
+  In my early 20s, I accepted the standard picture of the High Qing as a golden age. It took me a long time to realize how ridiculous that was. I read John Barrow’s Travels in China and Macartney’s journal with deep admiration for the writers’ perceptiveness—and utter shame for our own history.
 
 <!-- 全站访问量，数据来自 GoatCounter（需在 GoatCounter 设置里打开 "Allow adding visitor counts on your website"）。
      只放在"读书笔记"和"文章"两个目录页。数字最多有 4 小时延迟；访问量不到 100 或读取失败时不显示 -->

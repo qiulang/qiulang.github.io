@@ -26,9 +26,6 @@ author:
     - label: "Stack Overflow"
       icon: "fab fa-fw fa-stack-overflow"
       url: "https://stackoverflow.com/users/301513/qiulang"
-    - label: "History Stack Exchange"
-      icon: "fas fa-fw fa-landmark"
-      url: "https://history.stackexchange.com/users/53036/qiulang"
 
 # ---- Apply layout + sidebar to every page (incl. index.md) ----
 defaults:

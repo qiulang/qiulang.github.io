@@ -16,23 +16,21 @@ I also wrote [PyTorch Crash Course](./articles/pytorch-primer/index.html), for p
 
 ### ![Reading and writing](/nav-home.svg){: .heading-icon} Reading & Writing
 
-This site mainly keeps my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese).
-
-I read Hayek's _The Road to Serfdom_ and wrote [some notes on it](./articles/The-road-to-serfdom/index.html) (in Chinese): a few common misreadings of the book in the Chinese-speaking world, and what Hayek meant by socialism.
-
 I put a lot of effort into translating [Flying the Hump](./articles/flying-hump-2016/index.html) into Chinese. The page is bilingual, with the English original and my Chinese translation side by side. If you are interested in the history of the Flying Tigers and [The Hump](https://en.wikipedia.org/wiki/The_Hump) , please take a look.
 
 I also wrote a picture book, [Monkey King](https://www.amazon.com/dp/1763731669). It faithfully follows the narrative of the classic _Journey to the West_, retold for easy reading. I have [open-sourced its text](./articles/monkey-king-story/index.html); if you like it, please buy the printed edition so I can keep improving the story.
 
-I am very interested in history and have discussed [many questions on History Stack Exchange](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97). Some of those discussions grew into essays.
+This site is a collection of my [reading notes](./读书笔记/index.md). The books I have read over the years are [listed here](./reading-list.md) (in Chinese). I am particularly interested in history and in adventure stories. Some of my reading has grown into essays.
 
-- I have read Alfred Lansing's _Endurance: Shackleton's Incredible Voyage_ about ten times and think it is the best account of the expedition, but one line near its end never sat right with me: "Some said that Sørlle turned away and wept." I checked that ending against what Shackleton and Worsley wrote themselves, to find where the line came from — [My take on the ending](./articles/shackleton/index.html).
+- I have read Alfred Lansing's _Endurance: Shackleton's Incredible Voyage_ about ten times and think it is the best account of the expedition, but one line near its end never sat right with me: "Some said that Sørlle turned away and wept." I checked that ending against what Shackleton and Worsley wrote themselves, to find where the line came from — [My take on the ending](./articles/shackleton/index.html).  
 
+- Tim Jeal's _Explorers of the Nile_ contradicts every other account of the Burton–Speke dispute I have read, including Candice Millard's _River of the Gods_ and the biographies by Farwell and Brodie. I started from one narrow question — did Burton really tell Speke he would go home via Jerusalem? — I wrote up [the whole review](./articles/Burton-Speke-Dispute/index.html) after I learned Jeal died in August 2026.  
 
-- Tim Jeal's _Explorers of the Nile_ contradicts every other account of the Burton–Speke dispute I have read, including Candice Millard's _River of the Gods_ and the biographies by Farwell and Brodie. I started from one narrow question — did Burton really tell Speke he would go home via Jerusalem? — asked and answered it on History Stack Exchange, then wrote up [the whole review](./articles/Burton-Speke-Dispute/index.html) after Jeal died in August 2026.
+- Gillen D'Arcy Wood's _Tambora: The Eruption That Changed the World_ quotes a poem written under the same title as Du Fu's _秋雨叹_, by a near-obscure Yunnan poet living through the 1816–1817 famine. I could not find the Chinese original of Wood's quotation; following the trail took me to the Fudan University paper linking the 1815 Tambora eruption to the Jiaqing famine in Yunnan, and to [one place where I think Wood got the timeline wrong](./articles/Tambora-A-Sigh-for-Autumn-Rain/index.html) — the sudden "explosion" of opium cultivation he dates to 1820.  
 
+- [some notes on Hayek's _The Road to Serfdom_](./articles/The-road-to-serfdom/index.html) (in Chinese): a few common misreadings of the book in the Chinese-speaking world, and what Hayek meant by socialism.  
 
-- Gillen D'Arcy Wood's _Tambora: The Eruption That Changed the World_ quotes a poem written under the same title as Du Fu's _秋雨叹_, by a near-obscure Yunnan poet living through the 1816–1817 famine. I could not find the Chinese original of Wood's quotation; following the trail took me to the Fudan University paper linking the 1815 Tambora eruption to the Jiaqing famine in Yunnan, and to [one place where I think Wood got the timeline wrong](./articles/Tambora-A-Sigh-for-Autumn-Rain/index.html) — the sudden "explosion" of opium cultivation he dates to 1820.
+- In my early 20s, I accepted the standard picture of the High Qing as a golden age. It took me a long time to realize how ridiculous that was. When I later read John Barrow’s Travels in China and Macartney’s journal, I did so with deep admiration for the writers’ perceptiveness—and utter shame for our own history — [My Take on this](/articles/From-the-Macartney-Embassy-to-later-observers/index.html).
 
 
 ---
@@ -51,21 +49,21 @@ I am very interested in history and have discussed [many questions on History St
 
 ### ![阅读与写作](/nav-home.svg){: .heading-icon} 阅读与写作
 
-这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。
-
-我读了哈耶克的《通往奴役之路》，写了一篇[读后感](./articles/The-road-to-serfdom/index.html)，讲中文世界对这本书的几处常见误读，还有书里的 socialism 到底指什么。
-
 我花了很多心思翻译[这篇 flying hump](./articles/flying-hump-2016/index.html)，如果对飞虎队、驼峰航线的的历史感兴趣，一定看看。
 
 我还创作一本英文图画书 [美猴王](https://www.amazon.com/dp/1763731669)，[我把这本书的文字版开源了](./articles/monkey-king-story/index.html)，如果喜欢请购买纸质版，以便我能进一步打磨这个故事。
 
-我对历史很感兴趣， [SO和别人讨论过不少问题](https://history.stackexchange.com/users/53036/qiulang-%e9%82%b1%e6%9c%97)。有些讨论后来写成了文章。
+这里主要记录我的[读书笔记](./读书笔记/index.md)，这些年我大致看了[这些书](./reading-list.md)。
 
-- Alfred Lansing 的 _Endurance: Shackleton's Incredible Voyage_ 我读了十遍上下，觉得它是写这次探险最好的一本，只有临近结尾的一句 "Some said that Sørlle turned away and wept" 一直让我想不通。我把这个结尾和沙克尔顿、沃斯利本人写下的记述对照了一遍，查这句话是从哪儿来的——[我的考辨](./articles/shackleton/index.html)。
+- Alfred Lansing 的 _Endurance: Shackleton's Incredible Voyage_ 我读了十遍上下，觉得它是写这次探险最好的一本，只有临近结尾的一句 "Some said that Sørlle turned away and wept" 一直让我想不通。我把这个结尾和沙克尔顿、沃斯利本人写下的记述对照了一遍，查这句话是从哪儿来的——[我的考辨](./articles/shackleton/index.html)。  
 
-- Tim Jeal 的 _Explorers of the Nile_ 对伯顿与斯皮克之争的说法，和我读过的其他所有记载都对不上，包括 Candice Millard 的 _River of the Gods_ 以及 Farwell、Brodie 的两本伯顿传记。我先从一个小问题入手——伯顿到底有没有说过他要经耶路撒冷回家——在 History Stack Exchange 上提了问并自己作答；2026 年 8 月 Jeal 去世，才把整件事写成[完整的一篇](./articles/Burton-Speke-Dispute/index.html)。
+- Tim Jeal 的 _Explorers of the Nile_ 对伯顿与斯皮克之争的说法，和我读过的其他所有记载都对不上，包括 Candice Millard 的 _River of the Gods_ 以及 Farwell、Brodie 的两本伯顿传记。我先从一个小问题入手——伯顿到底有没有说过他要经耶路撒冷回家——在 History Stack Exchange 上提了问并自己作答；2026 年 8 月 Jeal 去世，才把整件事写成[完整的一篇](./articles/Burton-Speke-Dispute/index.html)。  
 
-- Gillen D'Arcy Wood 的 _Tambora: The Eruption That Changed the World_ 引了一首和杜甫《秋雨叹》同名的诗，作者是一个几乎无人知晓、正赶上 1816–1817 年饥荒的云南诗人。我想找 Wood 这段引文的中文原文，没有找到；顺着这条线查到复旦团队把 1815 年坦博拉爆发和嘉庆年间云南大饥荒联系起来的论文，也发现[一处我认为他写错了的时间线](./articles/Tambora-A-Sigh-for-Autumn-Rain/index.html)——他把云南鸦片的"突然爆发"定在 1820 年。
+- Gillen D'Arcy Wood 的 _Tambora: The Eruption That Changed the World_ 引了一首和杜甫《秋雨叹》同名的诗，作者是一个几乎无人知晓、正赶上 1816–1817 年饥荒的云南诗人。我想找 Wood 这段引文的中文原文，没有找到；顺着这条线查到复旦团队把 1815 年坦博拉爆发和嘉庆年间云南大饥荒联系起来的论文，也发现[一处我认为他写错了的时间线](./articles/Tambora-A-Sigh-for-Autumn-Rain/index.html)——他把云南鸦片的"突然爆发"定在 1820 年。  
+
+- 我读了哈耶克的《通往奴役之路》，写了一篇[读后感](./articles/The-road-to-serfdom/index.html)，讲中文世界对这本书的几处常见误读，还有书里的 socialism 到底指什么？  
+
+- 满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧！马戛尔尼使团的成员在250多年前就看得一清二楚。[我记录下他们的文字](/articles/From-the-Macartney-Embassy-to-later-observers/index.html)，心里充满了敬佩和羞愧的双重复杂情感。  
 
 
 ---

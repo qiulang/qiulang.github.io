@@ -1,7 +1,7 @@
-/* ===== 本篇自己的样式：:root + .pair + 两张横向扫描的宽度上限 ===== */
+/* ===== 本篇自己的样式：:root + .pair + 三张横向扫描的宽度上限 ===== */
 
 :root {
-  --measure: 56em;             /* 正文栏 1120px（20px 字号）。这一档现在只为英文正文和下面两张横向扫描留的，
+  --measure: 56em;             /* 正文栏 1120px（20px 字号）。这一档现在只为英文正文和下面三张横向扫描留的，
                                   shackleton 用的也是同一档。
                                   它不再决定 §1 那段中文引文的每行字数——引文有自己的 max-width
                                   （见下面 .pair-text blockquote），所以"只有 56em + 封面进 .pair
@@ -123,10 +123,16 @@
 .pair-text > :first-child { margin-top: 0; }
 .pair-text > :last-child > p:last-child { margin-bottom: 0; }
 
-/* ===== 两张横向文档扫描（§2 扉页、§4 乐谱）不进 .pair，单独限宽 =====
-   article > figure 只命中这两张：书封那一张在 .pair 里面，是 article > div.pair > figure，不匹配。
-   38em = 760px = site.css 缺省正文栏宽，也就是这两张在还没有本文件、--measure 还是 38em 时的显示宽度。
-   不夹的话，--measure 提到 56em 后它们会撑满 1120px 宽、高 778px / 730px，比一屏还高。
+/* ===== 三张横向文档扫描（§2 扉页、§3 肖像+扉页、§4 乐谱）不进 .pair，单独限宽 =====
+   article > figure 只命中这三张：书封那一张在 .pair 里面，是 article > div.pair > figure，不匹配。
+   38em = 760px = site.css 缺省正文栏宽，也就是它们在还没有本文件、--measure 还是 38em 时的显示宽度。
+   不夹的话，--measure 提到 56em 后它们会撑满 1120px 宽、高 778px / 660px / 731px，比一屏还高
+   （按各文件实际像素算：2302×1600、2426×1430、1582×1032；夹到 760 宽后是 528 / 448 / 496）。
+   居中不需要再加规则：site.css 第 308 行 figure { margin: 1.8rem auto }，块级 box 的 width 是 auto、
+   被这里的 max-width 夹到 760 < 正文栏 1120，剩下的 360px 由两个 auto 外边距平分 → 左右各 180px。
+   所以再写 .center { text-align } 或 margin-inline: center 之类都是空规则（按三问就别写），
+   什么时候这条理由会变：给 figure 写死 width（不是 max-width）、或者把图放进 .pair 那种 grid item 里，
+   auto 外边距就不再平分剩余空间了。
    用 max-width 不用 width：手机断点 38em = 18px × 38 = 684px > 335px 的正文栏，
    max-width 让 figure 自动缩到栏宽，width 是定宽、会溢出顶出横向滚动条。 */
 article > figure {
