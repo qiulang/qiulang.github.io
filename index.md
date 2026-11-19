@@ -28,9 +28,9 @@ This site is a collection of my [reading notes](./读书笔记/index.md). The bo
 
 - Gillen D'Arcy Wood's _Tambora: The Eruption That Changed the World_ quotes a poem written under the same title as Du Fu's _秋雨叹_, by a near-obscure Yunnan poet living through the 1816–1817 famine. I could not find the Chinese original of Wood's quotation; following the trail took me to the Fudan University paper linking the 1815 Tambora eruption to the Jiaqing famine in Yunnan, and to [one place where I think Wood got the timeline wrong](./articles/Tambora-A-Sigh-for-Autumn-Rain/index.html) — the sudden "explosion" of opium cultivation he dates to 1820.  
 
-- [some notes on Hayek's _The Road to Serfdom_](./articles/The-road-to-serfdom/index.html) (in Chinese): a few common misreadings of the book in the Chinese-speaking world, and what Hayek meant by socialism.  
+- [Some notes on Hayek's _The Road to Serfdom_](./articles/The-road-to-serfdom/index.html) (in Chinese): a few common misreadings of the book in the Chinese-speaking world, and what Hayek meant by socialism.  
 
-- In my early 20s, I accepted the standard picture of the High Qing as a golden age. It took me a long time to realize how ridiculous that was. When I later read John Barrow’s Travels in China and Macartney’s journal, I did so with deep admiration for the writers’ perceptiveness—and utter shame for our own history — [My Take on this](/articles/From-the-Macartney-Embassy-to-later-observers/index.html).
+- In my early 20s, I accepted the standard picture of the High Qing as a golden age. It took me a long time to realize how ridiculous that was. When I later read John Barrow’s Travels in China and Macartney’s journal, I did so with deep admiration for the writers’ perceptiveness—and utter shame for our own history — [My Take on this](./articles/From-the-Macartney-Embassy-to-later-observers/index.html).
 
 
 ---
@@ -63,7 +63,9 @@ This site is a collection of my [reading notes](./读书笔记/index.md). The bo
 
 - 我读了哈耶克的《通往奴役之路》，写了一篇[读后感](./articles/The-road-to-serfdom/index.html)，讲中文世界对这本书的几处常见误读，还有书里的 socialism 到底指什么？  
 
-- 满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧！马戛尔尼使团的成员在250多年前就看得一清二楚。[我记录下他们的文字](/articles/From-the-Macartney-Embassy-to-later-observers/index.html)，心里充满了敬佩和羞愧的双重复杂情感。  
+- 满屏尽是清宫剧让我们可能都忘记满清的残忍和愚昧！马戛尔尼使团的成员在250多年前就看得一清二楚。[我记录下他们的文字](./articles/From-the-Macartney-Embassy-to-later-observers/index.html)，心里充满了敬佩和羞愧的双重复杂情感。  
+
+- [阿克顿勋爵真的说过自由面临的四大挑战吗？](./articles/Acton/index.html)  这个话题其实是我在2021年在 history.stackexchange 和别人的讨论，有感而发把它重新记录下来。    
 
 
 ---
